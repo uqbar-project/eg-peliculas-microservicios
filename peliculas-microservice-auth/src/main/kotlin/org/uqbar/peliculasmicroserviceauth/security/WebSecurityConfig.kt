@@ -18,7 +18,7 @@ class WebSecurityConfig {
          .cors().disable()
          .csrf().disable()
          .authorizeHttpRequests()
-         .requestMatchers(HttpMethod.POST,"/auth/login").permitAll()
+         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
          .anyRequest().authenticated()
          .and()
          .httpBasic()
@@ -28,15 +28,4 @@ class WebSecurityConfig {
          .and()
          .build()
 
-//   @Bean
-//   fun passwordEncoder() = BCryptPasswordEncoder()
-
-//   @Bean
-//   fun authenticationManager(httpSecurity: HttpSecurity) =
-//      httpSecurity
-//         .getSharedObject(AuthenticationManager::class.java)
-//         .userDetailsService(userDetailsService())
-//         .passwordEncoder(passwordEncoder())
-//         .and()
-//         .build()
 }
