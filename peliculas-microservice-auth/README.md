@@ -37,3 +37,13 @@ Si bien está integrado con Spring Security, los endpoints no están securizados
 
 No está funcionando ni la autenticación básica (Basic Auth) en Insomnia.
 
+Tenemos la configuración global en `application.yml`:
+
+```yml
+spring:
+  # seguridad
+  security:
+    user:
+      name: admin
+      password: password
+```
