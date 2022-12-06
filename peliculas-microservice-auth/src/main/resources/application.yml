@@ -1,9 +1,9 @@
 spring:
-  # seguridad
-  security:
-    user:
-      name: admin
-      password: admin
+#  seguridad - si querés utilizar Basic Auth
+#  security:
+#    user:
+#      name: admin
+#      password: admin
 
   # base de datos posta
   datasource:
@@ -27,3 +27,7 @@ server:
   error:
     include-message: always
     include-binding-errors: always
+
+security:
+  secret-key: fc11a8a903105382311a8c17a6595dbc3618b2c0d201c92bf56c7bbf1c4f55cb
+  access-token-minutes: 300

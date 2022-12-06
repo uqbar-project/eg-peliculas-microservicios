@@ -2,6 +2,9 @@ package org.uqbar.peliculasmicroserviceauth.service
 
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.userdetails.User
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
 import org.uqbar.peliculasmicroserviceauth.dto.CredencialesDTO
 import org.uqbar.peliculasmicroserviceauth.dto.FacturacionDTO
@@ -14,7 +17,7 @@ import org.uqbar.peliculasmicroserviceauth.repository.UsuarioRepository
 
 @Service
 @Transactional
-class UsuarioService {
+class UsuarioService : UserDetailsService {
 
    @Autowired
    lateinit var usuarioRepository: UsuarioRepository
@@ -68,5 +71,11 @@ class UsuarioService {
       usuario.pagar(pagoDTO.idFactura)
       usuarioRepository.save(usuario)
       return usuario
+   }
+
+   override fun loadUserByUsername(username: String?): UserDetails {
+      if (username == null) throw CredencialesInvalidasException()
+      val usuario = usuarioRepository.findByNombre(username).orElseThrow { NotFoundException("No se encontró el usuario con el nombre $username") }
+      return User(usuario.nombre, usuario.password, listOf())
    }
 }

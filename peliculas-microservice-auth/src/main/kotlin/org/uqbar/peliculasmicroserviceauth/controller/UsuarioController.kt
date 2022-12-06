@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*
 import org.uqbar.peliculasmicroserviceauth.dto.CredencialesDTO
 import org.uqbar.peliculasmicroserviceauth.dto.FacturacionDTO
 import org.uqbar.peliculasmicroserviceauth.dto.PagoDTO
-import org.uqbar.peliculasmicroserviceauth.model.Usuario
+import org.uqbar.peliculasmicroserviceauth.security.TokenUtils
 import org.uqbar.peliculasmicroserviceauth.service.UsuarioService
 
 // https? armar el certificado
@@ -17,13 +17,13 @@ class UsuarioController {
    @Autowired
    lateinit var usuarioService: UsuarioService
 
+   @Autowired
+   lateinit var tokenUtils: TokenUtils
+
    @PostMapping("/login")
    fun login(@RequestBody credencialesDTO: CredencialesDTO): String {
       usuarioService.login(credencialesDTO)
-      // debería devolver un JWT con el rol, expiración, etc.
-      // JWT
-      // sin refresh token mediante servicio . es muy complicado
-      return "ok"
+      return tokenUtils.createToken(credencialesDTO.usuario, credencialesDTO.password)!!
    }
 
    @PostMapping("/user")
