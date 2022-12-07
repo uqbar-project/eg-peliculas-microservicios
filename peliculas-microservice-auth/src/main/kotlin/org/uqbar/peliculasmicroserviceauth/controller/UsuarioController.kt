@@ -33,7 +33,7 @@ class UsuarioController {
    fun eliminar(@PathVariable idUsuario: Long) = usuarioService.eliminarUsuario(idUsuario)
 
    @GetMapping("/users/{idUsuario}")
-   fun usuarios(@PathVariable idUsuario: Long) = usuarioService.verUsuario(idUsuario)
+   fun verUsuario(@PathVariable idUsuario: Long) = usuarioService.verUsuario(idUsuario)
 
    @GetMapping("/active-users")
    fun usuariosActivos() = usuarioService.usuariosActivos()

@@ -31,3 +31,8 @@ server:
 security:
   secret-key: fc11a8a903105382311a8c17a6595dbc3618b2c0d201c92bf56c7bbf1c4f55cb
   access-token-minutes: 300
+
+# Para activar el Trace
+#logging:
+#  level:
+#    root: TRACE

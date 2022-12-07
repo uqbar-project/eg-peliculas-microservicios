@@ -55,7 +55,7 @@ class UsuarioService : UserDetailsService {
       return usuario
    }
 
-   @Transactional(Transactional.TxType.NEVER)
+   @Transactional(Transactional.TxType.NOT_SUPPORTED)
    fun verUsuario(idUsuario: Long) = getUsuarioPorId(idUsuario)
 
    @Transactional(Transactional.TxType.REQUIRED)

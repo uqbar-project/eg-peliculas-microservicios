@@ -35,6 +35,7 @@ class WebSecurityConfig {
          .csrf().disable()
          .authorizeHttpRequests()
          .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+         .requestMatchers("/error").permitAll()
          .anyRequest().authenticated()
          .and()
          .httpBasic()
@@ -45,9 +46,8 @@ class WebSecurityConfig {
          .and()
          .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter::class.java)
           // fin agregado
-//         .exceptionHandling()
-//         .authenticationEntryPoint(BasicStatusEntryPoint())
-//         .and()
+         .exceptionHandling()
+         .and()
          .build()
    }
 }
