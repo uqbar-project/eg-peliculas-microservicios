@@ -8,6 +8,7 @@ import org.uqbar.peliculasmicroserviceauth.exceptions.BusinessException
 import org.uqbar.peliculasmicroserviceauth.exceptions.CredencialesInvalidasException
 import org.uqbar.peliculasmicroserviceauth.exceptions.NotFoundException
 import java.math.BigDecimal
+import java.time.LocalDateTime
 
 const val longitudMinimaPassword = 3
 
@@ -23,6 +24,8 @@ class Usuario {
    @JsonIgnore
    @Column(length = 255)
    var password = ""
+
+   var ultimoLogin: LocalDateTime? = null
 
    var activo = true
 
@@ -77,4 +80,9 @@ class Usuario {
    fun darDeBaja() {
       activo = false
    }
+
+   fun loguearse() {
+      ultimoLogin = LocalDateTime.now()
+   }
+
 }

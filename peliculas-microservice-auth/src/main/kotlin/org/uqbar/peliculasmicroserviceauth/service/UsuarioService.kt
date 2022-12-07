@@ -6,10 +6,7 @@ import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
-import org.uqbar.peliculasmicroserviceauth.dto.CredencialesDTO
-import org.uqbar.peliculasmicroserviceauth.dto.FacturacionDTO
-import org.uqbar.peliculasmicroserviceauth.dto.PagoDTO
-import org.uqbar.peliculasmicroserviceauth.dto.UsuarioBaseDTO
+import org.uqbar.peliculasmicroserviceauth.dto.*
 import org.uqbar.peliculasmicroserviceauth.exceptions.CredencialesInvalidasException
 import org.uqbar.peliculasmicroserviceauth.exceptions.NotFoundException
 import org.uqbar.peliculasmicroserviceauth.model.Usuario
@@ -22,20 +19,21 @@ class UsuarioService : UserDetailsService {
    @Autowired
    lateinit var usuarioRepository: UsuarioRepository
 
-   @Transactional(Transactional.TxType.NEVER)
+   @Transactional(Transactional.TxType.REQUIRED)
    fun login(credenciales: CredencialesDTO) {
       val usuario = usuarioRepository.findByNombre(credenciales.usuario).orElseThrow { CredencialesInvalidasException() }
+      usuario.loguearse()
       usuario.validarCredenciales(credenciales.password)
    }
 
    @Transactional(Transactional.TxType.NEVER)
    fun usuarios() = usuarioRepository.findAll().map { usuario ->
-      UsuarioBaseDTO(usuario.id!!, usuario.nombre, usuario.deuda(), usuario.ultimoPago()?.fechaPago)
+      usuario.toUsuarioBaseDTO()
    }
 
    @Transactional(Transactional.TxType.NEVER)
    fun usuariosActivos() = usuarioRepository.findAllActivos().map { usuario ->
-      UsuarioBaseDTO(usuario.id!!, usuario.nombre, usuario.deuda(), usuario.ultimoPago()?.fechaPago)
+      usuario.toUsuarioBaseDTO()
    }
 
    @Transactional(Transactional.TxType.REQUIRED)

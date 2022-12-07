@@ -24,5 +24,4 @@ class JWTAuthorizationFilter : OncePerRequestFilter() {
       filterChain.doFilter(request, response)
    }
 
-
 }
