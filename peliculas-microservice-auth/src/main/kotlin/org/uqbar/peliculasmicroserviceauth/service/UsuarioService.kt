@@ -46,28 +46,25 @@ class UsuarioService : UserDetailsService {
 
    @Transactional(Transactional.TxType.REQUIRED)
    fun eliminarUsuario(idUsuario: Long): Usuario {
-      val usuario = getUsuario(idUsuario)
+      val usuario = getUsuarioPorId(idUsuario)
       usuarioRepository.delete(usuario)
       return usuario
    }
 
    @Transactional(Transactional.TxType.NEVER)
-   fun verUsuario(idUsuario: Long): Usuario {
-      return getUsuario(idUsuario)
-   }
+   fun verUsuario(idUsuario: Long) = getUsuarioPorId(idUsuario)
 
    @Transactional(Transactional.TxType.REQUIRED)
    fun facturar(facturacionDTO: FacturacionDTO): Usuario {
-      val usuario = getUsuario(facturacionDTO.idUsuario)
+      val usuario = getUsuario(facturacionDTO.nombreUsuario)
       usuario.facturar(facturacionDTO.monto)
       usuarioRepository.save(usuario)
       return usuario
    }
 
-   private fun getUsuario(idUsuario: Long) = usuarioRepository.findById(idUsuario).orElseThrow { NotFoundException("No se encontró el usuario con el identificador $idUsuario") }
-
+   @Transactional(Transactional.TxType.REQUIRED)
    fun pagar(pagoDTO: PagoDTO): Usuario {
-      val usuario = getUsuario(pagoDTO.idUsuario)
+      val usuario = getUsuario(pagoDTO.nombreUsuario)
       usuario.pagar(pagoDTO.idFactura)
       usuarioRepository.save(usuario)
       return usuario
@@ -75,7 +72,12 @@ class UsuarioService : UserDetailsService {
 
    override fun loadUserByUsername(username: String?): UserDetails {
       if (username == null) throw CredencialesInvalidasException()
-      val usuario = usuarioRepository.findByNombre(username).orElseThrow { NotFoundException("No se encontró el usuario con el nombre $username") }
+      val usuario = getUsuario(username)
       return User(usuario.nombre, usuario.password, listOf())
    }
+
+   private fun getUsuario(nombreUsuario: String) = usuarioRepository.findByNombre(nombreUsuario).orElseThrow { NotFoundException("No se encontró el usuario con el nombre $nombreUsuario") }
+
+   private fun getUsuarioPorId(idUsuario: Long) = usuarioRepository.findById(idUsuario).orElseThrow { NotFoundException("No se encontró el usuario con el identificador $idUsuario") }
+
 }

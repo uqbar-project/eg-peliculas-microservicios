@@ -42,6 +42,6 @@ class UsuarioController {
    fun facturar(@RequestBody facturacionDTO: FacturacionDTO) = usuarioService.facturar(facturacionDTO)
 
    @PatchMapping("/pagar")
-   fun facturar(@RequestBody pagoDTO: PagoDTO) = usuarioService.pagar(pagoDTO)
+   fun pagar(@RequestBody pagoDTO: PagoDTO) = usuarioService.pagar(pagoDTO)
 
 }

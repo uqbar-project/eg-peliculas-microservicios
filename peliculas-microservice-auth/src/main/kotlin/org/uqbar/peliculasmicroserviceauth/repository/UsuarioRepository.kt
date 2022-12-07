@@ -11,4 +11,7 @@ interface UsuarioRepository : CrudRepository<Usuario, Long> {
 
    @EntityGraph(attributePaths = ["facturas"])
    override fun findAll(): List<Usuario>
+
+   @EntityGraph(attributePaths = ["facturas"])
+   override fun findById(idUsuario: Long): Optional<Usuario>
 }

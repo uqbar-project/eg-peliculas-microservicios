@@ -24,6 +24,7 @@ class Usuario {
    @Column(length = 150)
    var password = ""
 
+   // TODO: Usarlo en el repositorio
    var activo = true
 
    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
@@ -43,7 +44,7 @@ class Usuario {
    }
 
    fun pagar(idFactura: Long) {
-      val factura = facturas.find { id == idFactura } ?: throw NotFoundException("La factura con identificador $idFactura no existe")
+      val factura = facturas.find { it.id == idFactura } ?: throw NotFoundException("La factura con identificador $idFactura no existe")
       factura.pagar()
    }
 
@@ -59,10 +60,10 @@ class Usuario {
    }
 
    fun validar() {
-      if (nombre == null || nombre.trim().isBlank()) {
+      if (nombre.trim().isBlank()) {
          throw BusinessException("Debe ingresar nombre de usuario")
       }
-      if (password == null || password.trim().isBlank()) {
+      if (password.trim().isBlank()) {
          throw BusinessException("Debe ingresar contraseña")
       }
       if (password.length < longitudMinimaPassword) {

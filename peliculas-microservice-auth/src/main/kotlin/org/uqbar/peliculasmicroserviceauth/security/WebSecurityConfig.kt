@@ -45,6 +45,9 @@ class WebSecurityConfig {
          .and()
          .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter::class.java)
           // fin agregado
+//         .exceptionHandling()
+//         .authenticationEntryPoint(BasicStatusEntryPoint())
+//         .and()
          .build()
    }
 }
