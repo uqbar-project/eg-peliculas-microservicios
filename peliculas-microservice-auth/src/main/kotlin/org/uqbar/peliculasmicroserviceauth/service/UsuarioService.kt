@@ -33,6 +33,11 @@ class UsuarioService : UserDetailsService {
       UsuarioBaseDTO(usuario.id!!, usuario.nombre, usuario.deuda(), usuario.ultimoPago()?.fechaPago)
    }
 
+   @Transactional(Transactional.TxType.NEVER)
+   fun usuariosActivos() = usuarioRepository.findAllActivos().map { usuario ->
+      UsuarioBaseDTO(usuario.id!!, usuario.nombre, usuario.deuda(), usuario.ultimoPago()?.fechaPago)
+   }
+
    @Transactional(Transactional.TxType.REQUIRED)
    fun crearUsuario(credencialesDTO: CredencialesDTO): Usuario {
       val usuario = Usuario().apply {
@@ -47,7 +52,8 @@ class UsuarioService : UserDetailsService {
    @Transactional(Transactional.TxType.REQUIRED)
    fun eliminarUsuario(idUsuario: Long): Usuario {
       val usuario = getUsuarioPorId(idUsuario)
-      usuarioRepository.delete(usuario)
+      usuario.darDeBaja()
+      usuarioRepository.save(usuario)
       return usuario
    }
 

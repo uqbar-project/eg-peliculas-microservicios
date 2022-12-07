@@ -17,14 +17,13 @@ class Usuario {
    @GeneratedValue
    var id: Long? = null
 
-   @Column(length = 150)
+   @Column(length = 255)
    var nombre = ""
 
    @JsonIgnore
-   @Column(length = 150)
+   @Column(length = 255)
    var password = ""
 
-   // TODO: Usarlo en el repositorio
    var activo = true
 
    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
@@ -73,5 +72,9 @@ class Usuario {
 
    fun crearPassword(rawPassword: String) {
       password = getDefaultEncoder().encode(rawPassword)
+   }
+
+   fun darDeBaja() {
+      activo = false
    }
 }
