@@ -179,35 +179,31 @@ En nuestro caso, lo que vamos a hacer en el cliente Insomnia es llamar a los end
 
 ¿Qué pasa si enviamos un JWT de un usuario inexistente? Lo que imaginamos es que deberíamos recibir un 401:
 
-![JWT inválido](./images/jwtVencidoInsomnia.png)
+![JWT inválido](./images/jwtVencidoInsomnia2.png)
 
 ### Implementación
 
 La forma de decorar cada pedido es utililzar un **Filter**, en este caso uno que toma la información del request, obtiene el JWT y hace las validaciones pertinentes:
 
 ```kotlin
-@Component
-class JWTAuthorizationFilter : OncePerRequestFilter() {
-
-   override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
-      try {
-         val bearerToken = request.getHeader("Authorization")
-         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            val token = bearerToken.replace("Bearer ", "")
-            val usernamePAT = tokenUtils.getAuthentication(token)
-            usuarioService.validarUsuario(usernamePAT.name)
-            SecurityContextHolder.getContext().authentication = usernamePAT
-            logger.info("username PAT: $usernamePAT")
-         }
-         filterChain.doFilter(request, response)
-      } catch (e: CredencialesInvalidasException) {
-         response.setStatus(HttpStatus.UNAUTHORIZED.value())
-         response.getWriter().write("Las credenciales son inválidas")
-      }
-   }
+override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
+  val bearerToken = request.getHeader("Authorization")
+  if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+     try {
+        val token = bearerToken.replace("Bearer ", "")
+        val usernamePAT = tokenUtils.getAuthentication(token)
+        usuarioService.validarUsuario(usernamePAT.name)
+        SecurityContextHolder.getContext().authentication = usernamePAT
+        logger.info("username PAT: $usernamePAT")
+     } catch (e: CredencialesInvalidasException) {
+        response.status = HttpStatus.UNAUTHORIZED.value()
+     }
+  }
+  filterChain.doFilter(request, response)
+}
 ```
 
-El filtro recibe el pedido (request), el objeto que formará la respuesta (response) y la cadena de filtros (filterChain) que sería el decorador siguiente. En nuestro caso atrapamos una excepción de credencial inválida descartando el pedido y enviando un código http 401 (Unauthorized) con su correspondiente mensaje de error.
+El filtro recibe el pedido (request), el objeto que formará la respuesta (response) y la cadena de filtros (filterChain) que sería el decorador siguiente. En nuestro caso atrapamos una excepción de credencial inválida descartando el pedido y enviando un código http 401 (Unauthorized).
 
 ### Inyección de dependencias del filtro
 
@@ -238,7 +234,19 @@ class WebSecurityConfig {
    }
 ```
 
+## Roles Admin / User
 
+Como dijimos antes, el rol Admin es el que puede crear o eliminar usuarios. Veamos cómo el admin crea un usuario, eso permite que un nuevo usuario se loguee a la aplicación y pida los usuarios, pero no pueda crear un nuevo usuario:
+
+![Usuario común no puede crear usuario](./images/usuarioComunNoPuedeCrearUsuario.gif)
+
+### Implementación
+
+Cada usuario tiene asociado una serie de roles o authorities, esto lo configuramos cuando creamos el token:
+
+```kotlin
+TODO
+```
 
 ## Cómo testear la aplicación
 

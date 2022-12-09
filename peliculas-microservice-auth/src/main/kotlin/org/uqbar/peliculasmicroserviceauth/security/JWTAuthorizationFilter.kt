@@ -21,20 +21,19 @@ class JWTAuthorizationFilter : OncePerRequestFilter() {
    lateinit var usuarioService: UsuarioService
 
    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
-      try {
-         val bearerToken = request.getHeader("Authorization")
-         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+      val bearerToken = request.getHeader("Authorization")
+      if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+         try {
             val token = bearerToken.replace("Bearer ", "")
             val usernamePAT = tokenUtils.getAuthentication(token)
             usuarioService.validarUsuario(usernamePAT.name)
             SecurityContextHolder.getContext().authentication = usernamePAT
             logger.info("username PAT: $usernamePAT")
+         } catch (e: CredencialesInvalidasException) {
+            response.status = HttpStatus.UNAUTHORIZED.value()
          }
-         filterChain.doFilter(request, response)
-      } catch (e: CredencialesInvalidasException) {
-         response.setStatus(HttpStatus.UNAUTHORIZED.value())
-         response.getWriter().write("Las credenciales son inválidas")
       }
+      filterChain.doFilter(request, response)
    }
 
 }
