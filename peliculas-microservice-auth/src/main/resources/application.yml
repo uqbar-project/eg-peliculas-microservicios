@@ -28,6 +28,12 @@ server:
     include-message: always
     include-binding-errors: always
 
+  # para que se vean los caracteres "especiales" (como eñes o tildes)
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+
 security:
   secret-key: fc11a8a903105382311a8c17a6595dbc3618b2c0d201c92bf56c7bbf1c4f55cb
   access-token-minutes: 300

@@ -26,10 +26,12 @@ class UsuarioService : UserDetailsService {
 
    @Transactional(Transactional.TxType.REQUIRED)
    fun login(credenciales: CredencialesDTO) {
-      val usuario = usuarioRepository.findByNombre(credenciales.usuario).orElseThrow { CredencialesInvalidasException() }
+      val usuario = validarUsuario(credenciales.usuario)
       usuario.loguearse()
       usuario.validarCredenciales(credenciales.password)
    }
+
+   fun validarUsuario(nombreUsuario: String) = usuarioRepository.findByNombre(nombreUsuario).orElseThrow { CredencialesInvalidasException() }
 
    @Transactional(Transactional.TxType.NEVER)
    fun usuarios() = usuarioRepository.findAll().map { usuario ->

@@ -177,6 +177,69 @@ En nuestro caso, lo que vamos a hacer en el cliente Insomnia es llamar a los end
 
 ![Bearer Token](./images/bearerTokenInsomnia.gif)
 
+¿Qué pasa si enviamos un JWT de un usuario inexistente? Lo que imaginamos es que deberíamos recibir un 401:
+
+![JWT inválido](./images/jwtVencidoInsomnia.png)
+
+### Implementación
+
+La forma de decorar cada pedido es utililzar un **Filter**, en este caso uno que toma la información del request, obtiene el JWT y hace las validaciones pertinentes:
+
+```kotlin
+@Component
+class JWTAuthorizationFilter : OncePerRequestFilter() {
+
+   override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
+      try {
+         val bearerToken = request.getHeader("Authorization")
+         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            val token = bearerToken.replace("Bearer ", "")
+            val usernamePAT = tokenUtils.getAuthentication(token)
+            usuarioService.validarUsuario(usernamePAT.name)
+            SecurityContextHolder.getContext().authentication = usernamePAT
+            logger.info("username PAT: $usernamePAT")
+         }
+         filterChain.doFilter(request, response)
+      } catch (e: CredencialesInvalidasException) {
+         response.setStatus(HttpStatus.UNAUTHORIZED.value())
+         response.getWriter().write("Las credenciales son inválidas")
+      }
+   }
+```
+
+El filtro recibe el pedido (request), el objeto que formará la respuesta (response) y la cadena de filtros (filterChain) que sería el decorador siguiente. En nuestro caso atrapamos una excepción de credencial inválida descartando el pedido y enviando un código http 401 (Unauthorized) con su correspondiente mensaje de error.
+
+### Inyección de dependencias del filtro
+
+Eso se configura en la clase `WebSecurityConfig`, donde anteriormente habíamos definido que los recursos `/login` y `/error` no requerían autenticación:
+
+```kotlin
+@Configuration
+@EnableWebSecurity
+class WebSecurityConfig {
+
+   @Bean
+   fun filterChain(httpSecurity: HttpSecurity, authenticationManager: AuthenticationManager): SecurityFilterChain {
+      return httpSecurity
+         ...
+         .anyRequest().authenticated()
+         .and()
+         .httpBasic()
+         .and()
+         .sessionManagement()
+         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+          // agregado para JWT, si comentás estas dos líneas tendrías Basic Auth
+         .and()
+         .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter::class.java)
+          // fin agregado
+         .exceptionHandling()
+         .and()
+         .build()
+   }
+```
+
+
+
 ## Cómo testear la aplicación
 
 Levantar en Insomnia los endpoints importando [este archivo](./auth_insomnia.json).
