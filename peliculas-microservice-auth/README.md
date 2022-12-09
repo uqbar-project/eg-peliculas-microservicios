@@ -39,7 +39,7 @@ Existen múltiples frameworks que nos ayudan a completar este punto, pueden ver
 
 - InMemoryUserDetailsManager: genera una base de usuarios en memoria cada vez que se levanta el servidor
 - OAuth2: te podés integrar con servicios de autenticación externos, como tu correo de Google, Facebook, Github, etc.
-  - [Keycloak](https://www.keycloak.org/): provee un mecanismo de Single Sign On (SSO, o login unificado), federación de usuarios (cómo un usuario puede utilizarse en varios servidores sin tener que volver a generarlos)
+- [Keycloak](https://www.keycloak.org/): provee un mecanismo de Single Sign On (SSO, o login unificado), federación de usuarios (cómo un usuario puede utilizarse en varios servidores sin tener que volver a generarlos)
 - Basic Auth
 - JWT (JSON Web Token), es la variante que nosotros decidimos implementar.
 
@@ -62,23 +62,33 @@ Los pasos son
 
 Esta forma de trabajo es especialmente útil para el protocolo http/s que es _stateless_, el servidor no guarda información de sesión. Entonces es responsabilidad del cliente almacenar el token y enviarlo en cada pedido, para que el server pueda identificar al usuario que realiza ese pedido.
 
-### Servicio de usuarios
+![flujo JWT](./images/jwt.jpeg)
 
-Dado que nos interesa tener una entidad que agrupe a todos los usuarios, vamos a aprovechar la entidad Usuario que ya tenemos definida. Además, el componente UsuarioService va a implementar una interfaz que necesita Spring Security para encontrar cuáles son los usuarios válidos de nuestra aplicación:
+## Login
 
-```kotlin
-class UsuarioService : UserDetailsService {
-```
-
-Hay un solo método que debemos crear, es el que utiliza Spring Security para buscar el usuario y devuelve un objeto User propio de Spring Security:
+El endpoint de login necesita recibir la información del usuario y la contraseña. Dado que todavía no nos identificamos, necesitamos que este endpoint no tenga ningún requerimiento de seguridad, debemos habilitarlo para que cualquier usuario anónimo verifique su identidad.
 
 ```kotlin
-override fun loadUserByUsername(username: String?): UserDetails {
-  if (username == null) throw CredencialesInvalidasException()
-  val usuario = getUsuario(username)
-  return User(usuario.nombre, usuario.password, listOf())
-}
+@Configuration
+@EnableWebSecurity
+class WebSecurityConfig {
+   ...
+
+   @Bean
+   fun filterChain(httpSecurity: HttpSecurity, authenticationManager: AuthenticationManager): SecurityFilterChain {
+      return httpSecurity
+         .cors().disable()
+         .csrf().disable()
+         .authorizeHttpRequests()
+         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+         .requestMatchers("/error").permitAll()
+         ...
+         .and()
+         .build()
 ```
+
+> Un detalle importante de mencionar es que **también hay que habilitar la ruta `/error`**, de lo contrario cada vez que lancemos una excepción, en lugar de devolvernos un código de http 400, 404, etc. estaremos recibiendo un 401 ó 403 que nos dirá que no tenemos acceso a la ruta que tiene configurada Springboot para mostrar un mensaje de error.
+
 
 ### 
 
