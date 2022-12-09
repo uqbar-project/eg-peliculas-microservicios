@@ -89,8 +89,79 @@ class WebSecurityConfig {
 
 > Un detalle importante de mencionar es que **también hay que habilitar la ruta `/error`**, de lo contrario cada vez que lancemos una excepción, en lugar de devolvernos un código de http 400, 404, etc. estaremos recibiendo un 401 ó 403 que nos dirá que no tenemos acceso a la ruta que tiene configurada Springboot para mostrar un mensaje de error.
 
+Ahora que configuramos Spring Security para que permita pasar los pedidos de login, veamos cómo se implementa el controller:
 
-### 
+```kotlin
+@PostMapping("/login")
+fun login(@RequestBody credencialesDTO: CredencialesDTO): String {
+  usuarioService.login(credencialesDTO)
+  return tokenUtils.createToken(credencialesDTO.usuario, credencialesDTO.password)!!
+}
+```
+
+El service es el responsable de convertir las credenciales que contienen usuario y contraseña en un objeto de dominio Usuario. 
+
+```kotlin
+@Transactional(Transactional.TxType.REQUIRED)
+fun login(credenciales: CredencialesDTO) {
+  val usuario = usuarioRepository.findByNombre(credenciales.usuario).orElseThrow { CredencialesInvalidasException() }
+  usuario.loguearse()
+  usuario.validarCredenciales(credenciales.password)
+}
+```
+
+Como detalle de implementación, registramos el último login por temas de auditoría y delegamos en el objeto de dominio la validación de contraseña, utilizando un algoritmo de encriptado. Pueden ver el código para más detalles.
+
+### Generación del JWT
+
+El componente TokenUtils encapsula las responsabilidades que generan el token en base a cierta información y permiten recuperar dicha información en base a un token. Veamos el código asociado a la creación de un token:
+
+```kotlin
+fun createToken(nombre: String, password: String): String? {
+  val longExpirationTime = accessTokenMinutes * 60 * 60 * 1000
+  val now = Date()
+
+  return Jwts.builder()
+     .setSubject(nombre)
+     .setIssuedAt(now)
+     .setExpiration(Date(now.time + longExpirationTime))
+     .claim("roles", if (nombre == "admin") "ROLE_ADMIN" else "ROLE_USER")
+     .signWith(Keys.hmacShaKeyFor(secretKey.toByteArray()))
+     .compact()
+}
+```
+
+Como dijimos antes, el token es un valor, en este caso un String, que se forma con la información del
+
+- nombre del usuario, 
+- el momento en que se emite el token, 
+- el vencimiento, un token no es permanente sino que tiene un tiempo de validez por el cual simulamos una sesión abierta. Esa información se encripta junto con el token, recordamos que el servidor no almacena información en la VM de Springboot.
+- y los roles, que permiten diferenciar perfiles de usuario. Dado que es un ejemplo didáctico, decidimos no incluir el rol dentro de la entidad Usuario, que sería lo más recomendable. En lugar de eso tenemos un único usuario admin que se asocia al rol ROLE_ADMIN (es importante respetar la convención de utilizar el prefijo `ROLE_`), y el resto de los usuarios tiene el rol común (`ROLE_USER`)
+
+Para "firmar" el token utilizamos una clave que guardamos dentro de nuestro archivo `application.yml`
+
+```yml
+security:
+  secret-key: ...clave...
+  access-token-minutes: 300
+```
+
+y que se inyecta en nuestro componente TokenUtils:
+
+```kotlin
+@Component
+class TokenUtils {
+   @Value("\${security.secret-key}")
+   lateinit var secretKey: String
+```
+
+¿Es entonces JWT un mecanismo infalible? Claro que no, pero para poder descubrir cómo generar tokens la persona atacante necesita saber cuál es el algoritmo de encriptado, la clave y un usuario/contraseña. Eso no quita que pueda robarnos un JWT válido con el que ganar acceso a la aplicación durante el tiempo que dure el token.
+
+### Cómo se ve desde un cliente
+
+Si ingresamos credenciales inválidas, la aplicación nos devuelve un código de error 401 (asociado a la excepción `CredencialesInvalidasException`), en caso contrario nos devuelve nuestro JWT:
+
+![login](./images/loginInsomnia.gif)
 
 ## Cómo testear la aplicación
 
