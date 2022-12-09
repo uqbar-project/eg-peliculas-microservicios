@@ -1,12 +1,15 @@
 package org.uqbar.peliculasmicroserviceauth.service
 
 import jakarta.transaction.Transactional
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
 import org.uqbar.peliculasmicroserviceauth.dto.*
+import org.uqbar.peliculasmicroserviceauth.exceptions.BusinessException
 import org.uqbar.peliculasmicroserviceauth.exceptions.CredencialesInvalidasException
 import org.uqbar.peliculasmicroserviceauth.exceptions.NotFoundException
 import org.uqbar.peliculasmicroserviceauth.model.Usuario
@@ -15,6 +18,8 @@ import org.uqbar.peliculasmicroserviceauth.repository.UsuarioRepository
 @Service
 @Transactional
 class UsuarioService : UserDetailsService {
+
+   val logger = LoggerFactory.getLogger(UsuarioService::class.java)
 
    @Autowired
    lateinit var usuarioRepository: UsuarioRepository
@@ -38,6 +43,9 @@ class UsuarioService : UserDetailsService {
 
    @Transactional(Transactional.TxType.REQUIRED)
    fun crearUsuario(credencialesDTO: CredencialesDTO): Usuario {
+      if (usuarioRepository.findByNombre(credencialesDTO.usuario).isPresent) {
+         throw BusinessException("Ya existe un usuario con ese nombre")
+      }
       val usuario = Usuario().apply {
          nombre = credencialesDTO.usuario
          crearPassword(credencialesDTO.password)
@@ -77,8 +85,11 @@ class UsuarioService : UserDetailsService {
    override fun loadUserByUsername(username: String?): UserDetails {
       if (username == null) throw CredencialesInvalidasException()
       val usuario = getUsuario(username)
-      return User(usuario.nombre, usuario.password, listOf())
+      logger.info("Usuario " + usuario.nombre + " - Roles: " + roleFor(username))
+      return User(usuario.nombre, usuario.password, roleFor(username))
    }
+
+   private fun roleFor(username: String) = if (username.lowercase() == "admin") listOf(SimpleGrantedAuthority("ROLE_ADMIN")) else listOf()
 
    private fun getUsuario(nombreUsuario: String) = usuarioRepository.findByNombre(nombreUsuario).orElseThrow { NotFoundException("No se encontró el usuario con el nombre $nombreUsuario") }
 

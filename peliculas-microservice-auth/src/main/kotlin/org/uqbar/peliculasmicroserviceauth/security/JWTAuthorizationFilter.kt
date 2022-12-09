@@ -20,6 +20,7 @@ class JWTAuthorizationFilter : OncePerRequestFilter() {
          val token = bearerToken.replace("Bearer ", "")
          val usernamePAT = tokenUtils.getAuthentication(token)
          SecurityContextHolder.getContext().authentication = usernamePAT
+         logger.info("username PAT: $usernamePAT")
       }
       filterChain.doFilter(request, response)
    }

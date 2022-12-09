@@ -12,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
+
 @Configuration
 @EnableWebSecurity
 class WebSecurityConfig {
@@ -36,6 +37,10 @@ class WebSecurityConfig {
          .authorizeHttpRequests()
          .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
          .requestMatchers("/error").permitAll()
+          // Solo permitimos que creen o eliminen usuarios los que tengan rol administrador
+         .requestMatchers("/auth/user").hasAuthority("ROLE_ADMIN")
+         .requestMatchers("/auth/user/**").hasAuthority("ROLE_ADMIN")
+          //
          .anyRequest().authenticated()
          .and()
          .httpBasic()

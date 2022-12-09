@@ -33,6 +33,6 @@ security:
   access-token-minutes: 300
 
 # Para activar el Trace
-#logging:
-#  level:
-#    root: TRACE
+logging:
+  level:
+    root: INFO

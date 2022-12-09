@@ -17,34 +17,72 @@ En el archivo [`docker-compose.yml`](./docker-compose.yml) especificamos la imag
 
 Tenemos como entidad principal al usuario, la password se guarda encriptada en la base y tiene asociada la información de facturas (se factura en una fecha particular por un monto, y se puede pagar solo el total). Un usuario tiene muchas facturas.
 
-## Spring Security
+## Endpoints
 
-Primera versión funciona correctamente, endpoint de login devuelve ok y el resto usa basic auth:
-
-- el endpoint de login debería devolver un JWT
-- y luego ese JWT deberíamos pasarlo en el header para validar el usuario en el resto de los endpoints
-
-No está funcionando ni la autenticación básica (Basic Auth) en Insomnia.
-
-Tenemos la configuración global en `application.yml`:
-
-```yml
-spring:
-  # seguridad
-  security:
-    user:
-      name: admin
-      password: admin
-```
-
-## Cómo testear la aplicación
-
-Levantar en Insomnia los endpoints importando [este archivo](./auth_insomnia.json), donde podés
+¿Qué podemos hacer dentro de este módulo?
 
 - crear un usuario
 - facturar a un usuario (con su id)
 - pagar una factura con el id de usuario y de factura
 - ver la información de los usuarios
 - o de un usuario en particular
-- y adicionalmente borrar un usuario
+- y adicionalmente dar de baja un usuario (es una baja lógica, seguirá estando en la base)
+
+## Mecanismos para securizar los endpoints
+
+Este ejemplo utiliza Spring Security como tecnología de
+
+- **autenticación:** la forma en que validamos que las credenciales de un usuario son correctas (una forma es mediante un nombre de usuario y su contraseña)
+- **autorización:** verificando que cada usuario tenga permitido el uso de cada uno de los endpoints.
+
+Existen múltiples frameworks que nos ayudan a completar este punto, pueden ver
+
+- InMemoryUserDetailsManager: genera una base de usuarios en memoria cada vez que se levanta el servidor
+- OAuth2: te podés integrar con servicios de autenticación externos, como tu correo de Google, Facebook, Github, etc.
+  - [Keycloak](https://www.keycloak.org/): provee un mecanismo de Single Sign On (SSO, o login unificado), federación de usuarios (cómo un usuario puede utilizarse en varios servidores sin tener que volver a generarlos)
+- Basic Auth
+- JWT (JSON Web Token), es la variante que nosotros decidimos implementar.
+
+### JWT
+
+[JWT](https://developer.okta.com/blog/2018/06/20/what-happens-if-your-jwt-is-stolen) representa 
+
+- un token, un valor que almacena 
+- información sobre la sesión asociada a un usuario identificado
+- con formato JSON
+- y firmado digitalmente, donde un algoritmo utiliza una clave como forma de encriptar los datos.
+
+El estándar RFC 7519 define [JWT](https://jwt.io/) como un método que permite conectar dos partes, en nuestro caso un cliente y un servidor. El cliente puede ser cualquier aplicación construida con un frontend, o en este caso, dispararse vía POSTMAN / Insomnia.
+
+Los pasos son
+
+- el cliente pasa sus credenciales, en este caso usuario y contraseña (otro medio podría ser tener una [API Key](https://www.fortinet.com/resources/cyberglossary/api-key))
+- el servidor valida el login: en caso exitoso le devuelve un token que contiene información como el usuario y el momento en que vence ese token. La información está encriptada utilizando algún algoritmo que el cliente desconoce.
+- el cliente utilizará de aquí en más ese token para hacer los pedidos siguientes, de manera de no tener que pasar la contraseña cada vez que quiera ejecutar un endpoint
+
+Esta forma de trabajo es especialmente útil para el protocolo http/s que es _stateless_, el servidor no guarda información de sesión. Entonces es responsabilidad del cliente almacenar el token y enviarlo en cada pedido, para que el server pueda identificar al usuario que realiza ese pedido.
+
+### Servicio de usuarios
+
+Dado que nos interesa tener una entidad que agrupe a todos los usuarios, vamos a aprovechar la entidad Usuario que ya tenemos definida. Además, el componente UsuarioService va a implementar una interfaz que necesita Spring Security para encontrar cuáles son los usuarios válidos de nuestra aplicación:
+
+```kotlin
+class UsuarioService : UserDetailsService {
+```
+
+Hay un solo método que debemos crear, es el que utiliza Spring Security para buscar el usuario y devuelve un objeto User propio de Spring Security:
+
+```kotlin
+override fun loadUserByUsername(username: String?): UserDetails {
+  if (username == null) throw CredencialesInvalidasException()
+  val usuario = getUsuario(username)
+  return User(usuario.nombre, usuario.password, listOf())
+}
+```
+
+### 
+
+## Cómo testear la aplicación
+
+Levantar en Insomnia los endpoints importando [este archivo](./auth_insomnia.json).
 
