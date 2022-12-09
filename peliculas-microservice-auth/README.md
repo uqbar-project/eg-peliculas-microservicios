@@ -245,8 +245,33 @@ Como dijimos antes, el rol Admin es el que puede crear o eliminar usuarios. Veam
 Cada usuario tiene asociado una serie de roles o authorities, esto lo configuramos cuando creamos el token:
 
 ```kotlin
-TODO
+fun createToken(nombre: String, password: String): String? {
+  return Jwts.builder()
+   ...
+   .claim("roles", if (nombre == "admin") "ROLE_ADMIN" else "ROLE_USER")
+   ...
 ```
+
+Pueden ver el logger que se genera
+
+```bash
+2022-12-09T19:55:14.169-03:00  INFO 521538 --- [nio-9090-exec-8] o.u.p.security.JWTAuthorizationFilter    : username PAT: UsernamePasswordAuthenticationToken [Principal=pepita, Credentials=[PROTECTED], Authenticated=true, Details=null, Granted Authorities=[ROLE_USER]]
+```
+
+En la configuración de los endpoints, le configuramos para que solamente el rol ROLE_ADMIN pueda crear o eliminar usuarios:
+
+```kotlin
+   @Bean
+   fun filterChain(httpSecurity: HttpSecurity, authenticationManager: AuthenticationManager): SecurityFilterChain {
+      return httpSecurity
+         ...
+          // Solo permitimos que creen o eliminen usuarios los que tengan rol administrador
+         .requestMatchers(HttpMethod.POST, "/auth/user").hasAuthority("ROLE_ADMIN")
+         .requestMatchers(HttpMethod.DELETE, "/auth/user/**").hasAuthority("ROLE_ADMIN")
+          //
+```
+
+> Otras configuraciones son las annotations @PreAuthorize y @Secured, que se asocian a métodos de los controllers. Pero como requiere configuraciones adicionales, nos quedamos con esta variante más simple.
 
 ## Cómo testear la aplicación
 

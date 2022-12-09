@@ -38,8 +38,8 @@ class WebSecurityConfig {
          .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
          .requestMatchers("/error").permitAll()
           // Solo permitimos que creen o eliminen usuarios los que tengan rol administrador
-         .requestMatchers("/auth/user").hasAuthority("ROLE_ADMIN")
-         .requestMatchers("/auth/user/**").hasAuthority("ROLE_ADMIN")
+         .requestMatchers(HttpMethod.POST, "/auth/user").hasAuthority("ROLE_ADMIN")
+         .requestMatchers(HttpMethod.DELETE, "/auth/user/**").hasAuthority("ROLE_ADMIN")
           //
          .anyRequest().authenticated()
          .and()
