@@ -66,6 +66,8 @@ Esta forma de trabajo es especialmente útil para el protocolo http/s que es _st
 
 ## Login
 
+### Implementación
+
 El endpoint de login necesita recibir la información del usuario y la contraseña. Dado que todavía no nos identificamos, necesitamos que este endpoint no tenga ningún requerimiento de seguridad, debemos habilitarlo para que cualquier usuario anónimo verifique su identidad.
 
 ```kotlin
@@ -162,6 +164,18 @@ class TokenUtils {
 Si ingresamos credenciales inválidas, la aplicación nos devuelve un código de error 401 (asociado a la excepción `CredencialesInvalidasException`), en caso contrario nos devuelve nuestro JWT:
 
 ![login](./images/loginInsomnia.gif)
+
+## Acceso a los otros endpoints mediante el token
+
+Una vez obtenido el token, un frontend común lo que hace es
+
+- lo guarda en algún medio semi-persistente (ej: _local storage_ del navegador o incluso un mapa en memoria)
+- de aquí en más cada vez que realizamos un pedido al backend interceptamos el header y le agregamos el token
+- debemos manejar adicionalmente la ausencia de dicho token, redirigiendo a la página de login primero (e idealmente almacenando cuál era la ruta a la que queríamos acceder para ir allí una vez validado el usuario)
+
+En nuestro caso, lo que vamos a hacer en el cliente Insomnia es llamar a los endpoints utilizando _Bearer Token_ como mecanismo de autenticación (pasamos el token que nos devolvió el login):
+
+![Bearer Token](./images/bearerTokenInsomnia.gif)
 
 ## Cómo testear la aplicación
 

@@ -27,8 +27,6 @@ class Usuario {
 
    var ultimoLogin: LocalDateTime? = null
 
-   var activo = true
-
    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
    @OrderColumn
    var facturas = mutableListOf<Factura>()
@@ -75,10 +73,6 @@ class Usuario {
 
    fun crearPassword(rawPassword: String) {
       password = getDefaultEncoder().encode(rawPassword)
-   }
-
-   fun darDeBaja() {
-      activo = false
    }
 
    fun loguearse() {

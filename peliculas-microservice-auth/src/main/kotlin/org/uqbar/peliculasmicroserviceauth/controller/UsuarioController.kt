@@ -35,9 +35,6 @@ class UsuarioController {
    @GetMapping("/users/{idUsuario}")
    fun verUsuario(@PathVariable idUsuario: Long) = usuarioService.verUsuario(idUsuario)
 
-   @GetMapping("/active-users")
-   fun usuariosActivos() = usuarioService.usuariosActivos()
-
    @GetMapping("/users")
    fun usuarios() = usuarioService.usuarios()
 
