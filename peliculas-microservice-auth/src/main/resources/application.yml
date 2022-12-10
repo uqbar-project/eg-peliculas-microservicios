@@ -1,9 +1,13 @@
 spring:
-#  seguridad - si querés utilizar Basic Auth
-#  security:
-#    user:
-#      name: admin
-#      password: admin
+  # seguridad - si querés utilizar Basic Auth
+  #  security:
+  #    user:
+  #      name: admin
+  #      password: admin
+
+  application:
+    name: auth-service
+
 
   # base de datos posta
   datasource:
@@ -43,3 +47,12 @@ security:
 logging:
   level:
     root: INFO
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost

@@ -275,5 +275,30 @@ En la configuración de los endpoints, le configuramos para que solamente el rol
 
 ## Cómo testear la aplicación
 
-Levantar en Insomnia los endpoints importando [este archivo](./auth_insomnia.json).
+- Levantar la clase main
+- Importar [este archivo](./auth_insomnia.json) en Insomnia
+- Ejecutar los endpoints teniendo en cuenta que el usuario admin tiene como password "123456". 
+- Podés crear otros usuarios, facturarles y hacer que paguen.
 
+## Levantando la app como Microservicio
+
+Si levantás primero un server de Eureka (situado en el proyecto [Pelicula Microservice Registry](https://github.com/uqbar-project/peliculas-microservice-registry)), vas a ver reflejada esta aplicación como microservicio.
+
+![Auth en Eureka Server](./images/auth-en-eureka-server.png)
+
+Solo tenemos que configurar el nombre de la aplicación y dónde buscar el servidor de Eureka en el archivo `application.yml`
+
+```yml
+spring:
+  application:
+    name: auth-service
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+```
