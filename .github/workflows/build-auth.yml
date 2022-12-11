@@ -2,8 +2,9 @@ name: build-auth
 
 on: 
   push:
+
     paths:
-      - 'peliculas-microservice-auth'
+      - './peliculas-microservice-auth/**'
 
 jobs:
   gradle:
