@@ -31,5 +31,5 @@ jobs:
       - uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: false
-          files: ./peliculas-microservice-auth/**/coverage*.xml
+          files: ./build/reports/**/*.xml, ./build/test-results/**/*.xml
           verbose: true

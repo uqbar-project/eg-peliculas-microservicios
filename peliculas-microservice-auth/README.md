@@ -304,4 +304,3 @@ eureka:
   instance:
     hostname: localhost
 ```
-
