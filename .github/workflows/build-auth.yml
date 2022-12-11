@@ -24,5 +24,8 @@ jobs:
       - name: Execute Gradle build
         run: ./gradlew runOnGitHub
 
-      # Send JaCoCo reports to codecov
-      - run: bash <(curl -s https://codecov.io/bash)
+      - uses: actions/checkout@master
+      - uses: codecov/codecov-action@v3
+        with:
+          fail_ci_if_error: false
+          verbose: true
