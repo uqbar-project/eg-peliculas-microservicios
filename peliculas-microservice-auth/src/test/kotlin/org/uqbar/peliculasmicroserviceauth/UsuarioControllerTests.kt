@@ -102,6 +102,30 @@ class UsuarioControllerTests {
    }
    // end region
 
+   // region /user/{id}
+   @Test
+   fun `no se pueden conocer los datos de un usuario si no pasamos un token correcto`() {
+      val responseEntity = mockMvc.perform(
+         get("/auth/users/${idUsuarioOk("admin")}")
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", tokenUsuarioInvalido())
+      ).andExpect(status().isUnauthorized)
+   }
+
+   @Test
+   fun `se pueden ver los datos de un usuario con un token correcto`() {
+      val nombreUsuario = "admin"
+
+      val responseEntity = mockMvc.perform(
+         get("/auth/users/${idUsuarioOk(nombreUsuario)}")
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", tokenUsuarioOk)
+      )
+         .andExpect(status().isOk)
+         .andExpect(jsonPath("$.nombre").value(nombreUsuario))
+   }
+   // end region
+
    private fun bodyUsuarioExistente() = mapper.writeValueAsString(CredencialesDTO("user1", "password1"))
 
    private fun bodyUsuarioPasswordIncorrecta() = mapper.writeValueAsString(CredencialesDTO("user1", "password2"))
@@ -120,5 +144,7 @@ class UsuarioControllerTests {
       usuarioRepository.save(usuario)
       return "Bearer " + tokenUtils.createToken(usuario.nombre, usuario.password)!!
    }
+
+   private fun idUsuarioOk(nombre: String) = usuarioRepository.findByNombre(nombre).get().id
 
 }
