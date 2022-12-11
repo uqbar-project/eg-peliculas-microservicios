@@ -13,9 +13,11 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.uqbar.peliculasmicroserviceauth.dto.CredencialesDTO
 import org.uqbar.peliculasmicroserviceauth.model.Usuario
 import org.uqbar.peliculasmicroserviceauth.repository.UsuarioRepository
+import org.uqbar.peliculasmicroserviceauth.security.TokenUtils
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -33,11 +35,18 @@ class UsuarioControllerTests {
    @Autowired
    lateinit var usuarioRepository: UsuarioRepository
 
+   @Autowired
+   lateinit var tokenUtils: TokenUtils
+
+   lateinit var tokenUsuarioOk: String
+
+   lateinit var tokenAdminOk: String
+
    @BeforeEach
    fun crearUsuarios() {
       usuarioRepository.deleteAll()
-      crearUsuario("user1", "password1")
-      crearUsuario("admin", "123456")
+      tokenUsuarioOk = crearUsuario("user1", "password1")
+      tokenAdminOk = crearUsuario("admin", "123456")
    }
 
    // region: login
@@ -47,8 +56,7 @@ class UsuarioControllerTests {
          post("/auth/login")
             .contentType(MediaType.APPLICATION_JSON)
             .content(bodyUsuarioInexistente())
-      ).andReturn().response
-      assertEquals(401, responseEntity.status)
+      ).andExpect(status().isUnauthorized)
    }
 
    @Test
@@ -57,8 +65,7 @@ class UsuarioControllerTests {
          post("/auth/login")
             .contentType(MediaType.APPLICATION_JSON)
             .content(bodyUsuarioPasswordIncorrecta())
-      ).andReturn().response
-      assertEquals(401, responseEntity.status)
+      ).andExpect(status().isUnauthorized)
    }
 
    @Test
@@ -67,10 +74,33 @@ class UsuarioControllerTests {
          post("/auth/login")
             .contentType(MediaType.APPLICATION_JSON)
             .content(bodyUsuarioExistente())
-      ).andReturn().response
-      assertEquals(200, responseEntity.status)
+      )
+         .andExpect(status().isOk)
    }
    // endregion
+
+   // region /users
+   @Test
+   fun `no se pueden conocer los usuarios si no pasamos un token correcto`() {
+      val responseEntity = mockMvc.perform(
+         get("/auth/users")
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", tokenUsuarioInvalido())
+      ).andExpect(status().isUnauthorized)
+   }
+
+   @Test
+   fun `se pueden ver los usuarios con un token correcto`() {
+      val responseEntity = mockMvc.perform(
+         get("/auth/users")
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", tokenUsuarioOk)
+      )
+         .andExpect(status().isOk)
+         .andExpect(jsonPath("$[0].nombre").value("user1"))
+         .andExpect(jsonPath("$[1].nombre").value("admin"))
+   }
+   // end region
 
    private fun bodyUsuarioExistente() = mapper.writeValueAsString(CredencialesDTO("user1", "password1"))
 
@@ -79,11 +109,16 @@ class UsuarioControllerTests {
    private fun bodyUsuarioInexistente() =
       mapper.writeValueAsString(CredencialesDTO("usuarioInvalido", "cualquierPassword"))
 
-   private fun crearUsuario(_nombre: String, _password: String) {
-      usuarioRepository.save(Usuario().apply {
+   private fun tokenUsuarioInvalido() =
+      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsaXR1cmJlIiwiaWF0IjoxNjcwNTk0OTI5LCJleHAiOjE2NzE2NzQ5MjksInJvbGVzIjoiUk9MRV9VU0VSIn0.hSrd0sTw1OH57YlmV19xNCtide76AZa476XjPwE1uiW0wgbo7w5CarrJWCLjy0e62EZIbVjEGmIdHZ5tMHGkyg"
+
+   private fun crearUsuario(_nombre: String, _password: String): String {
+      val usuario = Usuario().apply {
          nombre = _nombre
          crearPassword(_password)
-      })
+      }
+      usuarioRepository.save(usuario)
+      return "Bearer " + tokenUtils.createToken(usuario.nombre, usuario.password)!!
    }
 
 }

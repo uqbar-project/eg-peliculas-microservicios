@@ -26,3 +26,8 @@ eureka:
     fetch-registry: false
   instance:
     hostname: localhost
+
+# Para activar el Trace
+logging:
+  level:
+    root: INFO
