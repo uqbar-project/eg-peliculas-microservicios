@@ -1,6 +1,8 @@
 
 # Ejemplo Microservicios - Películas
 
+[![build-auth](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-auth.yml/badge.svg)](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-auth.yml)
+
 ## Módulo de autenticación
 
 ## Instrucciones para levantar el ejemplo

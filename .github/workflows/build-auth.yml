@@ -18,13 +18,6 @@ jobs:
         with:
           java-version: 17
 
-      - name: ls
-        run: |
-          ls
-          pwd
-
-      # Execute Gradle commands in GitHub Actions workflows
-      # => https://github.com/marketplace/actions/gradle-command
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
       
