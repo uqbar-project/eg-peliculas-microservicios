@@ -19,3 +19,10 @@ spring:
       format_sql: true
       ddl-auto: create-drop
       pool_size: 50
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+  instance:
+    hostname: localhost
