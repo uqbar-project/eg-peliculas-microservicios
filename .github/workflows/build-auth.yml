@@ -25,12 +25,9 @@ jobs:
       - name: Execute Gradle build
         run: ./gradlew runOnGitHub
 
-      - name: ls
-        run: find * -print | grep xml
-
       - uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: false
           directory: peliculas-microservice-auth
-          flag: peliculas-microservice-auth
+          flag: auth
           verbose: true
