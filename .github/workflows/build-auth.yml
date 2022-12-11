@@ -32,5 +32,5 @@ jobs:
         with:
           fail_ci_if_error: false
           directory: peliculas-microservice-auth
-          name: peliculas-microservice-auth
+          flag: peliculas-microservice-auth
           verbose: true
