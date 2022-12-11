@@ -17,12 +17,11 @@ jobs:
 
       # Execute Gradle commands in GitHub Actions workflows
       # => https://github.com/marketplace/actions/gradle-command
-      - uses: eskatos/gradle-command-action@v1
-        with:
-          arguments: runOnGitHub
-          distributions-cache-enabled: true
-          dependencies-cache-enabled: true
-          configuration-cache-enabled: true
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      
+      - name: Execute Gradle build
+        run: ./gradlew runOnGitHub -p peliculas-microservice-auth
 
       # Send JaCoCo reports to codecov
       - run: bash <(curl -s https://codecov.io/bash)
