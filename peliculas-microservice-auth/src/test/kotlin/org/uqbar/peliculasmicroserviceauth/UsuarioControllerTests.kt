@@ -46,6 +46,7 @@ class UsuarioControllerTests {
    fun crearUsuarios() {
       usuarioRepository.deleteAll()
       tokenUsuarioOk = crearUsuario("user1", "password1")
+      crearUsuario("userDelete", "passwordDelete")
       tokenAdminOk = crearUsuario("admin", "123456")
    }
 
@@ -98,7 +99,8 @@ class UsuarioControllerTests {
       )
          .andExpect(status().isOk)
          .andExpect(jsonPath("$[0].nombre").value("user1"))
-         .andExpect(jsonPath("$[1].nombre").value("admin"))
+         .andExpect(jsonPath("$[1].nombre").value("userDelete"))
+         .andExpect(jsonPath("$[2].nombre").value("admin"))
    }
    // endregion
 
@@ -168,7 +170,72 @@ class UsuarioControllerTests {
          .andExpect(status().isOk)
          .andExpect(jsonPath("$.nombre").value("user2"))
    }
-   // end region
+   // endregion
+
+   // region delete user
+   @Test
+   fun `no se puede eliminar un usuario si no pasamos un token correcto`() {
+      val responseEntity = mockMvc.perform(
+         delete("/auth/user/${idUsuarioEliminar()}")
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", tokenUsuarioInvalido())
+      ).andExpect(status().isUnauthorized)
+   }
+
+   @Test
+   fun `un usuario común no puede eliminar un usuario`() {
+      val responseEntity = mockMvc.perform(
+         delete("/auth/user/${idUsuarioEliminar()}")
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", tokenUsuarioOk)
+      ).andExpect(status().isForbidden)
+   }
+
+   @Test
+   fun `un usuario admin puede eliminar un usuario`() {
+      val responseEntity = mockMvc.perform(
+         delete("/auth/user/${idUsuarioEliminar()}")
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", tokenAdminOk)
+      )
+         .andExpect(status().isOk)
+         .andExpect(jsonPath("$.nombre").value("userDelete"))
+   }
+   // endregion
+
+   // region invoice
+   @Test
+   fun `no se puede facturar un usuario si no pasamos un token correcto`() {
+      val responseEntity = mockMvc.perform(
+         patch("/auth/invoice")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(bodyFacturarOk())
+            .header("Authorization", tokenUsuarioInvalido())
+      ).andExpect(status().isUnauthorized)
+   }
+
+   @Test
+   fun `no se puede facturar un usuario inexistente`() {
+      val responseEntity = mockMvc.perform(
+         patch("/auth/invoice")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(bodyFacturarUsuarioInexistente())
+            .header("Authorization", tokenUsuarioOk)
+      ).andExpect(status().isNotFound)
+   }
+
+   @Test
+   fun `se puede facturar un usuario existente`() {
+      val responseEntity = mockMvc.perform(
+         patch("/auth/invoice")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(bodyFacturarOk())
+            .header("Authorization", tokenUsuarioOk)
+      )
+         .andExpect(status().isOk)
+         .andExpect(jsonPath("$.facturas.length()").value(1))
+   }
+   // endregion
 
    private fun bodyUsuarioExistente() = mapper.writeValueAsString(CredencialesDTO("user1", "password1"))
 
@@ -198,5 +265,23 @@ class UsuarioControllerTests {
    }
 
    private fun idUsuarioOk(nombre: String) = usuarioRepository.findByNombre(nombre).get().id
+
+   private fun idUsuarioEliminar() = usuarioRepository.findByNombre("userDelete").get().id
+
+   private fun bodyFacturarOk() =
+      """
+         {
+         	"nombreUsuario": "user1",
+         	"monto": 5000
+         }
+      """.trimIndent()
+
+   private fun bodyFacturarUsuarioInexistente() =
+      """
+         {
+         	"nombreUsuario": "userFake",
+         	"monto": 2500
+         }
+      """.trimIndent()
 
 }

@@ -38,10 +38,10 @@ class UsuarioController {
    @GetMapping("/users")
    fun usuarios() = usuarioService.usuarios()
 
-   @PatchMapping("/facturar")
+   @PatchMapping("/invoice")
    fun facturar(@RequestBody facturacionDTO: FacturacionDTO) = usuarioService.facturar(facturacionDTO)
 
-   @PatchMapping("/pagar")
+   @PatchMapping("/pay")
    fun pagar(@RequestBody pagoDTO: PagoDTO) = usuarioService.pagar(pagoDTO)
 
 }
