@@ -7,6 +7,9 @@ import java.util.*
 
 interface UsuarioRepository : CrudRepository<Usuario, Long> {
 
+   @EntityGraph(attributePaths = ["facturas"])
+   fun findFullByNombre(nombre: String): Optional<Usuario>
+
    fun findByNombre(nombre: String): Optional<Usuario>
 
    @EntityGraph(attributePaths = ["facturas"])
