@@ -49,7 +49,7 @@ class UsuarioControllerTests {
       tokenAdminOk = crearUsuario("admin", "123456")
    }
 
-   // region: login
+   // region login
    @Test
    fun `usuario inexistente no pasa el login`() {
       val responseEntity = mockMvc.perform(
@@ -100,7 +100,7 @@ class UsuarioControllerTests {
          .andExpect(jsonPath("$[0].nombre").value("user1"))
          .andExpect(jsonPath("$[1].nombre").value("admin"))
    }
-   // end region
+   // endregion
 
    // region /user/{id}
    @Test
@@ -124,6 +124,50 @@ class UsuarioControllerTests {
          .andExpect(status().isOk)
          .andExpect(jsonPath("$.nombre").value(nombreUsuario))
    }
+
+   @Test
+   fun `si se pide ver los datos de un usuario que no existe se devuelve un error`() {
+      val responseEntity = mockMvc.perform(
+         get("/auth/users/190")
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", tokenUsuarioOk)
+      )
+         .andExpect(status().isNotFound)
+   }
+   // endregion
+
+   // region create user
+   @Test
+   fun `no se puede crear un usuario si no pasamos un token correcto`() {
+      val responseEntity = mockMvc.perform(
+         post("/auth/user")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(bodyCrearUsuario())
+            .header("Authorization", tokenUsuarioInvalido())
+      ).andExpect(status().isUnauthorized)
+   }
+
+   @Test
+   fun `un usuario común no puede crear un usuario`() {
+      val responseEntity = mockMvc.perform(
+         post("/auth/user")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(bodyCrearUsuario())
+            .header("Authorization", tokenUsuarioOk)
+      ).andExpect(status().isForbidden)
+   }
+
+   @Test
+   fun `un usuario admin puede crear un usuario`() {
+      val responseEntity = mockMvc.perform(
+         post("/auth/user")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(bodyCrearUsuario())
+            .header("Authorization", tokenAdminOk)
+      )
+         .andExpect(status().isOk)
+         .andExpect(jsonPath("$.nombre").value("user2"))
+   }
    // end region
 
    private fun bodyUsuarioExistente() = mapper.writeValueAsString(CredencialesDTO("user1", "password1"))
@@ -132,6 +176,14 @@ class UsuarioControllerTests {
 
    private fun bodyUsuarioInexistente() =
       mapper.writeValueAsString(CredencialesDTO("usuarioInvalido", "cualquierPassword"))
+
+   private fun bodyCrearUsuario() =
+      """
+         {
+         	"usuario": "user2",
+         	"password": "password2"
+         }
+      """.trimIndent()
 
    private fun tokenUsuarioInvalido() =
       "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsaXR1cmJlIiwiaWF0IjoxNjcwNTk0OTI5LCJleHAiOjE2NzE2NzQ5MjksInJvbGVzIjoiUk9MRV9VU0VSIn0.hSrd0sTw1OH57YlmV19xNCtide76AZa476XjPwE1uiW0wgbo7w5CarrJWCLjy0e62EZIbVjEGmIdHZ5tMHGkyg"
