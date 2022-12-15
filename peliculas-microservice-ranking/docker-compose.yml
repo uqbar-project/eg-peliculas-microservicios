@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  mongo:
+    # tomamos la última imagen de mongo
+    image: mongo:latest
+    container_name: mongo_peliculas
+    hostname: host-mongo
+
+    # mapeo el puerto de mi computadora 27019 contra el 27017 (importante porque es el default de mongo)
+    ports:
+      - "27019:27017"
+    volumes:
+      - ~/apps/mongo_db:/data/db
+      - ~/apps/mongo_log:/var/log/mongodb/
+      - ./Docker/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: capo
+      MONGO_INITDB_ROOT_PASSWORD: eyra
+      MONGO_INITDB_DATABASE: peliculas

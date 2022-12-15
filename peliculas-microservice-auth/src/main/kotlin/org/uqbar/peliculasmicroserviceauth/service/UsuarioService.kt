@@ -59,6 +59,8 @@ class UsuarioService : UserDetailsService {
       return usuario
    }
 
+   // NOT_SUPPORTED permite que otro método en transacción lo llame y luego continúe con dicha transacción
+   // con NEVER si intentamos llamar desde un método que tiene transacción a verUsuario, dispara una excepción
    @Transactional(Transactional.TxType.NOT_SUPPORTED)
    fun verUsuario(idUsuario: Long) = getUsuarioPorId(idUsuario)
 
