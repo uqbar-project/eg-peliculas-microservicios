@@ -23,3 +23,7 @@ tmdb:
 ```
 
 Dado que es información sensible, **no la subimos a git** (está ignorado en el archivo `.gitignore` raíz del monorepo). Esta es una práctica recomendable para no compartir claves, especialmente en un lugar tan público como github / gitlab.
+
+## Tutoriales
+
+- [Reactive Spring Boot](https://www.youtube.com/watch?v=IK26KdGRl48&list=PLnXn1AViWyL70R5GuXt_nIDZytYBnvBdd&ab_channel=CodeWithDilip_

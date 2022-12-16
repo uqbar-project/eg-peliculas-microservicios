@@ -7,7 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document
 class Genero {
 
    @Id
-   lateinit var id: String
+   var id: String? = null
+   lateinit var idOriginal: Number
    lateinit var descripcion: String
 
 }

@@ -1,9 +1,9 @@
 package org.uqbar.peliculasmicroserviceranking.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.apache.tomcat.util.json.JSONParser
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
+import org.uqbar.peliculasmicroserviceranking.domain.Genero
 import org.uqbar.peliculasmicroserviceranking.domain.Pelicula
 import org.uqbar.peliculasmicroserviceranking.dto.MovieDTO
 import java.net.URI
@@ -18,23 +18,26 @@ class TMDBService {
    @Value("\${tmdb.api-key}")
    lateinit var apiKey: String
 
-   fun buscarPeliculaPorId(id: Number): Pelicula {
-      val request = HttpRequest.newBuilder(URI.create("https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=1"))
-         .GET()
-         .build()
+   fun buscarPeliculaPorId(_idTMDB: Number): Pelicula {
+      val request =
+         HttpRequest.newBuilder(URI.create("https://api.themoviedb.org/3/movie/${_idTMDB}?api_key=${apiKey}&language=en-US"))
+            .GET()
+            .build()
 
       val client = HttpClient.newBuilder().build()
       val response = client.send(request, HttpResponse.BodyHandlers.ofString())
 
       val movieDTO = ObjectMapper().readValue(response.body(), MovieDTO::class.java)
-      val movie = movieDTO.results.first()
 
       return Pelicula().apply {
-         idTMDB = movie.id
-         sinopsis = movie.overview
-         titulo = movie.title
-         idioma = movie.original_language
-         fechaSalida = LocalDate.parse(movie.release_date)
+         idTMDB = movieDTO.id
+         sinopsis = movieDTO.overview
+         titulo = movieDTO.title
+         idioma = movieDTO.original_language
+         generos = getGeneros(movieDTO)
+         fechaSalida = LocalDate.parse(movieDTO.release_date)
       }
    }
+
+   private fun getGeneros(movieDTO: MovieDTO) = movieDTO.genres.map { it.toGenero() }.toMutableList()
 }

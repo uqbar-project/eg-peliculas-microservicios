@@ -8,8 +8,7 @@ import java.time.LocalDate
 @Document(collection = "pelicula")
 class Pelicula {
    @Id
-//   @JsonIgnore
-   lateinit var id: String
+   var id: String? = null
 
    lateinit var idTMDB: Number
    lateinit var titulo: String
@@ -23,5 +22,9 @@ class Pelicula {
 
 //   @Embedded
    var calificaciones = mutableListOf<Calificacion>()
+
+   fun sumarVista() {
+      vistas++
+   }
 
 }

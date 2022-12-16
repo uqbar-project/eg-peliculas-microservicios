@@ -12,7 +12,10 @@ class PeliculaController {
    @Autowired
    lateinit var peliculaService: PeliculaService
 
-   @GetMapping("/pelicula/{id}")
-   fun buscarPeliculaPorId(@PathVariable id: Number) = peliculaService.buscarPelicula(id)
+   @GetMapping("/pelicula/{idTMDB}")
+   suspend fun buscarPeliculaPorIdTMDB(@PathVariable idTMDB: Int) = peliculaService.buscarPelicula(idTMDB)
+
+//   @PatchMapping("/ver-pelicula/{id}")
+//   fun verPelicula(@PathVariable id: Number) = peliculaService.verPelicula(id)
 
 }
