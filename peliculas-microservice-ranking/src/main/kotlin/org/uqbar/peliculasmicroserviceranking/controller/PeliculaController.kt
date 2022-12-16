@@ -13,9 +13,9 @@ class PeliculaController {
    lateinit var peliculaService: PeliculaService
 
    @GetMapping("/pelicula/{idTMDB}")
-   suspend fun buscarPeliculaPorIdTMDB(@PathVariable idTMDB: Int) = peliculaService.buscarPelicula(idTMDB)
+   fun buscarPeliculaPorIdTMDB(@PathVariable idTMDB: Int) = peliculaService.buscarPelicula(idTMDB)
 
    @PatchMapping("/ver-pelicula/{idTMDB}")
-   suspend fun verPelicula(@PathVariable idTMDB: Int) = peliculaService.verPelicula(idTMDB)
+   fun verPelicula(@PathVariable idTMDB: Int) = peliculaService.verPelicula(idTMDB)
 
 }
