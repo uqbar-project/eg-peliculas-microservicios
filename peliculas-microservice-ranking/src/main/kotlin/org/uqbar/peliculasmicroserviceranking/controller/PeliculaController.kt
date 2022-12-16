@@ -15,7 +15,7 @@ class PeliculaController {
    @GetMapping("/pelicula/{idTMDB}")
    suspend fun buscarPeliculaPorIdTMDB(@PathVariable idTMDB: Int) = peliculaService.buscarPelicula(idTMDB)
 
-//   @PatchMapping("/ver-pelicula/{id}")
-//   fun verPelicula(@PathVariable id: Number) = peliculaService.verPelicula(id)
+   @PatchMapping("/ver-pelicula/{idTMDB}")
+   suspend fun verPelicula(@PathVariable idTMDB: Int) = peliculaService.verPelicula(idTMDB)
 
 }

@@ -1,6 +1,5 @@
 package org.uqbar.peliculasmicroserviceranking.service
 
-import kotlinx.coroutines.reactive.awaitFirstOrElse
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -8,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional
 import org.uqbar.peliculasmicroserviceranking.domain.Pelicula
 import org.uqbar.peliculasmicroserviceranking.repository.PeliculaRepository
 import reactor.core.publisher.Mono
-import java.time.LocalDate
 
 @Service
 @Transactional
@@ -34,11 +32,15 @@ class PeliculaService {
          })
    }
 
-//   suspend fun verPelicula(idTMDB: Int): Mono<Pelicula> {
-//      logger.info("Visualizar película ${idTMDB}")
-//      buscarPelicula(idTMDB).map(Pelicula::sumarVista)
-//         peliculaRepository.save(pelicula).subscribe()
-//         pelicula
-//      }
-//   }
+   suspend fun verPelicula(idTMDB: Int): Mono<Pelicula> {
+      logger.info("Visualizar película ${idTMDB}")
+      return buscarPelicula(idTMDB).map { pelicula ->
+         pelicula!!.sumarVista()
+         pelicula
+      }.doOnNext { pelicula ->
+         logger.info("Película tiene ${pelicula.vistas} vistas")
+         // La llamada al subscribe es muy importante para que se dispare la actualización
+         peliculaRepository.save(pelicula).subscribe()
+      }
+   }
 }
