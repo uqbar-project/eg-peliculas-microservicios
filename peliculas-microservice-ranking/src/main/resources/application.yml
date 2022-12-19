@@ -11,6 +11,11 @@ spring:
     embedded:
       version: 4.4.0
 
+  # importante para que se active graphiql!
+  graphql:
+    graphiql:
+      enabled: true
+
 server:
   port: 9091
   error:
@@ -23,6 +28,7 @@ logging:
     root: INFO
     org.springframework.data: DEBUG
     org.mongodb.driver.protocol.command: DEBUG
+    _org.springframework.web.servlet.HandlerMapping.Mappings: DEBUG
 
 eureka:
   client:
@@ -32,3 +38,4 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     hostname: localhost
+

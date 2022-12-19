@@ -3,14 +3,14 @@ package org.uqbar.peliculasmicroserviceranking.service
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import org.uqbar.peliculasmicroserviceranking.domain.Genero
+import org.springframework.transaction.annotation.Transactional
 import org.uqbar.peliculasmicroserviceranking.domain.Pelicula
 import org.uqbar.peliculasmicroserviceranking.dto.MovieDTO
+import org.uqbar.peliculasmicroserviceranking.dto.PeliculasDTO
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
-import java.time.LocalDate
 
 @Service
 class TMDBService {
@@ -18,26 +18,29 @@ class TMDBService {
    @Value("\${tmdb.api-key}")
    lateinit var apiKey: String
 
+   @Transactional(readOnly = true)
+   fun peliculasPopulares(): List<Pelicula> {
+      val response = prepareTMDBResponse("https://api.themoviedb.org/3/movie/popular?api_key=10a56b1f0d4208a8609c58d9e4c6321d&language=en-US&page=1")
+      val popularesDTO = ObjectMapper().readValue(response.body(), PeliculasDTO::class.java)
+      return popularesDTO.results.map { it.toPelicula() }
+   }
+
+
+   @Transactional(readOnly = true)
    fun buscarPeliculaPorId(_idTMDB: Number): Pelicula {
+      val response = prepareTMDBResponse("https://api.themoviedb.org/3/movie/${_idTMDB}?api_key=${apiKey}&language=en-US")
+      val movieDTO = ObjectMapper().readValue(response.body(), MovieDTO::class.java)
+      return movieDTO.toPelicula()
+   }
+
+   private fun prepareTMDBResponse(uri: String): HttpResponse<String> {
       val request =
-         HttpRequest.newBuilder(URI.create("https://api.themoviedb.org/3/movie/${_idTMDB}?api_key=${apiKey}&language=en-US"))
+         HttpRequest.newBuilder(URI.create(uri))
             .GET()
             .build()
 
       val client = HttpClient.newBuilder().build()
-      val response = client.send(request, HttpResponse.BodyHandlers.ofString())
-
-      val movieDTO = ObjectMapper().readValue(response.body(), MovieDTO::class.java)
-
-      return Pelicula().apply {
-         idTMDB = movieDTO.id
-         sinopsis = movieDTO.overview
-         titulo = movieDTO.title
-         idioma = movieDTO.original_language
-         generos = getGeneros(movieDTO)
-         fechaSalida = LocalDate.parse(movieDTO.release_date)
-      }
+      return client.send(request, HttpResponse.BodyHandlers.ofString())
    }
 
-   private fun getGeneros(movieDTO: MovieDTO) = movieDTO.genres.map { it.toGenero() }.toMutableList()
 }

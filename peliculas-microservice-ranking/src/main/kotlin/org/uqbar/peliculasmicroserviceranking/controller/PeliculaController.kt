@@ -1,21 +1,31 @@
 package org.uqbar.peliculasmicroserviceranking.controller
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.graphql.data.method.annotation.Argument
+import org.springframework.graphql.data.method.annotation.QueryMapping
+import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.uqbar.peliculasmicroserviceranking.service.PeliculaService
+import org.uqbar.peliculasmicroserviceranking.service.TMDBService
+import reactor.core.publisher.Flux
 
-@RestController
+@Controller
 @CrossOrigin(origins = ["**"])
-@RequestMapping("/ranking")
 class PeliculaController {
 
    @Autowired
    lateinit var peliculaService: PeliculaService
 
-   @GetMapping("/pelicula/{idTMDB}")
-   fun buscarPeliculaPorIdTMDB(@PathVariable idTMDB: Int) = peliculaService.buscarPelicula(idTMDB)
+   @Autowired
+   lateinit var tmdbService: TMDBService
 
-   @PatchMapping("/ver-pelicula/{idTMDB}")
-   fun verPelicula(@PathVariable idTMDB: Int) = peliculaService.verPelicula(idTMDB)
+   @QueryMapping
+   fun peliculaPorIdTMDB(@Argument idTMDB: Int) = peliculaService.buscarPelicula(idTMDB)
+
+   @QueryMapping
+   fun populares() = Flux.just(tmdbService.peliculasPopulares())
+
+//   @MutationMapping
+//   fun verPelicula(@Argument idTMDB: Int) = peliculaService.verPelicula(idTMDB)
 
 }
