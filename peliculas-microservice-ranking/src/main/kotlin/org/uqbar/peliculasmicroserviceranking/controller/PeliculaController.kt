@@ -23,7 +23,7 @@ class PeliculaController {
    fun peliculaPorIdTMDB(@Argument idTMDB: Int) = peliculaService.buscarPelicula(idTMDB)
 
    @QueryMapping
-   fun populares() = Flux.just(tmdbService.peliculasPopulares())
+   fun populares() = tmdbService.peliculasPopulares()
 
 //   @MutationMapping
 //   fun verPelicula(@Argument idTMDB: Int) = peliculaService.verPelicula(idTMDB)

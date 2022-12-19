@@ -39,17 +39,27 @@ open class MovieDTO : AbstractMovieDTO() {
 
    override fun extraToPelicula(pelicula: Pelicula) {
       pelicula.generos = genres.map { it.toGenero() }.toMutableList()
-
    }
 
    private fun getGeneros() = genres.map { it.toGenero() }.toMutableList()
 }
 
 open class PopularMovieDTO : AbstractMovieDTO() {
-   override fun extraToPelicula(pelicula: Pelicula) {
-      pelicula.generos = mutableListOf()
+   lateinit var genre_ids: List<Number>
+
+   companion object {
+      var generos = mutableMapOf<Number, Genero>()
    }
 
+   override fun extraToPelicula(pelicula: Pelicula) {
+      pelicula.generos = genre_ids.map { generos.get(it)!! }.toMutableList()
+   }
+
+}
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+class GenresDTO {
+   lateinit var genres: List<GenreDTO>
 }
 
 @JsonIgnoreProperties(ignoreUnknown = true)

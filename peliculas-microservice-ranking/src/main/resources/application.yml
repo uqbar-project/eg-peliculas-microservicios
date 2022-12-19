@@ -39,3 +39,5 @@ eureka:
   instance:
     hostname: localhost
 
+tmdb:
+  base-url: https://api.themoviedb.org/3

@@ -1,5 +1,21 @@
+scalar Date
+
+type Genero {
+    idOriginal: Int
+    descripcion: String
+}
+
 type Pelicula {
     id: String!
+    titulo: String!
+    idTMDB: Int!
+    generos: [Genero]
+    idioma: String
+    sinopsis: String
+    fechaSalida: Date
+}
+
+type PeliculaTMDB {
     titulo: String!
     idTMDB: Int
     generos: [Genero]
@@ -8,17 +24,10 @@ type Pelicula {
     fechaSalida: Date
 }
 
-type Genero {
-    id: String!
-    descripcion: String
-}
-
-scalar Date
-
 # Queries
 type Query {
     peliculaPorIdTMDB(idTMDB: Int): Pelicula
-    populares: [Pelicula]
+    populares: [PeliculaTMDB]
 }
 
 # Mutations
