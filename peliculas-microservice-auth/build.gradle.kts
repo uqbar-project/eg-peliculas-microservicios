@@ -9,7 +9,7 @@ plugins {
 	jacoco
 }
 
-extra["springCloudVersion"] = "2022.0.0-RC2"
+extra["springCloudVersion"] = "2022.0.0"
 
 group = "org.uqbar"
 version = "0.0.1-SNAPSHOT"
@@ -17,8 +17,6 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
 	mavenCentral()
-	maven { url = uri("https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates") }
-	maven { url = uri("https://repo.spring.io/milestone") }
 }
 
 dependencies {
