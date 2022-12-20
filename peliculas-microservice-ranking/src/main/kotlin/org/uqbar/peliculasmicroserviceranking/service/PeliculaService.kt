@@ -44,4 +44,8 @@ class PeliculaService {
          peliculaRepository.save(pelicula)
       }
    }
+
+   @Transactional(readOnly = true)
+   fun masVistas() = peliculaRepository.findAllByOrderByVistasDesc()
+
 }

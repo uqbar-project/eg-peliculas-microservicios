@@ -2,6 +2,7 @@ package org.uqbar.peliculasmicroserviceranking.controller
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.graphql.data.method.annotation.Argument
+import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -26,7 +27,10 @@ class PeliculaController {
    @QueryMapping
    fun populares() = tmdbService.peliculasPopulares()
 
-//   @MutationMapping
-//   fun verPelicula(@Argument idTMDB: Int) = peliculaService.verPelicula(idTMDB)
+   @QueryMapping
+   fun masVistas() = peliculaService.masVistas()
+
+   @MutationMapping
+   fun verPelicula(@Argument idTMDB: Int) = peliculaService.verPelicula(idTMDB)
 
 }

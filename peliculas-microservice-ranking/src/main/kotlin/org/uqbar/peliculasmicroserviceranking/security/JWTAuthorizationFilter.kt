@@ -32,7 +32,7 @@ class JWTAuthorizationFilter : OncePerRequestFilter() {
       if (authorized) {
          filterChain.doFilter(request, response)
       } else {
-         response.status = 401
+          response.status = 401
       }
    }
 

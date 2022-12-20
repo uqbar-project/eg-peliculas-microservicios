@@ -13,6 +13,7 @@ type Pelicula {
     idioma: String
     sinopsis: String
     fechaSalida: Date
+    vistas: Int
 }
 
 type PeliculaTMDB {
@@ -28,14 +29,10 @@ type PeliculaTMDB {
 type Query {
     peliculaPorIdTMDB(idTMDB: Int): Pelicula
     populares: [PeliculaTMDB]
+    masVistas: [Pelicula]
 }
 
 # Mutations
-input PeliculaUpdate {
-    id: String
-    idTMDB: Int
-}
-
 type Mutation {
-    verPelicula(peliculaUpdate: PeliculaUpdate): Pelicula
+    verPelicula(idTMDB: Int): Pelicula
 }
