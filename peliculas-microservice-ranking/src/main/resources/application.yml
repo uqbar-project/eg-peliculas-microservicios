@@ -1,6 +1,6 @@
 spring:
   application:
-    name: ranking
+    name: ranking-service
 
   # base documental
   data:
@@ -37,7 +37,10 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka/
   instance:
-    hostname: localhost
+    prefer-ip-address: true
 
 tmdb:
   base-url: https://api.themoviedb.org/3
+
+auth:
+  base-url: http://192.168.0.103:9090

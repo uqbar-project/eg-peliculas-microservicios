@@ -4,10 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.uqbar.peliculasmicroserviceranking.service.PeliculaService
 import org.uqbar.peliculasmicroserviceranking.service.TMDBService
-import reactor.core.publisher.Flux
+
+// https://opensource.expediagroup.com/graphql-kotlin/docs/
 
 @Controller
 @CrossOrigin(origins = ["**"])
