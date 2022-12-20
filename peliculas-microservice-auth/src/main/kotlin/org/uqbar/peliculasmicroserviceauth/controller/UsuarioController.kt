@@ -44,4 +44,7 @@ class UsuarioController {
    @PatchMapping("/pay")
    fun pagar(@RequestBody pagoDTO: PagoDTO) = usuarioService.pagar(pagoDTO)
 
+   @GetMapping("/validate")
+   fun validar() = usuarioService.validar()
+
 }

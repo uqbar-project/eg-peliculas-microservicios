@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.stereotype.Component
+import org.uqbar.peliculasmicroserviceauth.exceptions.CredencialesInvalidasException
 import java.util.*
 
 @Component
@@ -40,6 +41,10 @@ class TokenUtils {
          .build()
          .parseClaimsJws(token)
          .body
+
+      if (claims.subject == null) {
+         throw CredencialesInvalidasException()
+      }
 
       logger.info("Token decoded, user: " + claims.subject + " - roles: " + claims["roles"])
 

@@ -285,6 +285,27 @@ class UsuarioControllerTests {
    }
    // endregion
 
+   // region validate-token
+   @Test
+   fun `token de usuario inexistente no pasa validacion`() {
+      val responseEntity = mockMvc.perform(
+         get("/auth/validate")
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", tokenUsuarioInvalido())
+      ).andExpect(status().isUnauthorized)
+   }
+
+   @Test
+   fun `token de usuario existente pasa el login y retorna JWT`() {
+      val responseEntity = mockMvc.perform(
+         get("/auth/validate")
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", tokenUsuarioOk)
+      )
+         .andExpect(status().isOk)
+   }
+   // endregion
+
    private fun bodyUsuarioExistente() = mapper.writeValueAsString(CredencialesDTO("user1", "password1"))
 
    private fun bodyUsuarioPasswordIncorrecta() = mapper.writeValueAsString(CredencialesDTO("user1", "password2"))

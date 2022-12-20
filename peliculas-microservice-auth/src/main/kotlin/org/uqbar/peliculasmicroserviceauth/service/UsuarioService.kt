@@ -14,6 +14,7 @@ import org.uqbar.peliculasmicroserviceauth.exceptions.CredencialesInvalidasExcep
 import org.uqbar.peliculasmicroserviceauth.exceptions.NotFoundException
 import org.uqbar.peliculasmicroserviceauth.model.Usuario
 import org.uqbar.peliculasmicroserviceauth.repository.UsuarioRepository
+import org.uqbar.peliculasmicroserviceauth.security.TokenUtils
 
 @Service
 @Transactional
@@ -23,6 +24,9 @@ class UsuarioService : UserDetailsService {
 
    @Autowired
    lateinit var usuarioRepository: UsuarioRepository
+
+   @Autowired
+   lateinit var tokenUtils: TokenUtils
 
    @Transactional(Transactional.TxType.REQUIRED)
    fun login(credenciales: CredencialesDTO) {
@@ -92,5 +96,10 @@ class UsuarioService : UserDetailsService {
    private fun getUsuario(nombreUsuario: String) = usuarioRepository.findByNombre(nombreUsuario).orElseThrow { NotFoundException("No se encontró el usuario con el nombre $nombreUsuario") }
 
    private fun getUsuarioPorId(idUsuario: Long) = usuarioRepository.findById(idUsuario).orElseThrow { NotFoundException("No se encontró el usuario con el identificador $idUsuario") }
+
+   // El efecto que tiene es simplemente devolver un ok si el filtro de JWT (JWTAuthorizationFilter) pasa
+   fun validar(): String {
+      return "ok"
+   }
 
 }
