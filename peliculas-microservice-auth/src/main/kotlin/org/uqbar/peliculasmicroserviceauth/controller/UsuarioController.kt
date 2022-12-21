@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*
 import org.uqbar.peliculasmicroserviceauth.dto.CredencialesDTO
 import org.uqbar.peliculasmicroserviceauth.dto.FacturacionDTO
 import org.uqbar.peliculasmicroserviceauth.dto.PagoDTO
+import org.uqbar.peliculasmicroserviceauth.model.Usuario
 import org.uqbar.peliculasmicroserviceauth.security.TokenUtils
 import org.uqbar.peliculasmicroserviceauth.service.UsuarioService
 
@@ -32,8 +33,8 @@ class UsuarioController {
    @DeleteMapping("/user/{idUsuario}")
    fun eliminar(@PathVariable idUsuario: Long) = usuarioService.eliminarUsuario(idUsuario)
 
-   @GetMapping("/users/{idUsuario}")
-   fun verUsuario(@PathVariable idUsuario: Long) = usuarioService.verUsuario(idUsuario)
+   @GetMapping("/users/{nombreUsuario}")
+   fun verUsuario(@PathVariable nombreUsuario: String) = usuarioService.verUsuario(nombreUsuario)
 
    @GetMapping("/users")
    fun usuarios() = usuarioService.usuarios()

@@ -10,6 +10,7 @@ interface UsuarioRepository : CrudRepository<Usuario, Long> {
    @EntityGraph(attributePaths = ["facturas"])
    fun findFullByNombre(nombre: String): Optional<Usuario>
 
+   @EntityGraph(attributePaths = ["facturas"])
    fun findByNombre(nombre: String): Optional<Usuario>
 
    @EntityGraph(attributePaths = ["facturas"])

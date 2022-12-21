@@ -27,4 +27,11 @@ class Pelicula {
       vistas++
    }
 
+   fun calificar(_usuario: Usuario, _calificacion: Int) {
+      calificaciones.add(Calificacion().apply {
+         usuario = _usuario
+         valoracion = _calificacion
+      })
+   }
+
 }

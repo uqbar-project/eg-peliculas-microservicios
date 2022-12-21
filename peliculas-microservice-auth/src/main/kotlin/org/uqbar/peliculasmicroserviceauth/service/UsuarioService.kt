@@ -66,11 +66,11 @@ class UsuarioService : UserDetailsService {
    // NOT_SUPPORTED permite que otro método en transacción lo llame y luego continúe con dicha transacción
    // con NEVER si intentamos llamar desde un método que tiene transacción a verUsuario, dispara una excepción
    @Transactional(Transactional.TxType.NOT_SUPPORTED)
-   fun verUsuario(idUsuario: Long) = getUsuarioPorId(idUsuario)
+   fun verUsuario(nombreUsuario: String) = usuarioRepository.findByNombre(nombreUsuario).orElseThrow { NotFoundException("No se encontró el usuario con el nombre $nombreUsuario") }
 
    @Transactional(Transactional.TxType.REQUIRED)
    fun facturar(facturacionDTO: FacturacionDTO): Usuario {
-      val usuario = getUsuario(facturacionDTO.nombreUsuario)
+      val usuario = verUsuario(facturacionDTO.nombreUsuario)
       usuario.facturar(facturacionDTO.monto)
       usuarioRepository.save(usuario)
       return usuario
@@ -78,7 +78,7 @@ class UsuarioService : UserDetailsService {
 
    @Transactional(Transactional.TxType.REQUIRED)
    fun pagar(pagoDTO: PagoDTO): Usuario {
-      val usuario = getUsuario(pagoDTO.nombreUsuario)
+      val usuario = verUsuario(pagoDTO.nombreUsuario)
       usuario.pagar(pagoDTO.idFactura)
       usuarioRepository.save(usuario)
       return usuario
@@ -86,14 +86,12 @@ class UsuarioService : UserDetailsService {
 
    override fun loadUserByUsername(username: String?): UserDetails {
       if (username == null) throw CredencialesInvalidasException()
-      val usuario = getUsuario(username)
+      val usuario = verUsuario(username)
       logger.info("Usuario " + usuario.nombre + " - Roles: " + roleFor(username))
       return User(usuario.nombre, usuario.password, roleFor(username))
    }
 
    private fun roleFor(username: String) = if (username.lowercase() == "admin") listOf(SimpleGrantedAuthority("ROLE_ADMIN")) else listOf()
-
-   private fun getUsuario(nombreUsuario: String) = usuarioRepository.findByNombre(nombreUsuario).orElseThrow { NotFoundException("No se encontró el usuario con el nombre $nombreUsuario") }
 
    private fun getUsuarioPorId(idUsuario: Long) = usuarioRepository.findById(idUsuario).orElseThrow { NotFoundException("No se encontró el usuario con el identificador $idUsuario") }
 

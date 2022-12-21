@@ -107,11 +107,11 @@ class UsuarioControllerTests {
    }
    // endregion
 
-   // region /user/{id}
+   // region /user/{nombre}
    @Test
    fun `no se pueden conocer los datos de un usuario si no pasamos un token correcto`() {
       val responseEntity = mockMvc.perform(
-         get("/auth/users/${idUsuarioOk("admin")}")
+         get("/auth/users/${nombreUsuarioOk("admin")}")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", tokenUsuarioInvalido())
       ).andExpect(status().isUnauthorized)
@@ -122,7 +122,7 @@ class UsuarioControllerTests {
       val nombreUsuario = "admin"
 
       val responseEntity = mockMvc.perform(
-         get("/auth/users/${idUsuarioOk(nombreUsuario)}")
+         get("/auth/users/$nombreUsuario")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", tokenUsuarioOk)
       )
@@ -344,7 +344,7 @@ class UsuarioControllerTests {
       return "Bearer " + tokenUtils.createToken(usuario.nombre, usuario.password)!!
    }
 
-   private fun idUsuarioOk(nombre: String) = usuarioRepository.findByNombre(nombre).get().id
+   private fun nombreUsuarioOk(nombre: String) = usuarioRepository.findByNombre(nombre).get().nombre
 
    private fun idUsuarioEliminar() = usuarioRepository.findByNombre("userDelete").get().id
 

@@ -33,6 +33,13 @@ type Query {
 }
 
 # Mutations
+input CalificacionPelicula {
+    idTMDB: Int,
+    usuario: String,
+    valoracion: Int
+}
+
 type Mutation {
     verPelicula(idTMDB: Int): Pelicula
+    calificarPelicula(calificacionPelicula: CalificacionPelicula): Pelicula
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.uqbar.peliculasmicroserviceranking.domain.Pelicula
+import org.uqbar.peliculasmicroserviceranking.graphql.CalificacionPelicula
 import org.uqbar.peliculasmicroserviceranking.repository.PeliculaRepository
 import reactor.core.publisher.Mono
 
@@ -18,6 +19,9 @@ class PeliculaService {
 
    @Autowired
    lateinit var tmdbService: TMDBService
+
+   @Autowired
+   lateinit var usuarioService: UsuarioService
 
    val logger: Logger = LoggerFactory.getLogger(PeliculaService::class.java)
 
@@ -47,5 +51,13 @@ class PeliculaService {
 
    @Transactional(readOnly = true)
    fun masVistas() = peliculaRepository.findAllByOrderByVistasDesc()
+
+   fun calificarPelicula(peliculaUpdate: CalificacionPelicula): Mono<Pelicula> {
+      val usuario = usuarioService.getUsuario(peliculaUpdate.usuario)
+      return buscarPelicula(peliculaUpdate.idTMDB).flatMap { pelicula ->
+         pelicula!!.calificar(usuario, peliculaUpdate.valoracion)
+         peliculaRepository.save(pelicula)
+      }
+   }
 
 }
