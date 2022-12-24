@@ -5,6 +5,17 @@ type Genero {
     descripcion: String
 }
 
+type Usuario {
+    id: String
+    nombre: String
+}
+
+type Calificacion {
+    id: String
+    usuario: Usuario
+    valoracion: Float
+}
+
 type Pelicula {
     id: String!
     titulo: String!
@@ -15,6 +26,7 @@ type Pelicula {
     fechaSalida: Date
     vistas: Int
     calificacionPromedio: Float
+    calificaciones: [Calificacion]
 }
 
 type PeliculaTMDB {
