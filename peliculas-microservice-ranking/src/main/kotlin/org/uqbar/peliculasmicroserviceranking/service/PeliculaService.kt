@@ -4,14 +4,13 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import org.uqbar.peliculasmicroserviceranking.domain.Pelicula
+import org.uqbar.peliculasmicroserviceranking.exceptions.BusinessException
 import org.uqbar.peliculasmicroserviceranking.graphql.CalificacionPelicula
 import org.uqbar.peliculasmicroserviceranking.repository.PeliculaRepository
 import reactor.core.publisher.Mono
 
 @Service
-@Transactional
 class PeliculaService {
 
    @Autowired
@@ -49,13 +48,16 @@ class PeliculaService {
       }
    }
 
-   @Transactional(readOnly = true)
    fun masVistas() = peliculaRepository.findAllByOrderByVistasDesc()
+
+   fun mejorCalificadas() = peliculaRepository.findAllByOrderByCalificacionPromedioDesc()
 
    fun calificarPelicula(peliculaUpdate: CalificacionPelicula): Mono<Pelicula> {
       val usuario = usuarioService.getUsuario(peliculaUpdate.usuario)
       return buscarPelicula(peliculaUpdate.idTMDB).flatMap { pelicula ->
-         pelicula!!.calificar(usuario, peliculaUpdate.valoracion)
+         if (pelicula == null) return@flatMap Mono.error(BusinessException("La película ${peliculaUpdate.idTMDB} no fue encontrada en el sistema"))
+         if (pelicula.calificadaPor(usuario)) return@flatMap Mono.error(BusinessException("El usuario ${usuario.nombre} ya calificó la película ${pelicula.titulo}"))
+         pelicula.calificar(usuario, peliculaUpdate.valoracion)
          peliculaRepository.save(pelicula)
       }
    }

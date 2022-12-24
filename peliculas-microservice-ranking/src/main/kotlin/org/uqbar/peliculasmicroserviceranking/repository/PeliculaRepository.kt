@@ -13,4 +13,6 @@ interface PeliculaRepository : ReactiveCrudRepository<Pelicula, String> {
 
    fun findAllByOrderByVistasDesc(): Flux<Pelicula>
 
+   fun findAllByOrderByCalificacionPromedioDesc(): Flux<Pelicula>
+
 }

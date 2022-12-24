@@ -1,6 +1,5 @@
 package org.uqbar.peliculasmicroserviceranking.domain
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDate
@@ -17,10 +16,10 @@ class Pelicula {
    lateinit var idioma: String
    lateinit var sinopsis: String
    lateinit var fechaSalida: LocalDate
+   var calificacionPromedio: Number = 0
 
    var vistas = 0
 
-//   @Embedded
    var calificaciones = mutableListOf<Calificacion>()
 
    fun sumarVista() {
@@ -32,6 +31,13 @@ class Pelicula {
          usuario = _usuario
          valoracion = _calificacion
       })
+      actualizarCalificacionPromedio()
    }
+
+   fun actualizarCalificacionPromedio() {
+      calificacionPromedio = calificaciones.map { it.valoracion.toDouble() }.average()
+   }
+
+   fun calificadaPor(usuario: Usuario) = calificaciones.any { it.usuario.nombre == usuario.nombre }
 
 }

@@ -3,7 +3,6 @@ package org.uqbar.peliculasmicroserviceranking.service
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import org.uqbar.peliculasmicroserviceranking.domain.Pelicula
 import org.uqbar.peliculasmicroserviceranking.dto.*
 import java.net.URI
@@ -20,7 +19,6 @@ class TMDBService {
    @Value("\${tmdb.base-url}")
    lateinit var baseUrl: String
 
-   @Transactional(readOnly = true)
    fun peliculasPopulares(): List<Pelicula> {
       actualizarGeneros()
       val response = prepareTMDBResponse("${baseUrl}/movie/popular?api_key=${apiKey}&language=en-US&page=1")
@@ -29,7 +27,6 @@ class TMDBService {
    }
 
 
-   @Transactional(readOnly = true)
    fun buscarPeliculaPorId(_idTMDB: Number): Pelicula {
       val response = prepareTMDBResponse("${baseUrl}/movie/${_idTMDB}?api_key=${apiKey}&language=en-US")
       val movieDTO = ObjectMapper().readValue(response.body(), MovieDTO::class.java)

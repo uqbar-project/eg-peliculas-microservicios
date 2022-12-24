@@ -5,8 +5,8 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.RequestEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
-import org.uqbar.peliculasmicroserviceranking.exceptions.BusinessException
 import org.uqbar.peliculasmicroserviceranking.domain.Usuario
+import org.uqbar.peliculasmicroserviceranking.exceptions.BusinessException
 
 @Service
 class UsuarioService {

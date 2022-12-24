@@ -33,12 +33,13 @@ class PeliculaController {
    @QueryMapping
    fun masVistas() = peliculaService.masVistas()
 
+   @QueryMapping
+   fun mejorCalificadas() = peliculaService.mejorCalificadas()
+
    @MutationMapping
    fun verPelicula(@Argument idTMDB: Int) = peliculaService.verPelicula(idTMDB)
 
    @MutationMapping
-   fun calificarPelicula(@Argument calificacionPelicula: CalificacionPelicula): Mono<Pelicula> {
-      // TODO: try/catch
-      return peliculaService.calificarPelicula(calificacionPelicula)
-   }
+   fun calificarPelicula(@Argument calificacionPelicula: CalificacionPelicula): Mono<Pelicula> =
+      peliculaService.calificarPelicula(calificacionPelicula)
 }

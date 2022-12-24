@@ -14,6 +14,7 @@ type Pelicula {
     sinopsis: String
     fechaSalida: Date
     vistas: Int
+    calificacionPromedio: Float
 }
 
 type PeliculaTMDB {
@@ -30,6 +31,7 @@ type Query {
     peliculaPorIdTMDB(idTMDB: Int): Pelicula
     populares: [PeliculaTMDB]
     masVistas: [Pelicula]
+    mejorCalificadas: [Pelicula]
 }
 
 # Mutations
