@@ -8,6 +8,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.graphql.execution.DataFetcherExceptionResolverAdapter
 import org.springframework.stereotype.Component
+import org.springframework.web.client.HttpClientErrorException
 
 @Component
 class GraphQLExceptionHandler : DataFetcherExceptionResolverAdapter() {
@@ -19,7 +20,7 @@ class GraphQLExceptionHandler : DataFetcherExceptionResolverAdapter() {
       log.warn("Exception while handling request: ${e.message}", e)
       return when (e) {
          is BusinessException -> toGraphQLError(e.message, ErrorType.ValidationError)
-//         is HttpClientErrorException -> toGraphQLError(e.getResponseBodyAs(RuntimeException::class.java)?.message)
+         is HttpClientErrorException -> toGraphQLError(e.getResponseBodyAs(RuntimeException::class.java)?.message)
          is Exception -> toGraphQLError(e.message)
          else -> super.resolveToSingleError(e, env)
       }
