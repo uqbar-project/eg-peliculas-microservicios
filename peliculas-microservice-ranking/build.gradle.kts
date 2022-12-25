@@ -38,9 +38,6 @@ dependencies {
 
    // graphql
    implementation("org.springframework.boot:spring-boot-starter-graphql")
-   implementation("ch.qos.logback:logback-core:1.2.10")
-   implementation("ch.qos.logback:logback-classic:1.2.10")
-   implementation("ch.qos.logback:logback-access:1.2.10")
 
    // microservicios
    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.0.0")

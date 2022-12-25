@@ -17,19 +17,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 class WebSecurityConfig {
 
    @Autowired
-   lateinit var authConfiguration: AuthenticationConfiguration
-
-   @Autowired
    lateinit var jwtAuthorizationFilter: JWTAuthorizationFilter
 
-   @Bean
-   @Throws(Exception::class)
-   fun authenticationManager(): AuthenticationManager? {
-      return authConfiguration.getAuthenticationManager()
-   }
+//   Ojo con definir authenticationManager como Bean, ver...
+//   https://stackoverflow.com/questions/73883122/i-get-stackoverflowerror-in-spring-security-test
+//   https://github.com/spring-projects/spring-framework/issues/29215
 
    @Bean
-   fun filterChain(httpSecurity: HttpSecurity, authenticationManager: AuthenticationManager): SecurityFilterChain {
+   fun filterChain(httpSecurity: HttpSecurity): SecurityFilterChain {
       return httpSecurity
          .cors().disable()
          .csrf().disable()
