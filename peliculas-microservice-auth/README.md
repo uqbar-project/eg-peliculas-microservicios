@@ -1,8 +1,9 @@
 
 # Ejemplo Microservicios - Películas
 
-[![build-auth](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-auth.yml/badge.svg)](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-auth.yml) [![codecov](https://codecov.io/gh/uqbar-project/eg-peliculas-microservicios/branch/master/graph/badge.svg?token=VGXucKfbqn&flag=auth)](https://codecov.io/gh/uqbar-project/eg-peliculas-microservicios)
 ## Módulo de autenticación
+
+[![build-auth](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-auth.yml/badge.svg)](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-auth.yml) [![codecov](https://codecov.io/gh/uqbar-project/eg-peliculas-microservicios/branch/master/graph/badge.svg?token=VGXucKfbqn&flag=auth)](https://codecov.io/gh/uqbar-project/eg-peliculas-microservicios)
 
 ## Instrucciones para levantar el ejemplo
 

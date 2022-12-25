@@ -1,5 +1,9 @@
 
-# Módulo Ránking de películas
+# Ejemplo Microservicios - Películas
+
+## Módulo Ránking de películas
+
+[![build-auth](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-ranking.yml/badge.svg)](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-ranking.yml) [![codecov](https://codecov.io/gh/uqbar-project/eg-peliculas-microservicios/branch/master/graph/badge.svg?token=VGXucKfbqn&flag=auth)](https://codecov.io/gh/uqbar-project/eg-peliculas-microservicios)
 
 Este módulo permite
 
@@ -8,7 +12,7 @@ Este módulo permite
 - calificar una película
 - hacer búsquedas de una película
 
-# Conceptos salientes
+## Conceptos salientes
 
 - Medio persistente: base de datos documental creada desde Docker
 - Mapeo OD/M con Spring Boot

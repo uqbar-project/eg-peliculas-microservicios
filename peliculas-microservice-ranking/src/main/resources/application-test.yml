@@ -1,0 +1,16 @@
+logging:
+  level:
+    org.springframework.data: WARN
+    org.mongodb.driver.protocol.command: WARN
+    _org.springframework.web.servlet.HandlerMapping.Mappings: WARN
+
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+  instance:
+    hostname: localhost
+
+tmdb:
+  api-key: 11111111111111
