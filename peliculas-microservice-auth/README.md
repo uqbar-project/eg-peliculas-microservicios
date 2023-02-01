@@ -15,6 +15,12 @@ docker-compose up
 
 En el archivo [`docker-compose.yml`](./docker-compose.yml) especificamos la imagen dockerizada de Postgres que queremos utilizar y adicionalmente tenemos un [script de inicialización](./Docker/init_db.sh) que crea la base de datos `peliculas_auth` y le da accesos a un usuario que creamos también.
 
+> Si tenés un error de permisos (Permission Denied, error 13) cambiá los siguientes accesos: `sudo chmod 777 /var/run/docker.sock`
+
+Antes de levantar la aplicación conviene levantar [el proyecto hermano que tiene la registración de los servicios en Eureka](../peliculas-microservice-registry/README.md).
+
+Después sí, ejecutás el main del archivo PeliculasMicroserviceAuthApplication.
+
 ## El modelo de datos
 
 Tenemos como entidad principal al usuario, la password se guarda encriptada en la base y tiene asociada la información de facturas (se factura en una fecha particular por un monto, y se puede pagar solo el total). Un usuario tiene muchas facturas.

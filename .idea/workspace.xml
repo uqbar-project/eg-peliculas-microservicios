@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="940445e7-fa8b-45fa-9566-7f98a149b1be" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/build-auth.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build-auth.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/build-ranking.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build-ranking.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/Docker/init_db.sh" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/Docker/init_db.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/auth_insomnia.json" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/auth_insomnia.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/images/auth-en-eureka-server.png" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/images/auth-en-eureka-server.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/images/bearerTokenInsomnia.gif" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/images/bearerTokenInsomnia.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/images/jwt.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/images/jwt.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/images/jwtVencidoInsomnia2.png" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/images/jwtVencidoInsomnia2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/images/loginInsomnia.gif" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/images/loginInsomnia.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/images/usuarioComunNoPuedeCrearUsuario.gif" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/images/usuarioComunNoPuedeCrearUsuario.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/PeliculasMicroserviceAuthApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/PeliculasMicroserviceAuthApplication.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/bootstrap/AuthInitializer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/bootstrap/AuthInitializer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/controller/UsuarioController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/controller/UsuarioController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/dto/CredencialesDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/dto/CredencialesDTO.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/dto/FacturacionDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/dto/FacturacionDTO.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/dto/PagoDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/dto/PagoDTO.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/dto/UsuarioBaseDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/dto/UsuarioBaseDTO.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/exceptions/BusinessException.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/exceptions/BusinessException.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/exceptions/CredencialesInvalidasException.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/exceptions/CredencialesInvalidasException.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/exceptions/NotFoundException.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/exceptions/NotFoundException.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/model/Factura.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/model/Factura.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/model/Usuario.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/model/Usuario.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/repository/UsuarioRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/repository/UsuarioRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/security/JWTAuthorizationFilter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/security/JWTAuthorizationFilter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/security/TokenUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/security/TokenUtils.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/security/WebSecurityConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/security/WebSecurityConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/service/UsuarioService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/kotlin/org/uqbar/peliculasmicroserviceauth/service/UsuarioService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/resources/application-test.yml" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/resources/application-test.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-auth/src/test/kotlin/org/uqbar/peliculasmicroserviceauth/UsuarioControllerTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-auth/src/test/kotlin/org/uqbar/peliculasmicroserviceauth/UsuarioControllerTests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/.run/PeliculasMicroserviceRankingApplication.run.xml" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/.run/PeliculasMicroserviceRankingApplication.run.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/Docker/mongo-init.js" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/Docker/mongo-init.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/ranking-insomnia.json" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/ranking-insomnia.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/PeliculasMicroserviceRankingApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/PeliculasMicroserviceRankingApplication.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/controller/PeliculaController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/controller/PeliculaController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/domain/Calificacion.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/domain/Calificacion.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/domain/Genero.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/domain/Genero.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/domain/Pelicula.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/domain/Pelicula.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/dto/MovieDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/dto/MovieDTO.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/exceptions/BusinessException.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/exceptions/BusinessException.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/exceptions/CustomGraphQLErrorHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/exceptions/CustomGraphQLErrorHandler.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/graphql/CalificacionPelicula.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/graphql/CalificacionPelicula.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/graphql/DateScalar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/graphql/DateScalar.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/repository/GeneroRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/repository/GeneroRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/repository/PeliculaRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/repository/PeliculaRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/security/JWTAuthorizationFilter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/security/JWTAuthorizationFilter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/security/WebSecurityConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/security/WebSecurityConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/service/PeliculaService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/service/PeliculaService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/service/TMDBService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/service/TMDBService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/service/UsuarioService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/kotlin/org/uqbar/peliculasmicroserviceranking/service/UsuarioService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/resources/application-test.yml" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/resources/application-test.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/resources/graphql/schema.graphqls" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/main/resources/graphql/schema.graphqls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-ranking/src/test/kotlin/org/uqbar/peliculasmicroserviceranking/PeliculaControllerTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-ranking/src/test/kotlin/org/uqbar/peliculasmicroserviceranking/PeliculaControllerTests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-registry/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-registry/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-registry/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-registry/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-registry/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-registry/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-registry/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-registry/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-registry/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-registry/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-registry/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-registry/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-registry/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-registry/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-registry/src/main/kotlin/org/uqbar/peliculasmicroserviceregistry/PeliculasMicroserviceRegistryApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-registry/src/main/kotlin/org/uqbar/peliculasmicroserviceregistry/PeliculasMicroserviceRegistryApplication.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-registry/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-registry/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/peliculas-microservice-registry/src/test/kotlin/org/uqbar/peliculasmicroserviceregistry/PeliculasMicroserviceRegistryApplicationTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/peliculas-microservice-registry/src/test/kotlin/org/uqbar/peliculasmicroserviceregistry/PeliculasMicroserviceRegistryApplicationTests.kt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2L8LJA9Ja2othuChI4bxP576FWD" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/dodain/workspace/microservices-2023/eg-peliculas-microservicios",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="940445e7-fa8b-45fa-9566-7f98a149b1be" name="Changes" comment="" />
+      <created>1675247688619</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1675247688619</updated>
+      <workItem from="1675247689875" duration="22000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

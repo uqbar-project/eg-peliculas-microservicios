@@ -43,4 +43,4 @@ tmdb:
   base-url: https://api.themoviedb.org/3
 
 auth:
-  base-url: http://192.168.0.103:9090
+  base-url: http://localhost:9090
