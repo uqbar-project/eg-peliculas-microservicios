@@ -24,27 +24,25 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-hateoas")
 	implementation("org.springframework.boot:spring-boot-starter-data-rest")
+	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-	// seguridad y autenticación
-	implementation("org.springframework.boot:spring-boot-starter-security")
-	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
-	implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
-	implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
-	implementation("org.bouncycastle:bcprov-jdk15on:1.70")
+	// cliente graphql
+	implementation("com.graphql-java:graphql-spring-boot-starter:5.0.2")
 
-	// conexión a la base de datos
-	implementation("org.postgresql:postgresql:42.5.1")
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	// base de datos Redis
+	implementation("org.springframework.boot:spring-boot-starter-data-redis")
+	implementation("org.testcontainers:testcontainers:1.17.6")
+
+	// no tenemos spring security porque delegamos en ranking que a su vez delega en auth
 
 	// microservicios
-	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.0.0")
 
 	// testing
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("com.h2database:h2:2.1.214")
 }
 
 dependencyManagement {
