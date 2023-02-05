@@ -29,6 +29,9 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
+	// security
+	implementation("org.springframework.boot:spring-boot-starter-security")
+
 	// cliente graphql
 	implementation("com.graphql-java:graphql-spring-boot-starter:5.0.2")
 

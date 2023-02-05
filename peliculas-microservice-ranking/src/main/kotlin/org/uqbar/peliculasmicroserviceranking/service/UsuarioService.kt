@@ -12,13 +12,13 @@ import org.uqbar.peliculasmicroserviceranking.exceptions.BusinessException
 class UsuarioService {
 
    @Value("\${auth.base-url}")
-   lateinit var baseUrl: String
+   lateinit var authBaseUrl: String
 
    lateinit var token: String
 
    fun authorize(_token: String): Boolean {
       token = _token
-      val authRequest = RequestEntity.get("${baseUrl}/auth/validate")
+      val authRequest = RequestEntity.get("${authBaseUrl}/auth/validate")
          .headers(HttpHeaders().apply {
             setBearerAuth(token)
          })
@@ -28,7 +28,7 @@ class UsuarioService {
    }
 
    fun getUsuario(nombreUsuario: String): Usuario {
-      val authRequest = RequestEntity.get("${baseUrl}/auth/users/$nombreUsuario")
+      val authRequest = RequestEntity.get("${authBaseUrl}/auth/users/$nombreUsuario")
          .headers(HttpHeaders().apply {
             // Asume que el token tiene que existir
             setBearerAuth(token)

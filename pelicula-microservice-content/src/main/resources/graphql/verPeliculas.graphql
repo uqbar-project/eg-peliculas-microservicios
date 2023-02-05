@@ -1,7 +1,0 @@
-mutation {
-	verPelicula(idTMDB: $idTMDB) {
-		idTMDB,
-		titulo,
-		vistas
-	}
-}

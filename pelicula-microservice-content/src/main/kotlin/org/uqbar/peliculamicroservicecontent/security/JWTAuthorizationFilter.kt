@@ -1,4 +1,4 @@
-package org.uqbar.peliculasmicroserviceranking.security
+package org.uqbar.peliculamicroservicecontent.security
 
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
-import org.uqbar.peliculasmicroserviceranking.service.UsuarioService
+import org.uqbar.peliculamicroservicecontent.service.ContentService
+import org.uqbar.peliculamicroservicecontent.service.UsuarioService
 
 @Component
 class JWTAuthorizationFilter : OncePerRequestFilter() {

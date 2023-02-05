@@ -1,8 +1,16 @@
 package org.uqbar.peliculamicroservicecontent.dto
 
 class VerPeliculaDTO {
-    lateinit var idTMDB: Number
-    lateinit var titulo: String
-    lateinit var vistas: Number
-    lateinit var file: String
+    var data: DataDTO? = null
+    var file: String? = null
+}
+
+class DataDTO {
+    var verPelicula: PeliculaDTO? = null
+}
+
+class PeliculaDTO {
+    var idTMDB: Int = 0
+    var titulo: String = ""
+    var vistas: Int = 0
 }

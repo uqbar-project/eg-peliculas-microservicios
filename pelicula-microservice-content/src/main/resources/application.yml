@@ -19,7 +19,7 @@ server:
 # Para activar el Trace
 logging:
   level:
-    root: INFO
+    root: DEBUG
     org.springframework.data: DEBUG
     org.mongodb.driver.protocol.command: DEBUG
     _org.springframework.web.servlet.HandlerMapping.Mappings: DEBUG
@@ -34,4 +34,7 @@ eureka:
     prefer-ip-address: true
 
 ranking:
-  base-url: http://localhost:9091
+  base-url: http://localhost:9091/graphql
+
+auth:
+  base-url: http://localhost:9090

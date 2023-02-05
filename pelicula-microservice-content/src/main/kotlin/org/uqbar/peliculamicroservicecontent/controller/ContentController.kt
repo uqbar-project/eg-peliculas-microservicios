@@ -13,5 +13,5 @@ class ContentController {
     lateinit var contentService: ContentService
 
     @PatchMapping("/watch")
-    fun watchContent(@RequestBody idContent: String) = contentService.watchContent(idContent, "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMDMxMywiZXhwIjoxNjc2NTkwMzEzLCJyb2xlcyI6IlJPTEVfQURNSU4ifQ.s50WRZLD_xlGsByjxZi4LQocuFEVUpRrSSdtqjE6_bqrvkOsU4V9uqBZW3uzkg7PS58hACXwmcElsEscH3K7kQ")
+    fun watchContent(@RequestBody idContent: String) = contentService.watchContent(idContent)
 }
