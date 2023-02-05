@@ -19,7 +19,7 @@ server:
 # Para activar el Trace
 logging:
   level:
-    root: DEBUG
+    root: INFO
     org.springframework.data: DEBUG
     org.mongodb.driver.protocol.command: DEBUG
     _org.springframework.web.servlet.HandlerMapping.Mappings: DEBUG
