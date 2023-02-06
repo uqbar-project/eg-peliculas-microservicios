@@ -55,7 +55,7 @@ class UsuarioControllerTests {
    // region login
    @Test
    fun `usuario inexistente no pasa el login`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          post("/auth/login")
             .contentType(MediaType.APPLICATION_JSON)
             .content(bodyUsuarioInexistente())
@@ -64,7 +64,7 @@ class UsuarioControllerTests {
 
    @Test
    fun `usuario con password incorrecta no pasa el login`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          post("/auth/login")
             .contentType(MediaType.APPLICATION_JSON)
             .content(bodyUsuarioPasswordIncorrecta())
@@ -73,7 +73,7 @@ class UsuarioControllerTests {
 
    @Test
    fun `usuario existente pasa el login y retorna JWT`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          post("/auth/login")
             .contentType(MediaType.APPLICATION_JSON)
             .content(bodyUsuarioExistente())
@@ -85,7 +85,7 @@ class UsuarioControllerTests {
    // region /users
    @Test
    fun `no se pueden conocer los usuarios si no pasamos un token correcto`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          get("/auth/users")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", tokenUsuarioInvalido())
@@ -94,7 +94,7 @@ class UsuarioControllerTests {
 
    @Test
    fun `se pueden ver los usuarios con un token correcto`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          get("/auth/users")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", tokenUsuarioOk)
@@ -110,7 +110,7 @@ class UsuarioControllerTests {
    // region /user/{nombre}
    @Test
    fun `no se pueden conocer los datos de un usuario si no pasamos un token correcto`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          get("/auth/users/${nombreUsuarioOk("admin")}")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", tokenUsuarioInvalido())
@@ -121,7 +121,7 @@ class UsuarioControllerTests {
    fun `se pueden ver los datos de un usuario con un token correcto`() {
       val nombreUsuario = "admin"
 
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          get("/auth/users/$nombreUsuario")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", tokenUsuarioOk)
@@ -132,7 +132,7 @@ class UsuarioControllerTests {
 
    @Test
    fun `si se pide ver los datos de un usuario que no existe se devuelve un error`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          get("/auth/users/190")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", tokenUsuarioOk)
@@ -144,7 +144,7 @@ class UsuarioControllerTests {
    // region create user
    @Test
    fun `no se puede crear un usuario si no pasamos un token correcto`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          post("/auth/user")
             .contentType(MediaType.APPLICATION_JSON)
             .content(bodyCrearUsuario())
@@ -154,7 +154,7 @@ class UsuarioControllerTests {
 
    @Test
    fun `un usuario común no puede crear un usuario`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          post("/auth/user")
             .contentType(MediaType.APPLICATION_JSON)
             .content(bodyCrearUsuario())
@@ -164,7 +164,7 @@ class UsuarioControllerTests {
 
    @Test
    fun `un usuario admin no puede crear un usuario con el mismo nombre`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          post("/auth/user")
             .contentType(MediaType.APPLICATION_JSON)
             .content(bodyCrearUsuarioExistente())
@@ -175,7 +175,7 @@ class UsuarioControllerTests {
 
    @Test
    fun `un usuario admin puede crear un usuario`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          post("/auth/user")
             .contentType(MediaType.APPLICATION_JSON)
             .content(bodyCrearUsuario())
@@ -189,7 +189,7 @@ class UsuarioControllerTests {
    // region delete user
    @Test
    fun `no se puede eliminar un usuario si no pasamos un token correcto`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          delete("/auth/user/${idUsuarioEliminar()}")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", tokenUsuarioInvalido())
@@ -198,7 +198,7 @@ class UsuarioControllerTests {
 
    @Test
    fun `un usuario común no puede eliminar un usuario`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          delete("/auth/user/${idUsuarioEliminar()}")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", tokenUsuarioOk)
@@ -207,7 +207,7 @@ class UsuarioControllerTests {
 
    @Test
    fun `un usuario admin puede eliminar un usuario`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          delete("/auth/user/${idUsuarioEliminar()}")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", tokenAdminOk)
@@ -220,7 +220,7 @@ class UsuarioControllerTests {
    // region invoice
    @Test
    fun `no se puede facturar un usuario si no pasamos un token correcto`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          patch("/auth/invoice")
             .contentType(MediaType.APPLICATION_JSON)
             .content(bodyFacturarOk())
@@ -230,7 +230,7 @@ class UsuarioControllerTests {
 
    @Test
    fun `no se puede facturar un usuario inexistente`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          patch("/auth/invoice")
             .contentType(MediaType.APPLICATION_JSON)
             .content(bodyFacturarUsuarioInexistente())
@@ -240,7 +240,7 @@ class UsuarioControllerTests {
 
    @Test
    fun `se puede facturar un usuario existente`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          patch("/auth/invoice")
             .contentType(MediaType.APPLICATION_JSON)
             .content(bodyFacturarOk())
@@ -254,7 +254,7 @@ class UsuarioControllerTests {
    // region pay
    @Test
    fun `no se puede pagar un usuario si no pasamos un token correcto`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          patch("/auth/pay")
             .contentType(MediaType.APPLICATION_JSON)
             .content(bodyPagarOk())
@@ -264,7 +264,7 @@ class UsuarioControllerTests {
 
    @Test
    fun `no se puede pagar un usuario y factura inexistente`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          patch("/auth/pay")
             .contentType(MediaType.APPLICATION_JSON)
             .content(bodyPagarDataInexistente())
@@ -274,7 +274,7 @@ class UsuarioControllerTests {
 
    @Test
    fun `se puede pagar un usuario y factura existente`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          patch("/auth/pay")
             .contentType(MediaType.APPLICATION_JSON)
             .content(bodyPagarOk())
@@ -288,7 +288,7 @@ class UsuarioControllerTests {
    // region validate-token
    @Test
    fun `token de usuario inexistente no pasa validacion`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          get("/auth/validate")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", tokenUsuarioInvalido())
@@ -297,7 +297,7 @@ class UsuarioControllerTests {
 
    @Test
    fun `token de usuario existente pasa el login y retorna JWT`() {
-      val responseEntity = mockMvc.perform(
+      mockMvc.perform(
          get("/auth/validate")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", tokenUsuarioOk)
