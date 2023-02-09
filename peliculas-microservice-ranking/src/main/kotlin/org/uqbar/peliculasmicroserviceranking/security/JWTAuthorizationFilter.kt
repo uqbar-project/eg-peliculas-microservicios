@@ -16,8 +16,6 @@ class JWTAuthorizationFilter : OncePerRequestFilter() {
    @Autowired
    lateinit var usuarioService: UsuarioService
 
-   val logger: Logger = LoggerFactory.getLogger(JWTAuthorizationFilter::class.java)
-
    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
       var authorized = false
       val bearerToken = request.getHeader("Authorization")
