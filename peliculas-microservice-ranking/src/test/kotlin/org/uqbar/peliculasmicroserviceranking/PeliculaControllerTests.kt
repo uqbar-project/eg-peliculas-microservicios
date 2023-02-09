@@ -127,6 +127,7 @@ class PeliculaControllerTests {
             .execute()
             .path("")
             .matchesJson("{ }")
+
         // TODO: ver por qué no está tirando
         // Está pasando por JWT?
         /**
