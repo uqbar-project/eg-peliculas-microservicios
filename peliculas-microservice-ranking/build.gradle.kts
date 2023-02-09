@@ -52,8 +52,10 @@ dependencies {
 
    // testing
    testImplementation("org.springframework.boot:spring-boot-starter-test")
+   testImplementation("org.mockito:mockito-core:5.1.1")
    testImplementation("io.projectreactor:reactor-test")
    testImplementation("org.springframework.graphql:spring-graphql-test")
+   testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.35.0")
 }
 
 // microservicios

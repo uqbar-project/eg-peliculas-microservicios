@@ -3,7 +3,7 @@
 
 ## Módulo Ránking de películas
 
-[![build-auth](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-ranking.yml/badge.svg)](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-ranking.yml) [![codecov](https://codecov.io/gh/uqbar-project/eg-peliculas-microservicios/branch/master/graph/badge.svg?token=VGXucKfbqn&flag=auth)](https://codecov.io/gh/uqbar-project/eg-peliculas-microservicios)
+[![build-auth](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-ranking.yml/badge.svg)](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-ranking.yml) [![codecov](https://codecov.io/gh/uqbar-project/eg-peliculas-microservicios/branch/master/graph/badge.svg?token=VGXucKfbqn&flag=ranking)](https://codecov.io/gh/uqbar-project/eg-peliculas-microservicios)
 
 Este módulo permite
 

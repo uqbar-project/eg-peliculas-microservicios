@@ -1,6 +1,8 @@
 package org.uqbar.peliculasmicroserviceranking.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.uqbar.peliculasmicroserviceranking.domain.Pelicula
@@ -19,6 +21,8 @@ class TMDBService {
    @Value("\${tmdb.base-url}")
    lateinit var baseUrl: String
 
+   val logger: Logger = LoggerFactory.getLogger(TMDBService::class.java)
+
    fun peliculasPopulares(): List<Pelicula> {
       actualizarGeneros()
       val response = prepareTMDBResponse("${baseUrl}/movie/popular?api_key=${apiKey}&language=en-US&page=1")
@@ -26,9 +30,10 @@ class TMDBService {
       return popularesDTO.results.map { it.toPelicula() }
    }
 
-
    fun buscarPeliculaPorId(_idTMDB: Number): Pelicula {
+      logger.info("buscando película con id $_idTMDB en TMDB")
       val response = prepareTMDBResponse("${baseUrl}/movie/${_idTMDB}?api_key=${apiKey}&language=en-US")
+      logger.info("respuesta ${response.body().toString()}")
       val movieDTO = ObjectMapper().readValue(response.body(), MovieDTO::class.java)
       return movieDTO.toPelicula()
    }
@@ -38,6 +43,8 @@ class TMDBService {
          HttpRequest.newBuilder(URI.create(uri))
             .GET()
             .build()
+
+      logger.info("request ${request.uri()}")
 
       val client = HttpClient.newBuilder().build()
       return client.send(request, HttpResponse.BodyHandlers.ofString())
