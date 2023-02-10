@@ -18,7 +18,6 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.graphql.test.tester.GraphQlTester
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.web.context.WebApplicationContext
 import org.uqbar.peliculasmicroserviceranking.domain.Genero
 import org.uqbar.peliculasmicroserviceranking.domain.Pelicula
 import org.uqbar.peliculasmicroserviceranking.repository.GeneroRepository
@@ -36,9 +35,6 @@ class PeliculaControllerTests {
     private val mapper = jacksonObjectMapper().apply {
         registerModule(JavaTimeModule())
     }
-
-    @Autowired
-    lateinit var context: WebApplicationContext
 
     @Autowired
     lateinit var graphQlTester: GraphQlTester
@@ -133,8 +129,8 @@ class PeliculaControllerTests {
             .matchesJson("{ }")
 
 
-        // TODO: ver por qué no está tirando
-        // Está pasando por JWT?
+        // TODO: el test si bien pasa debería utilizar el filtro JWTAuthenticationFilter, y no está pasando por ahí
+        // el JSON que debería devolver es
         /**
          * {
          * 	"timestamp": "2023-02-09T02:59:13.726+00:00",

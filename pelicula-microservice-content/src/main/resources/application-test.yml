@@ -1,0 +1,17 @@
+# Para activar el Trace
+logging:
+  level:
+    root: DEBUG
+    org.springframework.data: DEBUG
+    org.mongodb.driver.protocol.command: DEBUG
+    _org.springframework.web.servlet.HandlerMapping.Mappings: DEBUG
+
+ranking:
+  base-url: http://localhost:9080/graphql
+
+auth:
+  base-url: http://localhost:9080
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false

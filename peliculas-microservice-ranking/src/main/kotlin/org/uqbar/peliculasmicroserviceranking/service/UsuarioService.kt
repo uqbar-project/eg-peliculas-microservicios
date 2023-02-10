@@ -18,7 +18,7 @@ class UsuarioService {
 
    lateinit var token: String
 
-   val logger: Logger = LoggerFactory.getLogger(PeliculaService::class.java)
+   val logger: Logger = LoggerFactory.getLogger(UsuarioService::class.java)
 
    fun authorize(_token: String): Boolean {
       token = _token
@@ -28,9 +28,14 @@ class UsuarioService {
             setBearerAuth(token)
          })
          .build()
-      val authResponse = RestTemplate().exchange(authRequest, String::class.java)
-      logger.info("authorize ${authResponse.body}")
-      return authResponse.body == "ok"
+      return try {
+         val authResponse = RestTemplate().exchange(authRequest, String::class.java)
+         logger.info("authorization passed: ${authResponse.body}")
+         authResponse.body == "ok"
+      } catch (e: Exception) {
+         logger.info("authorization failed: ${e.message}")
+         false
+      }
    }
 
    fun getUsuario(nombreUsuario: String): Usuario {

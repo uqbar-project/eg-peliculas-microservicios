@@ -61,7 +61,7 @@ class ContentService {
 
         val verPeliculaDTO = webClient.post()
             .uri(rankingBaseUrl)
-            .headers({ header -> header.setBearerAuth(token)})
+            .headers { header -> header.setBearerAuth(token) }
             .bodyValue(GraphQLRequest(graphqlMutationBody))
             .retrieve()
             .bodyToMono(VerPeliculaDTO::class.java)
