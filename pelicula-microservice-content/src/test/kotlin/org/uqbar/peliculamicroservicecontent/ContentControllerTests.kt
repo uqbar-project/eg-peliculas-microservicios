@@ -82,6 +82,7 @@ class ContentControllerTests {
             .andExpect(MockMvcResultMatchers.jsonPath("$.data.verPelicula.vistas").value(522.toString()))
     }
     //
+    
 
     private fun stubTokenInexistente() {
         wireMockServer.stubFor(

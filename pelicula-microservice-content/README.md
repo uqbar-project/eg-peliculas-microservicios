@@ -3,7 +3,7 @@
 
 ## Módulo de Contenido (content)
 
-[![build-auth](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-content.yml/badge.svg)](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-content.yml) [![codecov](https://codecov.io/gh/uqbar-project/eg-peliculas-microservicios/branch/master/graph/badge.svg?token=VGXucKfbqn&flag=content)](https://codecov.io/gh/uqbar-project/eg-peliculas-microservicios)
+[![build-ranking](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-ranking.yml/badge.svg)](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-ranking.yml) [![codecov](https://codecov.io/gh/uqbar-project/eg-peliculas-microservicios/branch/master/graph/badge.svg?token=VGXucKfbqn&flag=content)](https://codecov.io/gh/uqbar-project/eg-peliculas-microservicios)
 
 
 ## Instalación

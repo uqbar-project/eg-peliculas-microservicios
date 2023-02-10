@@ -32,7 +32,7 @@ jobs:
         with:
           fail_ci_if_error: false
           directory: peliculas-microservice-content
-          flags: auth
+          flags: content
           verbose: true
 
       - name: Stop containers
