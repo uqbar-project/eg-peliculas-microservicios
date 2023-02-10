@@ -18,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.graphql.test.tester.GraphQlTester
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.web.context.WebApplicationContext
 import org.uqbar.peliculasmicroserviceranking.domain.Genero
 import org.uqbar.peliculasmicroserviceranking.domain.Pelicula
 import org.uqbar.peliculasmicroserviceranking.repository.GeneroRepository
@@ -35,6 +36,9 @@ class PeliculaControllerTests {
     private val mapper = jacksonObjectMapper().apply {
         registerModule(JavaTimeModule())
     }
+
+    @Autowired
+    lateinit var context: WebApplicationContext
 
     @Autowired
     lateinit var graphQlTester: GraphQlTester
