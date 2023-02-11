@@ -9,3 +9,4 @@ class PeliculaMicroserviceContentApplication
 fun main(args: Array<String>) {
 	runApplication<PeliculaMicroserviceContentApplication>(*args)
 }
+

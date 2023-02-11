@@ -9,3 +9,4 @@ class PeliculasMicroserviceRankingApplication
 fun main(args: Array<String>) {
 	runApplication<PeliculasMicroserviceRankingApplication>(*args)
 }
+
