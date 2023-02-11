@@ -9,20 +9,21 @@ import com.github.tomakehurst.wiremock.http.JvmProxyConfigurer
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers.anyInt
-import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureGraphQlTester
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.graphql.test.tester.GraphQlTester
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.uqbar.peliculasmicroserviceranking.domain.Genero
 import org.uqbar.peliculasmicroserviceranking.domain.Pelicula
 import org.uqbar.peliculasmicroserviceranking.repository.GeneroRepository
 import org.uqbar.peliculasmicroserviceranking.repository.PeliculaRepository
-import org.uqbar.peliculasmicroserviceranking.service.TMDBService
 import reactor.core.publisher.Mono
 import java.time.LocalDate
 
@@ -30,6 +31,7 @@ import java.time.LocalDate
 @ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureGraphQlTester
+@AutoConfigureMockMvc
 class PeliculaControllerTests {
 
     private val mapper = jacksonObjectMapper().apply {
@@ -43,12 +45,14 @@ class PeliculaControllerTests {
     lateinit var peliculaRepository: PeliculaRepository
 
     @Autowired
+    lateinit var mockMvc: MockMvc
+
+    @Autowired
     lateinit var generoRepository: GeneroRepository
 
     lateinit var wireMockServer: WireMockServer
 
-    @MockBean
-    lateinit var tmdbService: TMDBService
+    val tokenUsuarioInexistente = "tokenInexistente"
 
     @BeforeEach
     fun setup() {
@@ -56,7 +60,7 @@ class PeliculaControllerTests {
             descripcion = "Comedia"
             idOriginal = 1
         }
-        generoRepository.save(comedia)
+        generoRepository.save(comedia).subscribe()
 
         val pelicula = Mono.defer {
             peliculaRepository.save(Pelicula().apply {
@@ -73,6 +77,7 @@ class PeliculaControllerTests {
         wireMockServer = WireMockServer(
             options()
                 .enableBrowserProxying(true)
+                .port(9080)
         )
         wireMockServer.start()
 
@@ -86,7 +91,44 @@ class PeliculaControllerTests {
                 )
         )
 
-        Mockito.`when`(tmdbService.buscarPeliculaPorId(anyInt())).thenReturn(pelicula)
+        wireMockServer.stubFor(
+            get("/movie/1?api_key=11111111111111&language=en-US")
+                .willReturn(
+                    ok(
+                        """
+                                {
+                                	"budget": 200000000,
+                                	"genres": [
+                                		{
+                                			"id": 14,
+                                			"name": "Fantasy"
+                                		},
+                                		{
+                                			"id": 28,
+                                			"name": "Action"
+                                		},
+                                		{
+                                			"id": 878,
+                                			"name": "Science Fiction"
+                                		}
+                                	],
+                                	"id": 1,
+                                	"imdb_id": "tt6443346",
+                                	"original_language": "es",
+                                	"original_title": "Esperando la carroza",
+                                	"overview": "Nearly 5,000 years after he was bestowed with the almighty powers of the Egyptian gods—and imprisoned just as quickly—Black Adam is freed from his earthly tomb, ready to unleash his unique form of justice on the modern world.",
+                                	"popularity": 111,
+                                	"release_date": "2022-10-19",
+                                	"status": "Released",
+                                	"tagline": "The world needed a hero. It got Black Adam.",
+                                	"title": "Esperando la carroza",
+                                	"vote_average": 7.197,
+                                	"vote_count": 4062
+                                }
+			""".trimIndent()
+                )
+                )
+        )
     }
 
     @AfterEach
@@ -115,31 +157,21 @@ class PeliculaControllerTests {
                 )
         )
 
-        graphQlTester.document(
-            """
-			query {
-			  peliculaPorIdTMDB(idTMDB: 1) {
-				titulo
-			  }
-			}
-		""".trimIndent()
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/graphql")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                    "query": "{
+                      peliculaPorIdTMDB(idTMDB: 505642) {
+                        idTMDB
+                        titulo
+                        fechaSalida
+                      }
+                    }"
+                """.trimIndent())
+                .header("Authorization", tokenUsuarioInexistente)
         )
-            .execute()
-            .path("")
-            .matchesJson("{ }")
-
-
-        // TODO: el test si bien pasa debería utilizar el filtro JWTAuthenticationFilter, y no está pasando por ahí
-        // el JSON que debería devolver es
-        /**
-         * {
-         * 	"timestamp": "2023-02-09T02:59:13.726+00:00",
-         * 	"status": 500,
-         * 	"error": "Internal Server Error",
-         * 	"message": "500 : \"{\"timestamp\":\"2023-02-09T02:59:13.709+00:00\",\"status\":500,\"error\":\"Internal Server Error\",\"message\":\"JWT expired at 2022-12-22T02:08:49Z. Current time: 2023-02-09T02:59:13Z, a difference of 4236624708 milliseconds.  Allowed clock skew: 0 milliseconds.\",\"path\":\"/auth/validate\"}\"",
-         * 	"path": "/graphql"
-         * }
-         */
+            .andExpect(MockMvcResultMatchers.status().isUnauthorized)
     }
 
     @Test

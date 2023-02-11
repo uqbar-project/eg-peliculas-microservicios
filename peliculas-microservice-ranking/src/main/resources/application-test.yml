@@ -13,5 +13,11 @@ eureka:
   instance:
     hostname: localhost
 
+# tenemos que configurarle el mismo server para facilitar la configuración de Wiremock
+# TMDB usa por defecto https pero eso requiere instalar un certificado en el servidor local y es más problemático
 tmdb:
   api-key: 11111111111111
+  base-url: http://localhost:9080
+
+auth:
+  base-url: http://localhost:9080
