@@ -24,6 +24,7 @@ import org.uqbar.peliculasmicroserviceranking.domain.Genero
 import org.uqbar.peliculasmicroserviceranking.domain.Pelicula
 import org.uqbar.peliculasmicroserviceranking.repository.GeneroRepository
 import org.uqbar.peliculasmicroserviceranking.repository.PeliculaRepository
+import org.uqbar.peliculasmicroserviceranking.service.UsuarioService
 import java.time.LocalDate
 
 
@@ -48,6 +49,9 @@ class PeliculaControllerTests {
 
     @Autowired
     lateinit var generoRepository: GeneroRepository
+
+    @Autowired
+    lateinit var usuarioService: UsuarioService
 
     lateinit var wireMockServer: WireMockServer
 
@@ -97,6 +101,16 @@ class PeliculaControllerTests {
                 .withHost(
                     equalTo("localhost")
                 )
+        )
+
+        wireMockServer.stubFor(
+            get("/auth/users/user1")
+                .willReturn(jsonResponse("""
+                    {
+                        "id": 5,
+                        "nombre": "Usuario Calificador"
+                    }
+                """.trimIndent(), HttpStatus.OK.value()))
         )
 
         wireMockServer.stubFor(
@@ -210,7 +224,7 @@ class PeliculaControllerTests {
 
     @Test
     fun `un usuario existente puede consultar las peliculas mas vistas`() {
-        val peliculas = graphQlTester.document(
+        graphQlTester.document(
             """
 			query {
 			  masVistas {
@@ -226,6 +240,34 @@ class PeliculaControllerTests {
             .path("masVistas")
             .entityList(Pelicula::class.java)
             .matches<GraphQlTester.EntityList<Pelicula>> { peliculas -> peliculas[0].titulo == "Nueve reinas" }
+    }
+
+    @Test
+    fun `un usuario existente puede calificar una película por única vez`() {
+        usuarioService.authorize("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3MTUzNjk2MiwiZXhwIjoxNjcyNjE2OTYyLCJyb2xlcyI6IlJPTEVfQURNSU4ifQ.xnLiQFGRWQ_FwdILrWDqRtFPalKRZ4Tv0bCAKT6fqjgV7QDBEERqRYNJPxRzB-SEn-55LNPsfJjR4IGEQMKbgQ")
+
+        graphQlTester.document(
+            """
+            mutation {
+                calificarPelicula(calificacionPelicula: {
+                    idTMDB: 1200, 
+                    usuario: "user1", 
+                    valoracion: 8
+                }) {
+                    idTMDB,
+                    titulo,
+                    calificacionPromedio,
+                    fechaSalida
+                }
+            }
+    		""".trimIndent()
+        )
+            .execute()
+            .path("calificarPelicula")
+            .entity(Pelicula::class.java)
+            .matches { pelicula ->
+                pelicula.calificacionPromedio == 8.0
+            }
     }
 
 
