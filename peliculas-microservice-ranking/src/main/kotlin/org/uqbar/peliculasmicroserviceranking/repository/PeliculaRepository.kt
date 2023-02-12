@@ -1,18 +1,17 @@
 package org.uqbar.peliculasmicroserviceranking.repository
 
-import org.springframework.data.repository.reactive.ReactiveCrudRepository
+import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 import org.uqbar.peliculasmicroserviceranking.domain.Pelicula
-import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
+import java.util.*
 
 @Repository
-interface PeliculaRepository : ReactiveCrudRepository<Pelicula, String> {
+interface PeliculaRepository : CrudRepository<Pelicula, String> {
 
-   fun findByIdTMDB(idTMDB: Int): Mono<Pelicula?>
+   fun findByIdTMDB(idTMDB: Number): Optional<Pelicula>
 
-   fun findAllByOrderByVistasDesc(): Flux<Pelicula>
+   fun findAllByOrderByVistasDesc(): List<Pelicula>
 
-   fun findAllByOrderByCalificacionPromedioDesc(): Flux<Pelicula>
+   fun findAllByOrderByCalificacionPromedioDesc(): List<Pelicula>
 
 }

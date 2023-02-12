@@ -34,6 +34,15 @@ class TMDBService {
       logger.info("buscando película con id $_idTMDB en TMDB")
       val response = prepareTMDBResponse("${baseUrl}/movie/${_idTMDB}?api_key=${apiKey}&language=en-US")
       logger.info("respuesta ${response.body().toString()}")
+      // TODO: qué pasa si no la encuentra
+      // Recibimos un
+      /*
+      {
+          "success": false,
+          "status_code": 34,
+          "status_message": "The resource you requested could not be found."
+      }
+       */
       val movieDTO = ObjectMapper().readValue(response.body(), MovieDTO::class.java)
       return movieDTO.toPelicula()
    }

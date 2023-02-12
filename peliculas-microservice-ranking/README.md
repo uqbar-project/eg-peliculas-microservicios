@@ -3,7 +3,7 @@
 
 ## Módulo Ránking de películas
 
-[![build-auth](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-ranking.yml/badge.svg)](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-ranking.yml) [![codecov](https://codecov.io/gh/uqbar-project/eg-peliculas-microservicios/branch/master/graph/badge.svg?token=VGXucKfbqn&flag=ranking)](https://codecov.io/gh/uqbar-project/eg-peliculas-microservicios)
+[![build-ranking](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-ranking.yml/badge.svg)](https://github.com/uqbar-project/eg-peliculas-microservicios/actions/workflows/build-ranking.yml) [![codecov](https://codecov.io/gh/uqbar-project/eg-peliculas-microservicios/branch/master/graph/badge.svg?token=VGXucKfbqn&flag=ranking)](https://codecov.io/gh/uqbar-project/eg-peliculas-microservicios)
 
 Este módulo permite
 
@@ -30,4 +30,4 @@ Dado que es información sensible, **no la subimos a git** (está ignorado en el
 
 ## Tutoriales
 
-- [Reactive Spring Boot](https://www.youtube.com/watch?v=IK26KdGRl48&list=PLnXn1AViWyL70R5GuXt_nIDZytYBnvBdd&ab_channel=CodeWithDilip_
+- [Reactive Spring Boot](https://www.youtube.com/watch?v=IK26KdGRl48&list=PLnXn1AViWyL70R5GuXt_nIDZytYBnvBdd&ab_channel=CodeWithDilip_)

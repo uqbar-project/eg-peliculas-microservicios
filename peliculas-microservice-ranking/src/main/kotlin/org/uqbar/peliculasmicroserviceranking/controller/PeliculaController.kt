@@ -41,6 +41,6 @@ class PeliculaController {
    fun verPelicula(@Argument idTMDB: Int) = peliculaService.verPelicula(idTMDB)
 
    @MutationMapping
-   fun calificarPelicula(@Argument calificacionPelicula: CalificacionPelicula): Mono<Pelicula> =
+   fun calificarPelicula(@Argument calificacionPelicula: CalificacionPelicula): Pelicula =
       peliculaService.calificarPelicula(calificacionPelicula)
 }

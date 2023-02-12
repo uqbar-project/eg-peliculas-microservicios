@@ -30,11 +30,8 @@ dependencies {
    // security
    implementation("org.springframework.boot:spring-boot-starter-security")
 
-   // funciones asincrónicas
-   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-
    // base de datos documental MongoDB
-   implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
+   implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 
    // graphql
    implementation("org.springframework.boot:spring-boot-starter-graphql")

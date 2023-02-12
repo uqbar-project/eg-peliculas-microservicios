@@ -24,7 +24,6 @@ import org.uqbar.peliculasmicroserviceranking.domain.Genero
 import org.uqbar.peliculasmicroserviceranking.domain.Pelicula
 import org.uqbar.peliculasmicroserviceranking.repository.GeneroRepository
 import org.uqbar.peliculasmicroserviceranking.repository.PeliculaRepository
-import reactor.core.publisher.Mono
 import java.time.LocalDate
 
 
@@ -56,23 +55,32 @@ class PeliculaControllerTests {
 
     @BeforeEach
     fun setup() {
-        val comedia = Genero().apply {
-            descripcion = "Comedia"
-            idOriginal = 1
-        }
-        generoRepository.save(comedia).subscribe()
+        val comedia = crearGenero("Comedia")
+        val suspenso = crearGenero("Suspenso")
 
-        val pelicula = Mono.defer {
-            peliculaRepository.save(Pelicula().apply {
-                idioma = "ES"
-                titulo = "Esperando la carroza"
-                sinopsis =
-                    "La confusión invade a una familia luego de que Mamá Cora, una anciana de 80 años, desaparece. Aunque algunos creen que ha muerto, nada es tan sencillo como parece."
-                fechaSalida = LocalDate.of(1985, 4, 1)
-                calificacionPromedio = 7.5
-                generos = mutableListOf(comedia)
-            })
-        }.block()
+        peliculaRepository.save(Pelicula().apply {
+            idioma = "ES"
+            titulo = "Esperando la carroza"
+            vistas = 110
+            idTMDB = 1200
+            sinopsis =
+                "La confusión invade a una familia luego de que Mamá Cora, una anciana de 80 años, desaparece. Aunque algunos creen que ha muerto, nada es tan sencillo como parece."
+            fechaSalida = LocalDate.of(1985, 4, 1)
+            calificacionPromedio = 7.5
+            generos = mutableListOf(comedia)
+        })
+
+        peliculaRepository.save(Pelicula().apply {
+            idioma = "ES"
+            idTMDB = 144
+            titulo = "Nueve reinas"
+            vistas = 201
+            sinopsis =
+                "Dos estafadores se hacen socios en busca de su sueño, vender una falsificación de una serie de estampillas que los hará dar el gran golpe."
+            fechaSalida = LocalDate.of(1999, 10, 2)
+            calificacionPromedio = 8.2
+            generos = mutableListOf(suspenso)
+        })
 
         wireMockServer = WireMockServer(
             options()
@@ -112,21 +120,21 @@ class PeliculaControllerTests {
                                 			"name": "Science Fiction"
                                 		}
                                 	],
-                                	"id": 1,
+                                	"id": 4,
                                 	"imdb_id": "tt6443346",
                                 	"original_language": "es",
-                                	"original_title": "Esperando la carroza",
+                                	"original_title": "Black Adam",
                                 	"overview": "Nearly 5,000 years after he was bestowed with the almighty powers of the Egyptian gods—and imprisoned just as quickly—Black Adam is freed from his earthly tomb, ready to unleash his unique form of justice on the modern world.",
                                 	"popularity": 111,
                                 	"release_date": "2022-10-19",
                                 	"status": "Released",
                                 	"tagline": "The world needed a hero. It got Black Adam.",
-                                	"title": "Esperando la carroza",
+                                	"title": "Black Adam",
                                 	"vote_average": 7.197,
                                 	"vote_count": 4062
                                 }
 			""".trimIndent()
-                )
+                    )
                 )
         )
     }
@@ -143,7 +151,9 @@ class PeliculaControllerTests {
     fun `un usuario inexistente no puede consultar una película`() {
         wireMockServer.stubFor(
             get("/auth/validate")
-                .willReturn(jsonResponse("""
+                .willReturn(
+                    jsonResponse(
+                        """
                     {
                     	"timestamp": "2023-02-09T02:51:00.571+00:00",
                     	"status": 500,
@@ -151,7 +161,9 @@ class PeliculaControllerTests {
                     	"message": "JWT expired at 2022-12-22T02:08:49Z. Current time: 2023-02-09T02:51:00Z, a difference of 4236131569 milliseconds.  Allowed clock skew: 0 milliseconds.",
                     	"path": "/auth/validate"
                     }
-                """.trimIndent(), HttpStatus.INTERNAL_SERVER_ERROR.value()))
+                """.trimIndent(), HttpStatus.INTERNAL_SERVER_ERROR.value()
+                    )
+                )
                 .withHost(
                     equalTo("localhost")
                 )
@@ -160,15 +172,17 @@ class PeliculaControllerTests {
         mockMvc.perform(
             MockMvcRequestBuilders.post("/graphql")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("""
-                    "query": "{
+                .content(
+                    """
+                    query {
                       peliculaPorIdTMDB(idTMDB: 505642) {
                         idTMDB
                         titulo
                         fechaSalida
                       }
                     }"
-                """.trimIndent())
+                """.trimIndent()
+                )
                 .header("Authorization", tokenUsuarioInexistente)
         )
             .andExpect(MockMvcResultMatchers.status().isUnauthorized)
@@ -189,9 +203,37 @@ class PeliculaControllerTests {
             .path("peliculaPorIdTMDB")
             .hasValue()
             .entity(Pelicula::class.java)
-            .matches { pelicula -> pelicula.titulo.equals("Esperando la carroza")  }
+            .matches { pelicula -> pelicula.titulo.equals("Black Adam") }
     }
 
+//    @Test
+//    fun `un usuario existente puede consultar las peliculas mas vistas`() {
+//        graphQlTester.document(
+//            """
+//			query {
+//			  masVistas {
+//                idTMDB
+//                titulo
+//                fechaSalida
+//                vistas
+//			  }
+//			}
+//		""".trimIndent()
+//        )
+//            .execute()
+//            .path("masVistas")
+//            .hasValue()
+//            .entity(Pelicula::class.java)
+//            .matches { pelicula -> pelicula.titulo.equals("Nueve reinas")  }
+//    }
+
+
+    fun crearGenero(nombre: String) = generoRepository.save(Genero().apply {
+        descripcion = "Comedia"
+        idOriginal = 1
+    })
+
 }
+
 
 data class CredencialesDTO(val usuario: String, val password: String)
