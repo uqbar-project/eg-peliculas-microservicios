@@ -1,5 +1,6 @@
 package org.uqbar.peliculasmicroserviceranking.domain
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDate
@@ -15,6 +16,8 @@ class Pelicula {
    var generos: MutableList<Genero> = mutableListOf()
    lateinit var idioma: String
    lateinit var sinopsis: String
+
+   @JsonFormat(pattern = "dd/MM/yyyy")
    lateinit var fechaSalida: LocalDate
    var calificacionPromedio: Number = 0
 

@@ -149,6 +149,8 @@ class PeliculaControllerTests {
 
     @Test
     fun `un usuario inexistente no puede consultar una película`() {
+        // en este test no podemos utilizar GraphQLTester porque no prueba la capa de http (por ende
+        // tampoco el filtro que obtiene el JWT)
         wireMockServer.stubFor(
             get("/auth/validate")
                 .willReturn(
@@ -206,26 +208,25 @@ class PeliculaControllerTests {
             .matches { pelicula -> pelicula.titulo.equals("Black Adam") }
     }
 
-//    @Test
-//    fun `un usuario existente puede consultar las peliculas mas vistas`() {
-//        graphQlTester.document(
-//            """
-//			query {
-//			  masVistas {
-//                idTMDB
-//                titulo
-//                fechaSalida
-//                vistas
-//			  }
-//			}
-//		""".trimIndent()
-//        )
-//            .execute()
-//            .path("masVistas")
-//            .hasValue()
-//            .entity(Pelicula::class.java)
-//            .matches { pelicula -> pelicula.titulo.equals("Nueve reinas")  }
-//    }
+    @Test
+    fun `un usuario existente puede consultar las peliculas mas vistas`() {
+        val peliculas = graphQlTester.document(
+            """
+			query {
+			  masVistas {
+                idTMDB
+                titulo
+                fechaSalida
+                vistas
+			  }
+			}
+		""".trimIndent()
+        )
+            .execute()
+            .path("masVistas")
+            .entityList(Pelicula::class.java)
+            .matches<GraphQlTester.EntityList<Pelicula>> { peliculas -> peliculas[0].titulo == "Nueve reinas" }
+    }
 
 
     fun crearGenero(nombre: String) = generoRepository.save(Genero().apply {
