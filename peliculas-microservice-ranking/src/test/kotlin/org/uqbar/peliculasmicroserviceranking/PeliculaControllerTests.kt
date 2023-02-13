@@ -55,12 +55,14 @@ class PeliculaControllerTests {
 
     lateinit var wireMockServer: WireMockServer
 
+    lateinit var suspenso: Genero
+
     val tokenUsuarioInexistente = "tokenInexistente"
 
     @BeforeEach
     fun setup() {
         val comedia = crearGenero("Comedia")
-        val suspenso = crearGenero("Suspenso")
+        suspenso = crearGenero("Suspenso")
 
         peliculaRepository.save(Pelicula().apply {
             idioma = "ES"
@@ -267,6 +269,39 @@ class PeliculaControllerTests {
             .entity(Pelicula::class.java)
             .matches { pelicula ->
                 pelicula.calificacionPromedio == 8.0
+            }
+    }
+
+    @Test
+    fun `un usuario existente puede ver una película`() {
+        peliculaRepository.save(Pelicula().apply {
+            idioma = "ES"
+            idTMDB = 1
+            titulo = "Un oso rojo"
+            vistas = 47
+            sinopsis =
+                "Un hombre dispuesto a todo por amor."
+            fechaSalida = LocalDate.of(2002, 4, 23)
+            calificacionPromedio = 7
+            generos = mutableListOf(suspenso)
+        })
+
+        graphQlTester.document(
+            """
+            mutation {
+                verPelicula(idTMDB: 1) {
+                    idTMDB,
+                    titulo,
+                    vistas
+                }
+            }
+    		""".trimIndent()
+        )
+            .execute()
+            .path("verPelicula")
+            .entity(Pelicula::class.java)
+            .matches { pelicula ->
+                pelicula.vistas == 48
             }
     }
 
