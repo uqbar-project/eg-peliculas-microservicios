@@ -11,6 +11,7 @@ ranking:
 
 auth:
   base-url: http://localhost:9080
+
 eureka:
   client:
     register-with-eureka: false
