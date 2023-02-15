@@ -12,6 +12,20 @@ Este módulo permite
 - calificar una película
 - hacer búsquedas de una película
 
+## Instrucciones para levantar el ejemplo
+
+Desde el directorio raíz en un shell se levanta la base de datos MongoDB con docker compose:
+
+```bash
+docker-compose up
+```
+
+En el archivo [`docker-compose.yml`](./docker-compose.yml) especificamos la imagen dockerizada de Mongo que queremos utilizar y adicionalmente tenemos un [script de inicialización](./Docker/mongo-init.js) que genera el usuario con roles de administración.
+
+Antes de levantar la aplicación conviene levantar [el proyecto hermano que tiene la registración de los servicios en Eureka](../peliculas-microservice-registry/README.md).
+
+Después sí, ejecutás el main del archivo PeliculasMicroserviceRankingApplication.
+
 ## Conceptos salientes
 
 - Medio persistente: base de datos documental creada desde Docker
@@ -139,6 +153,3 @@ La base de datos por otra parte es la real (no hay base embebida ni en memoria).
 
 ![|Test Ranking Architecture](./images/TestRankingArchitecture.png)
 
-## Tutoriales
-
-- [Reactive Spring Boot](https://www.youtube.com/watch?v=IK26KdGRl48&list=PLnXn1AViWyL70R5GuXt_nIDZytYBnvBdd&ab_channel=CodeWithDilip_)
