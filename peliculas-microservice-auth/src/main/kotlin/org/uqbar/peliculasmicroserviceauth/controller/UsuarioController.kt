@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*
 import org.uqbar.peliculasmicroserviceauth.dto.CredencialesDTO
 import org.uqbar.peliculasmicroserviceauth.dto.FacturacionDTO
 import org.uqbar.peliculasmicroserviceauth.dto.PagoDTO
-import org.uqbar.peliculasmicroserviceauth.model.Usuario
 import org.uqbar.peliculasmicroserviceauth.security.TokenUtils
 import org.uqbar.peliculasmicroserviceauth.service.UsuarioService
 
