@@ -10,7 +10,7 @@
 Desde el directorio raíz en un shell se levanta la base de datos PostgreSQL con docker compose:
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 En el archivo [`docker-compose.yml`](./docker-compose.yml) especificamos la imagen dockerizada de Postgres que queremos utilizar y adicionalmente tenemos un [script de inicialización](./Docker/init_db.sh) que crea la base de datos `peliculas_auth` y le da accesos a un usuario que creamos también.
@@ -45,17 +45,15 @@ Este ejemplo utiliza Spring Security como tecnología de
 
 Existen múltiples frameworks que nos ayudan a completar este punto, pueden ver
 
-- InMemoryUserDetailsManager: genera una base de usuarios en memoria cada vez que se levanta el servidor
-- OAuth2: te podés integrar con servicios de autenticación externos, como tu correo de Google, Facebook, Github, etc.
-- [Keycloak](https://www.keycloak.org/): provee un mecanismo de Single Sign On (SSO, o login unificado), federación de usuarios (cómo un usuario puede utilizarse en varios servidores sin tener que volver a generarlos)
-- Basic Auth
+- [InMemoryUserDetailsManager](https://howtodoinjava.com/spring-boot2/security-rest-basic-auth-example/): genera una base de usuarios en memoria cada vez que se levanta el servidor
+- [OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/): te podés integrar con servicios de autenticación externos, como tu correo de Google, Facebook, Github, etc.
+- [Keycloak](https://www.keycloak.org/): provee un mecanismo de Single Sign On (SSO, o login unificado), federación de usuarios (cómo un usuario puede utilizarse en varios servidores sin tener que volver a generarlos). Podés ver [esta implementación de ejemplo](https://www.baeldung.com/spring-boot-keycloak)
 - JWT (JSON Web Token), es la variante que nosotros decidimos implementar.
 
 ### JWT
 
-[JWT](https://developer.okta.com/blog/2018/06/20/what-happens-if-your-jwt-is-stolen) representa 
+[JWT](https://developer.okta.com/blog/2018/06/20/what-happens-if-your-jwt-is-stolen) representa un token, un valor que almacena 
 
-- un token, un valor que almacena 
 - información sobre la sesión asociada a un usuario identificado
 - con formato JSON
 - y firmado digitalmente, donde un algoritmo utiliza una clave como forma de encriptar los datos.
@@ -290,7 +288,7 @@ En la configuración de los endpoints, le configuramos para que solamente el rol
 
 ## Levantando la app como Microservicio
 
-Si levantás primero un server de Eureka (situado en el proyecto [Pelicula Microservice Registry](https://github.com/uqbar-project/peliculas-microservice-registry)), vas a ver reflejada esta aplicación como microservicio.
+Si levantás primero un server de Eureka (situado en el proyecto [Pelicula Microservice Registry](https://github.com/uqbar-project/eg-peliculas-microservicios/tree/master/peliculas-microservice-registry)), vas a ver reflejada esta aplicación como microservicio.
 
 ![Auth en Eureka Server](./images/auth-en-eureka-server.png)
 

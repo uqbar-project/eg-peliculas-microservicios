@@ -17,7 +17,7 @@ Este módulo permite
 Desde el directorio raíz en un shell se levanta la base de datos MongoDB con docker compose:
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 En el archivo [`docker-compose.yml`](./docker-compose.yml) especificamos la imagen dockerizada de Mongo que queremos utilizar y adicionalmente tenemos un [script de inicialización](./Docker/mongo-init.js) que genera el usuario con roles de administración.

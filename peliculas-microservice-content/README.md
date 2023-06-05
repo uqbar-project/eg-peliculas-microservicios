@@ -11,7 +11,7 @@
 Desde el directorio raíz en un shell se levanta la base de datos MongoDB con docker compose:
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 En el archivo [`docker-compose.yml`](./docker-compose.yml) especificamos la imagen dockerizada de Redis que queremos utilizar, así como el servicio **Redis Commander** que levanta un cliente web para poder acceder a la base.
