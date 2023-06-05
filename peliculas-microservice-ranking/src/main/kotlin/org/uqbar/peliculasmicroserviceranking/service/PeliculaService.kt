@@ -28,8 +28,7 @@ class PeliculaService {
       logger.info("Buscando película con id TMDB = $_idTMDB")
       return peliculaRepository.findByIdTMDB(_idTMDB).orElseGet {
          // En caso de que no encontremos la película en nuestra base mongo traemos la información de TMDB
-         // y guardamos la información. El método save de un ReactiveRepository devuelve un Mono<Pelicula>
-         // esto significa que es un Future (una promesa de una película grabada como documento en la base)
+         // y guardamos la información.
          val pelicula = tmdbService.buscarPeliculaPorId(_idTMDB)
          peliculaRepository.save(pelicula)
       }
