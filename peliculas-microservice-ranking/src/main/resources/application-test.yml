@@ -5,6 +5,11 @@ logging:
     org.mongodb.driver.protocol.command: DEBUG
     _org.springframework.web.servlet.HandlerMapping.Mappings: WARN
 
+spring:
+  data:
+    mongodb:
+      # base documental de test separada de la app
+      uri: mongodb://capo:eyra@127.0.0.1:27019/peliculasTest?authSource=admin
 
 eureka:
   client:
