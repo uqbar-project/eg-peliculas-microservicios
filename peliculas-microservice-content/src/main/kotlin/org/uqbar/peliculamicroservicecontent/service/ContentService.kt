@@ -1,6 +1,5 @@
 package org.uqbar.peliculamicroservicecontent.service
 
-import graphql.servlet.internal.GraphQLRequest
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -8,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.reactive.function.client.bodyToMono
 import org.uqbar.peliculamicroservicecontent.dto.VerPeliculaDTO
 import org.uqbar.peliculamicroservicecontent.model.Content
 import org.uqbar.peliculamicroservicecontent.repository.ContentRepository
@@ -29,15 +29,7 @@ class ContentService {
     @Value("\${ranking.base-url}")
     lateinit var rankingBaseUrl: String
 
-    fun watchContent(idContent: String): VerPeliculaDTO {
-        logger.info("Buscando película $idContent")
-        val content = contentRepository.findById(idContent).getOrElse {
-            logger.info("Nuevo content - Película ($idContent)")
-            contentRepository.save(Content().apply {
-                id = idContent
-                file = getContent(idContent)
-            })
-        }
+    fun watchContent(idTMDB: String): VerPeliculaDTO {
         // Avisamos que una película se vio
         // https://stackoverflow.com/questions/70519410/how-to-invoke-graphql-api-from-a-java-spring-boot-application-is-there-any-anno
         // https://medium.com/decathlontechnology/minimal-graphql-client-request-with-spring-boot-22e0041b170
@@ -50,7 +42,7 @@ class ContentService {
             .build()
 
         val graphqlMutationBody = """mutation {
-                verPelicula(idTMDB: $idContent) {
+                verPelicula(idTMDB: $idTMDB) {
                     idTMDB,
                     titulo,
                     vistas
@@ -67,7 +59,17 @@ class ContentService {
             .bodyToMono(VerPeliculaDTO::class.java)
             .block()!!
 
-        verPeliculaDTO.file = content.file
+        if (verPeliculaDTO.isOk()) {
+            logger.info("Buscando película $idTMDB")
+            val contentBD = contentRepository.findById(idTMDB).getOrElse {
+                logger.info("Nuevo content - Película ($idTMDB)")
+                contentRepository.save(Content().apply {
+                    id = idTMDB
+                    file = getContent(idTMDB)
+                })
+            }
+            verPeliculaDTO.file = contentBD.file
+        }
 
         return verPeliculaDTO
     }

@@ -13,5 +13,5 @@ class ContentController {
     lateinit var contentService: ContentService
 
     @PatchMapping("/watch")
-    fun watchContent(@RequestBody idContent: String) = contentService.watchContent(idContent)
+    fun watchContent(@RequestBody idTMDB: String) = contentService.watchContent(idTMDB)
 }
