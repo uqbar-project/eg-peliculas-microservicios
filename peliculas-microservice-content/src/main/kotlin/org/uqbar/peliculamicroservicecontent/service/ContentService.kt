@@ -60,6 +60,7 @@ class ContentService {
             .block()!!
 
         if (verPeliculaDTO.isOk()) {
+            // TODO: ojo que cuando le pasás una peli que no existe tira Remote host terminated the handshakex
             logger.info("Buscando película $idTMDB")
             val contentBD = contentRepository.findById(idTMDB).getOrElse {
                 logger.info("Nuevo content - Película ($idTMDB)")

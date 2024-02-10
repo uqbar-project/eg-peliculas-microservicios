@@ -1,6 +1,7 @@
 package org.uqbar.peliculasmicroserviceauth.security
 
 import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -9,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.stereotype.Component
 import org.uqbar.peliculasmicroserviceauth.exceptions.CredencialesInvalidasException
 import java.util.*
+
 
 @Component
 class TokenUtils {
@@ -36,11 +38,14 @@ class TokenUtils {
    }
 
    fun getAuthentication(token: String): UsernamePasswordAuthenticationToken {
-      val claims = Jwts.parserBuilder()
-         .setSigningKey(secretKey.toByteArray())
+      val secret = Keys.hmacShaKeyFor(secretKey.toByteArray())
+      val claims = Jwts.parser()
+         .verifyWith(secret)
          .build()
-         .parseClaimsJws(token)
-         .body
+         .parseSignedClaims(token)
+         .payload
+
+      // TODO: chequear expiration a ver si se venció el token
 
       if (claims.subject == null) {
          throw CredencialesInvalidasException()
