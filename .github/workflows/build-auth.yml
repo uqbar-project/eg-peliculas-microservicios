@@ -19,6 +19,7 @@ jobs:
       # Execute Gradle commands in GitHub Actions workflows
       - uses: gradle/actions/setup-gradle@v3
         with:
+          build-root-directory: ./peliculas-microservice-auth
           arguments: runOnGitHub
 
       # Send JaCoCo reports to codecov
