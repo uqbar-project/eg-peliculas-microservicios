@@ -63,8 +63,8 @@ class UsuarioService : UserDetailsService {
       return usuario
    }
 
-   // NOT_SUPPORTED permite que otro método en transacción lo llame y luego continúe con dicha transacción
-   // con NEVER si intentamos llamar desde un método que tiene transacción a verUsuario, dispara una excepción
+   // NOT_SUPPORTED permite que otro metodo en transacción lo llame y luego continúe con dicha transacción
+   // con NEVER si intentamos llamar desde un metodo que tiene transacción a verUsuario, dispara una excepción
    @Transactional(Transactional.TxType.NOT_SUPPORTED)
    fun verUsuario(nombreUsuario: String) = usuarioRepository.findByNombre(nombreUsuario).orElseThrow { NotFoundException("No se encontró el usuario con el nombre $nombreUsuario") }
 
