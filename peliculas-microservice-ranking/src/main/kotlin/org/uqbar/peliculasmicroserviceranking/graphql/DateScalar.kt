@@ -20,15 +20,18 @@ class DateScalarConfiguration {
          .description("Tipo Date para GraphQL")
          .coercing(object : Coercing<LocalDate?, String?> {
 
+               @Deprecated("Use serialize with GraphQLContext and Locale")
                override fun serialize(dataFetcherResult: Any): String {
                   return (dataFetcherResult as? LocalDate)?.format(defaultFormatter)
                      ?: throw CoercingSerializeException("El objeto no es de tipo LocalDate: ${dataFetcherResult.javaClass.name}")
                }
 
+               @Deprecated("Use parseValue with GraphQLContext and Locale")
                override fun parseValue(input: Any): LocalDate {
                   return LocalDate.parse(input.toString(), defaultFormatter)
                }
 
+               @Deprecated("Use parseLiteral with GraphQLContext and Locale")
                override fun parseLiteral(input: Any): LocalDate {
                   return LocalDate.parse(input.toString(), defaultFormatter)
                }

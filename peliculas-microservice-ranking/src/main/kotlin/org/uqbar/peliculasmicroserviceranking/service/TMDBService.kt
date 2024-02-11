@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.uqbar.peliculasmicroserviceranking.domain.Pelicula
 import org.uqbar.peliculasmicroserviceranking.dto.*
+import org.uqbar.peliculasmicroserviceranking.exceptions.BusinessException
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -33,7 +34,7 @@ class TMDBService {
    fun buscarPeliculaPorId(_idTMDB: Number): Pelicula {
       logger.info("buscando película con id $_idTMDB en TMDB")
       val response = prepareTMDBResponse("${baseUrl}/movie/${_idTMDB}?api_key=${apiKey}&language=en-US")
-      logger.info("respuesta ${response.body().toString()}")
+      logger.info("respuesta ${response.statusCode()} - ${response.body().toString()}")
       // TODO: qué pasa si no la encuentra
       // Recibimos un
       /*
@@ -43,6 +44,9 @@ class TMDBService {
           "status_message": "The resource you requested could not be found."
       }
        */
+      if (response.statusCode() == 404) {
+         throw BusinessException("No se encuentra la película cuyo id es $_idTMDB")
+      }
       val movieDTO = ObjectMapper().readValue(response.body(), MovieDTO::class.java)
       return movieDTO.toPelicula()
    }
@@ -71,3 +75,9 @@ class TMDBService {
       }
    }
 }
+
+data class SearchTDMBResponse(
+   val success: Boolean,
+   val status_code: String,
+   val status_message: String,
+)

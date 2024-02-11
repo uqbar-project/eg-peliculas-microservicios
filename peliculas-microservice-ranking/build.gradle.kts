@@ -1,43 +1,40 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-   id("org.springframework.boot") version "3.0.2"
-   id("io.spring.dependency-management") version "1.1.0"
-   kotlin("jvm") version "1.8.0"
-   kotlin("plugin.spring") version "1.8.0"
-   kotlin("plugin.jpa") version "1.8.0"
+   id("org.springframework.boot") version "3.2.2"
+   id("io.spring.dependency-management") version "1.1.4"
+   kotlin("jvm") version "1.9.22"
+   kotlin("plugin.spring") version "1.9.22"
+   kotlin("plugin.jpa") version "1.9.22"
    jacoco
 }
 
 group = "org.uqbar"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_17
-
-extra["springCloudVersion"] = "2022.0.0"
+java.sourceCompatibility = JavaVersion.VERSION_21
 
 repositories {
    mavenCentral()
 }
 
 dependencies {
+   developmentOnly("org.springframework.boot:spring-boot-devtools")
+
    // básicos de cualquier proyecto Spring Boot
    implementation("org.springframework.boot:spring-boot-starter-web")
+   implementation("org.springframework.boot:spring-boot-starter-hateoas")
+   implementation("org.springframework.boot:spring-boot-starter-data-rest")
+   implementation("org.springframework.boot:spring-boot-starter-validation")
    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-   implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
    implementation("org.jetbrains.kotlin:kotlin-reflect")
-   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-   // security
-   implementation("org.springframework.boot:spring-boot-starter-security")
-
-   // base de datos documental MongoDB
+   // conexión a la base de datos
+   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 
-   // graphql
-   implementation("org.springframework.boot:spring-boot-starter-graphql")
-
-   // microservicios
-   implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.0.0")
+   // testing
+   testImplementation("org.springframework.boot:spring-boot-starter-test")
+   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
    // logging
    implementation("org.springframework.boot:spring-boot-starter-log4j2")
@@ -47,25 +44,27 @@ dependencies {
       }
    }
 
+   // security
+   implementation("org.springframework.boot:spring-boot-starter-security")
+
+   // graphql
+   implementation("org.springframework.boot:spring-boot-starter-graphql")
+
+   // microservicios
+   implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.1.0")
+
    // testing
    testImplementation("org.springframework.boot:spring-boot-starter-test")
-   testImplementation("org.mockito:mockito-core:5.1.1")
+   testImplementation("org.mockito:mockito-core:5.10.0")
    testImplementation("io.projectreactor:reactor-test")
    testImplementation("org.springframework.graphql:spring-graphql-test")
-   testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.35.0")
-}
-
-// microservicios
-dependencyManagement {
-   imports {
-      mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
-   }
+   testImplementation("com.github.tomakehurst:wiremock-standalone:3.0.1")
 }
 
 tasks.withType<KotlinCompile> {
    kotlinOptions {
       freeCompilerArgs = listOf("-Xjsr305=strict")
-      jvmTarget = "17"
+      jvmTarget = "21"
    }
 }
 
@@ -82,7 +81,7 @@ tasks.jacocoTestReport {
 }
 
 jacoco {
-   toolVersion = "0.8.8"
+   toolVersion = "0.8.11"
 }
 
 tasks.jacocoTestReport {
