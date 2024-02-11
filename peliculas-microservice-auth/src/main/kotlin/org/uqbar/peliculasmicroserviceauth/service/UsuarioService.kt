@@ -96,8 +96,6 @@ class UsuarioService : UserDetailsService {
    private fun getUsuarioPorId(idUsuario: Long) = usuarioRepository.findById(idUsuario).orElseThrow { NotFoundException("No se encontró el usuario con el identificador $idUsuario") }
 
    // El efecto que tiene es simplemente devolver un ok si el filtro de JWT (JWTAuthorizationFilter) pasa
-   fun validar(): String {
-      return "ok"
-   }
+   fun validar(): String = "ok"
 
 }
