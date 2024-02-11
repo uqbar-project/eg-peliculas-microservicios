@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
   redis:
     container_name: redis
@@ -16,4 +16,3 @@ services:
       - REDIS_HOSTS=local:redis:6379
     ports:
       - "8081:8081"
-

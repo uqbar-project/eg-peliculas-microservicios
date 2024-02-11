@@ -1,64 +1,66 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "3.0.2"
-	id("io.spring.dependency-management") version "1.1.0"
-	kotlin("jvm") version "1.8.0"
-	kotlin("plugin.spring") version "1.8.0"
-	kotlin("plugin.jpa") version "1.8.0"
+	id("org.springframework.boot") version "3.2.2"
+	id("io.spring.dependency-management") version "1.1.4"
+	kotlin("jvm") version "1.9.22"
+	kotlin("plugin.spring") version "1.9.22"
+	kotlin("plugin.jpa") version "1.9.22"
 	jacoco
 }
 
-extra["springCloudVersion"] = "2022.0.0"
-
 group = "org.uqbar"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_21
 
 repositories {
 	mavenCentral()
 }
 
 dependencies {
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
+
 	// básicos de cualquier proyecto Spring Boot
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-hateoas")
 	implementation("org.springframework.boot:spring-boot-starter-data-rest")
-	implementation("org.springframework.boot:spring-boot-starter-webflux")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+	// base de datos clave/valor Redis
+	implementation("org.springframework.boot:spring-boot-starter-data-redis")
+	implementation("org.testcontainers:testcontainers:1.19.5")
+
+	// testing
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("com.github.tomakehurst:wiremock-standalone:3.0.1")
+
+	// logging
+	implementation("org.springframework.boot:spring-boot-starter-log4j2")
+	modules {
+		module("org.springframework.boot:spring-boot-starter-logging") {
+			replacedBy("org.springframework.boot:spring-boot-starter-log4j2", "Use Log4j2 instead of Logback")
+		}
+	}
 
 	// security
 	implementation("org.springframework.boot:spring-boot-starter-security")
 
 	// cliente graphql
-	implementation("com.graphql-java:graphql-spring-boot-starter:5.0.2")
-
-	// base de datos Redis
-	implementation("org.springframework.boot:spring-boot-starter-data-redis")
-	implementation("org.testcontainers:testcontainers:1.17.6")
+	implementation("com.graphql-java-kickstart:graphql-spring-boot-starter:15.1.0")
 
 	// no tenemos spring security porque delegamos en ranking que a su vez delega en auth
 
 	// microservicios
-	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.0.0")
-
-	// testing
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.35.0")
-}
-
-dependencyManagement {
-	imports {
-		mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
-	}
+	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.1.0")
 }
 
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "17"
+		jvmTarget = "21"
 	}
 }
 
@@ -75,7 +77,7 @@ tasks.jacocoTestReport {
 }
 
 jacoco {
-	toolVersion = "0.8.8"
+	toolVersion = "0.8.11"
 }
 
 tasks.jacocoTestReport {
