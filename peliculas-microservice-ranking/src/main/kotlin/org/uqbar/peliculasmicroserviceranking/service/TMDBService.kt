@@ -75,9 +75,3 @@ class TMDBService {
       }
    }
 }
-
-data class SearchTDMBResponse(
-   val success: Boolean,
-   val status_code: String,
-   val status_message: String,
-)
