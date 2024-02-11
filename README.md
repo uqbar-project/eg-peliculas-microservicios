@@ -27,3 +27,5 @@ Como respuesta recibís el token que tenés que usar en los demás endpoints. Pa
 Eso está hecho para todos los endpoints, pero si querés hacerlo vos te dejamos el gif:
 
 ![Tutorial para tomar el token](./images/microservicios-configurar-bearer-token-de-un-endpoint.gif)
+
+Para más información podés ver [esta página](https://docs.insomnia.rest/insomnia/chaining-requests).
