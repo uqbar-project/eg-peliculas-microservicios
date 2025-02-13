@@ -1,0 +1,707 @@
+{
+  "name": "Películas - Microservicios",
+  "version": "1",
+  "items": [
+    {
+      "type": "folder",
+      "name": "Autenticación",
+      "items": [
+        {
+          "type": "http",
+          "name": "Eliminar usuario",
+          "seq": 4,
+          "request": {
+            "url": "http://localhost:9090/auth/user/1",
+            "method": "DELETE",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Pagar factura",
+          "seq": 2,
+          "request": {
+            "url": "http://localhost:9090/auth/pay",
+            "method": "PATCH",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"nombreUsuario\": \"fdodino\",\n  \"idFactura\": 1\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Crear usuario",
+          "seq": 5,
+          "request": {
+            "url": "http://localhost:9090/auth/user",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"usuario\": \"fdodino\",\n  \"password\": \"dodain\"\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Login",
+          "seq": 8,
+          "request": {
+            "url": "http://{{AUTH-SERVICE}}/auth/login",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"usuario\": \"admin\",\n  \"password\": \"123456\"\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {
+              "res": [
+                {
+                  "name": "access_token",
+                  "value": "res.body",
+                  "enabled": true,
+                  "local": false
+                }
+              ]
+            },
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Facturar",
+          "seq": 3,
+          "request": {
+            "url": "http://localhost:9090/auth/invoice",
+            "method": "PATCH",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"nombreUsuario\": \"fdodino\",\n  \"monto\": 5000\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Ver 1 usuario",
+          "seq": 7,
+          "request": {
+            "url": "http://localhost:9090/auth/users/admin",
+            "method": "GET",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Ver todos los usuarios",
+          "seq": 6,
+          "request": {
+            "url": "http://localhost:9090/auth/users",
+            "method": "GET",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Validar token",
+          "seq": 1,
+          "request": {
+            "url": "http://{{AUTH-SERVICE}}/auth/validate",
+            "method": "GET",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "TMDB",
+      "root": {
+        "request": {
+          "vars": {
+            "req": [
+              {
+                "uid": "l4Ma95AnbUdwC675RhBXm",
+                "name": "TMDB_URL",
+                "value": "api.themoviedb.org/3",
+                "enabled": true
+              }
+            ]
+          }
+        }
+      },
+      "items": [
+        {
+          "type": "http",
+          "name": "Generos",
+          "seq": 1,
+          "request": {
+            "url": "https://{{TMDB_URL}}/genre/movie/list?api_key=10a56b1f0d4208a8609c58d9e4c6321d",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "api_key",
+                "value": "10a56b1f0d4208a8609c58d9e4c6321d",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Buscar una película",
+          "seq": 2,
+          "request": {
+            "url": "https://{{TMDB_URL}}/movie/436270?api_key=10a56b1f0d4208a8609c58d9e4c6321d&language=en-US",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "api_key",
+                "value": "10a56b1f0d4208a8609c58d9e4c6321d",
+                "type": "query",
+                "enabled": true
+              },
+              {
+                "name": "language",
+                "value": "en-US",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Pelis más populares",
+          "seq": 3,
+          "request": {
+            "url": "https://{{TMDB_URL}}/movie/popular?api_key=10a56b1f0d4208a8609c58d9e4c6321d&language=en-US&page=1",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "api_key",
+                "value": "10a56b1f0d4208a8609c58d9e4c6321d",
+                "type": "query",
+                "enabled": true
+              },
+              {
+                "name": "language",
+                "value": "en-US",
+                "type": "query",
+                "enabled": true
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Datos de una película",
+          "seq": 4,
+          "request": {
+            "url": "https://{{TMDB_URL}}/movie/550?api_key=10a56b1f0d4208a8609c58d9e4c6321d",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "api_key",
+                "value": "10a56b1f0d4208a8609c58d9e4c6321d",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "Ranking",
+      "items": [
+        {
+          "type": "graphql",
+          "name": "Ver los datos de una película",
+          "seq": 2,
+          "request": {
+            "url": "http://localhost:9091/graphql",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query {\n  peliculaPorIdTMDB(idTMDB: 505642) {\n    idTMDB\n    titulo\n    fechaSalida\n  }\n}"
+              },
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "graphql",
+          "name": "Películas más vistas",
+          "seq": 2,
+          "request": {
+            "url": "http://localhost:9091/graphql",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query {\n  masVistas {\n    idTMDB\n    titulo\n    fechaSalida,\n\t\tvistas,\n\t\tcalificacionPromedio,\n  \tcalificaciones {\n\t\t\tusuario {\n\t\t\t\tnombre\n\t\t\t},\n\t\t\tvaloracion\n\t\t}\n  }\n}"
+              },
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "graphql",
+          "name": "Populares en TMDB",
+          "seq": 3,
+          "request": {
+            "url": "http://localhost:9091/graphql",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query {\n  populares {\n    idTMDB\n    titulo\n    fechaSalida,\n  }\n}"
+              },
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "graphql",
+          "name": "Bucar película en TMDB",
+          "seq": 4,
+          "request": {
+            "url": "http://localhost:9091/graphql",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query {\n  peliculaPorIdTMDB(idTMDB: 76600) {\n    idTMDB\n    titulo\n    fechaSalida,\n  }\n}"
+              },
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "graphql",
+          "name": "Mejores películas",
+          "seq": 5,
+          "request": {
+            "url": "http://localhost:9091/graphql",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query {\n\tmejorCalificadas {\n\t\tidTMDB,\n\t\ttitulo,\n\t\tvistas,\n\t\tcalificacionPromedio,\n\t}\n}\n"
+              },
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "graphql",
+          "name": "Calificar película",
+          "seq": 6,
+          "request": {
+            "url": "http://localhost:9091/graphql",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation {\n\tcalificarPelicula(calificacionPelicula: {\n\t\tidTMDB: 436270, \n\t\tusuario: \"admin\", \n\t\tvaloracion: 6\n\t}) {\n\t\tidTMDB,\n\t\ttitulo,\n\t\tvistas\n\t}\n}\n"
+              },
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "Content",
+      "items": [
+        {
+          "type": "http",
+          "name": "Stream de una película",
+          "seq": 1,
+          "request": {
+            "url": "http://localhost:9092/content/watch",
+            "method": "PATCH",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "76600",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "environments": [],
+  "root": {
+    "request": {
+      "vars": {
+        "req": [
+          {
+            "uid": "w4uplUFIwQzOf0rEwLuWq",
+            "name": "AUTH-SERVICE",
+            "value": "localhost:9090",
+            "enabled": true
+          }
+        ]
+      }
+    }
+  },
+  "brunoConfig": {
+    "version": "1",
+    "name": "Películas - Microservicios",
+    "type": "collection",
+    "ignore": [
+      "node_modules",
+      ".git"
+    ]
+  }
+}

@@ -17,14 +17,14 @@ class AuthInitializer : InitializingBean {
 
    override fun afterPropertiesSet() {
       logger.info("Inicializando usuarios")
-      if (usuarioRepository.count() == 0L) {
+      if (usuarioRepository.findByNombre("admin").isEmpty) {
          logger.info("Creando usuario admin")
          usuarioRepository.save(Usuario().apply {
             nombre = "admin"
             crearPassword("123456")
          })
       } else {
-         logger.info("No hubo usuarios nuevos generados")
+         logger.info("Usuario admin ya existe")
       }
    }
 }

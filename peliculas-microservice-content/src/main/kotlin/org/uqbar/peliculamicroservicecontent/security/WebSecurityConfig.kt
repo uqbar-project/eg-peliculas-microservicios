@@ -3,6 +3,7 @@ package org.uqbar.peliculamicroservicecontent.security
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
@@ -24,23 +25,21 @@ class WebSecurityConfig {
    @Bean
    fun filterChain(httpSecurity: HttpSecurity): SecurityFilterChain {
       return httpSecurity
-         .cors().disable()
-         .csrf().disable()
-         .authorizeHttpRequests()
-         .requestMatchers("/error").permitAll()
-         .requestMatchers("/**").permitAll()
-         .anyRequest().authenticated()
-         .and()
-         .httpBasic()
-         .and()
-         .sessionManagement()
-         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-          // agregado para JWT, si comentás estas dos líneas tendrías Basic Auth
-         .and()
+         .cors { it.disable() }
+         .csrf { it.disable() }
+         .authorizeHttpRequests {
+            it.requestMatchers("/error").permitAll()
+            it.requestMatchers("/**").permitAll()
+            it.anyRequest().authenticated()
+         }
+         .httpBasic(Customizer.withDefaults())
+         .sessionManagement { configurer ->
+            configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+         }
+         // agregado para JWT, si comentás estas dos líneas tendrías Basic Auth
          .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter::class.java)
-          // fin agregado
-         .exceptionHandling()
-         .and()
+         // fin agregado
+         .exceptionHandling(Customizer.withDefaults())
          .build()
    }
 }

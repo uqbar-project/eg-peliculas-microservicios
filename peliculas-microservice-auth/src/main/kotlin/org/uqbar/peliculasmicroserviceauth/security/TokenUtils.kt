@@ -23,7 +23,7 @@ class TokenUtils {
    val logger = LoggerFactory.getLogger(TokenUtils::class.java)
 
    fun createToken(nombre: String, password: String): String? {
-      val longExpirationTime = accessTokenMinutes * 60 * 60 * 1000
+      val longExpirationTime = accessTokenMinutes * 60 * 1000
 
       val now = Date()
 

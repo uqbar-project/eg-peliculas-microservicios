@@ -189,7 +189,7 @@ En nuestro caso, lo que vamos a hacer en el cliente Insomnia es llamar a los end
 
 ### Implementación
 
-La forma de decorar cada pedido es utililzar un **Filter**, en este caso uno que toma la información del request, obtiene el JWT y hace las validaciones pertinentes:
+La forma de decorar cada pedido es utilizar un **Filter**, en este caso uno que toma la información del request, obtiene el JWT y hace las validaciones pertinentes:
 
 ```kotlin
 override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {

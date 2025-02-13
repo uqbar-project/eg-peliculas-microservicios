@@ -14,13 +14,27 @@ La arquitectura general podemos verla en este diagrama de alto nivel:
 
 ## Para testear los endpoints
 
-Te dejamos el archivo en formato [json](./peliculas-microservice-endpoints.json) (también tenés en formato [har](./peliculas-microservice-endpoints.har) para POSTMAN). Dado que los endpoints tienen seguridad, lo primero que tenés que hacer es
+Te dejamos los endpoints para
 
-- ejecutar el login del microservicio auth:
+- [Bruno](./Películas_Bruno.json)
+- [Insomnia](./peliculas-microservice-endpoints.json)
+- [Postman](./Películas_Postman.json)
 
-![Login](./images/microservicios-login.png)
+Dado que los endpoints tienen seguridad, lo primero que tenés que hacer es ejecutar el login del microservicio auth. Como respuesta recibís el token que tenés que usar en los demás endpoints. Para no tener que copiarlo y pegarlo en el header (como Authorization - Bearer), nosotros ya lo configuramos para que se use en el resto de los endpoints (en Bruno es una variable de ambiente, en Insomnia apuntamos al body de la respuesta directamente).
 
-Como respuesta recibís el token que tenés que usar en los demás endpoints. Para no tener que copiarlo y pegarlo en el header (como Authorization - Bearer), nosotros ya lo configuramos en Insomnia para que use la última respuesta del endpoint de login. Por ejemplo para ver los datos de una película, en el microservicio ranking fijate que en la solapa Bearer elegimos como token un `Response Raw Body`:
+### Bruno
+
+Te dejamos un gif que muestra cómo guarda el token dentro de una variable:
+
+![Login Bruno](./images/microservicios-bearer-token-bruno.gif)
+
+### Insomnia
+
+Ejecutamos el login
+
+![Login Insomnia](./images/microservicios-login.png)
+
+Como respuesta recibís el token que tenés que usar en los demás endpoints. Nosotros lo configuramos en Insomnia para que use la última respuesta del endpoint de login. Por ejemplo para ver los datos de una película, en el microservicio ranking fijate que en la solapa Bearer elegimos como token un `Response Raw Body`:
 
 ![Configuración Bearer Token](./images/microservicios-configuracion-bearer.png)
 

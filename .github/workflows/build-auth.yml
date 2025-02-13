@@ -17,13 +17,13 @@ jobs:
           java-version: 21
 
       # Execute Gradle commands in GitHub Actions workflows
-      - uses: gradle/actions/setup-gradle@v3
+      - uses: gradle/actions/setup-gradle@v4
         with:
           build-root-directory: ./peliculas-microservice-auth
           arguments: runOnGitHub
 
       # Send JaCoCo reports to codecov
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: false
           directory: peliculas-microservice-auth

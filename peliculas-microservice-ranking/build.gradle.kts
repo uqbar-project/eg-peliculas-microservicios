@@ -1,17 +1,20 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-   id("org.springframework.boot") version "3.2.2"
-   id("io.spring.dependency-management") version "1.1.4"
-   kotlin("jvm") version "1.9.22"
-   kotlin("plugin.spring") version "1.9.22"
-   kotlin("plugin.jpa") version "1.9.22"
+   id("org.springframework.boot") version "3.4.2"
+   id("io.spring.dependency-management") version "1.1.7"
+   kotlin("jvm") version "1.9.25"
+   kotlin("plugin.spring") version "1.9.25"
+   kotlin("plugin.jpa") version "1.9.25"
    jacoco
 }
 
 group = "org.uqbar"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_21
+
+java {
+   toolchain {
+      languageVersion = JavaLanguageVersion.of(21)
+   }
+}
 
 repositories {
    mavenCentral()
@@ -51,21 +54,14 @@ dependencies {
    implementation("org.springframework.boot:spring-boot-starter-graphql")
 
    // microservicios
-   implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.1.0")
+   implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.2.0")
 
    // testing
    testImplementation("org.springframework.boot:spring-boot-starter-test")
-   testImplementation("org.mockito:mockito-core:5.10.0")
+   testImplementation("org.mockito:mockito-core:5.15.2")
    testImplementation("io.projectreactor:reactor-test")
    testImplementation("org.springframework.graphql:spring-graphql-test")
    testImplementation("com.github.tomakehurst:wiremock-standalone:3.0.1")
-}
-
-tasks.withType<KotlinCompile> {
-   kotlinOptions {
-      freeCompilerArgs = listOf("-Xjsr305=strict")
-      jvmTarget = "21"
-   }
 }
 
 tasks.withType<Test> {
@@ -81,7 +77,7 @@ tasks.jacocoTestReport {
 }
 
 jacoco {
-   toolVersion = "0.8.11"
+   toolVersion = "0.8.12"
 }
 
 tasks.jacocoTestReport {

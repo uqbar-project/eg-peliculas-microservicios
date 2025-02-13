@@ -51,6 +51,8 @@ class Usuario {
    // https://www.baeldung.com/java-password-hashing
    fun validarCredenciales(passwordAVerificar: String) {
       if (!getDefaultEncoder().matches(passwordAVerificar, password)) {
+         println("FABRA " + passwordAVerificar)
+         println("BLANCO " + password)
          throw CredencialesInvalidasException()
       }
    }

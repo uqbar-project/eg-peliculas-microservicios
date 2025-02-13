@@ -1,17 +1,20 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-	id("org.springframework.boot") version "3.2.2"
-	id("io.spring.dependency-management") version "1.1.4"
-	kotlin("jvm") version "1.9.22"
-	kotlin("plugin.spring") version "1.9.22"
-	kotlin("plugin.jpa") version "1.9.22"
+	id("org.springframework.boot") version "3.4.2"
+	id("io.spring.dependency-management") version "1.1.7"
+	kotlin("jvm") version "1.9.25"
+	kotlin("plugin.spring") version "1.9.25"
+	kotlin("plugin.jpa") version "1.9.25"
 	jacoco
 }
 
 group = "org.uqbar"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_21
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
 
 repositories {
 	mavenCentral()
@@ -31,7 +34,7 @@ dependencies {
 
 	// base de datos clave/valor Redis
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
-	implementation("org.testcontainers:testcontainers:1.19.5")
+	implementation("org.testcontainers:testcontainers:1.20.4")
 
 	// testing
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -54,14 +57,7 @@ dependencies {
 	// no tenemos spring security porque delegamos en ranking que a su vez delega en auth
 
 	// microservicios
-	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.1.0")
-}
-
-tasks.withType<KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "21"
-	}
+	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.2.0")
 }
 
 tasks.withType<Test> {
@@ -77,7 +73,7 @@ tasks.jacocoTestReport {
 }
 
 jacoco {
-	toolVersion = "0.8.11"
+	toolVersion = "0.8.12"
 }
 
 tasks.jacocoTestReport {

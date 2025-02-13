@@ -1,0 +1,758 @@
+{
+  "info": {
+    "name": "Películas - Microservicios",
+    "description": "",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "bruno",
+      "event": []
+    },
+    {
+      "name": "Autenticación",
+      "item": [
+        {
+          "name": "Eliminar usuario",
+          "event": [],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9090/auth/user/1",
+              "protocol": "http",
+              "host": [
+                "localhost:9090"
+              ],
+              "path": [
+                "auth",
+                "user",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Pagar factura",
+          "event": [],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9090/auth/pay",
+              "protocol": "http",
+              "host": [
+                "localhost:9090"
+              ],
+              "path": [
+                "auth",
+                "pay"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"fdodino\",\n  \"idFactura\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Crear usuario",
+          "event": [],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9090/auth/user",
+              "protocol": "http",
+              "host": [
+                "localhost:9090"
+              ],
+              "path": [
+                "auth",
+                "user"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuario\": \"fdodino\",\n  \"password\": \"dodain\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://{{AUTH-SERVICE}}/auth/login",
+              "protocol": "http",
+              "host": [
+                "{{AUTH-SERVICE}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuario\": \"admin\",\n  \"password\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Facturar",
+          "event": [],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9090/auth/invoice",
+              "protocol": "http",
+              "host": [
+                "localhost:9090"
+              ],
+              "path": [
+                "auth",
+                "invoice"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"fdodino\",\n  \"monto\": 5000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Ver 1 usuario",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9090/auth/users/admin",
+              "protocol": "http",
+              "host": [
+                "localhost:9090"
+              ],
+              "path": [
+                "auth",
+                "users",
+                "admin"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Ver todos los usuarios",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9090/auth/users",
+              "protocol": "http",
+              "host": [
+                "localhost:9090"
+              ],
+              "path": [
+                "auth",
+                "users"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Validar token",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://{{AUTH-SERVICE}}/auth/validate",
+              "protocol": "http",
+              "host": [
+                "{{AUTH-SERVICE}}"
+              ],
+              "path": [
+                "auth",
+                "validate"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "TMDB",
+      "item": [
+        {
+          "name": "Generos",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "https://{{TMDB_URL}}/genre/movie/list?api_key=10a56b1f0d4208a8609c58d9e4c6321d",
+              "protocol": "https",
+              "host": [
+                "{{TMDB_URL}}"
+              ],
+              "path": [
+                "genre",
+                "movie",
+                "list"
+              ],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "10a56b1f0d4208a8609c58d9e4c6321d"
+                }
+              ],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Buscar una película",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "https://{{TMDB_URL}}/movie/436270?api_key=10a56b1f0d4208a8609c58d9e4c6321d&language=en-US",
+              "protocol": "https",
+              "host": [
+                "{{TMDB_URL}}"
+              ],
+              "path": [
+                "movie",
+                "436270"
+              ],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "10a56b1f0d4208a8609c58d9e4c6321d"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US"
+                }
+              ],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Pelis más populares",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "https://{{TMDB_URL}}/movie/popular?api_key=10a56b1f0d4208a8609c58d9e4c6321d&language=en-US&page=1",
+              "protocol": "https",
+              "host": [
+                "{{TMDB_URL}}"
+              ],
+              "path": [
+                "movie",
+                "popular"
+              ],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "10a56b1f0d4208a8609c58d9e4c6321d"
+                },
+                {
+                  "key": "language",
+                  "value": "en-US"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Datos de una película",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "https://{{TMDB_URL}}/movie/550?api_key=10a56b1f0d4208a8609c58d9e4c6321d",
+              "protocol": "https",
+              "host": [
+                "{{TMDB_URL}}"
+              ],
+              "path": [
+                "movie",
+                "550"
+              ],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "10a56b1f0d4208a8609c58d9e4c6321d"
+                }
+              ],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ranking",
+      "item": [
+        {
+          "name": "Ver los datos de una película",
+          "event": [],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9091/graphql",
+              "protocol": "http",
+              "host": [
+                "localhost:9091"
+              ],
+              "path": [
+                "graphql"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query {\n  peliculaPorIdTMDB(idTMDB: 505642) {\n    idTMDB\n    titulo\n    fechaSalida\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "Películas más vistas",
+          "event": [],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9091/graphql",
+              "protocol": "http",
+              "host": [
+                "localhost:9091"
+              ],
+              "path": [
+                "graphql"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query {\n  masVistas {\n    idTMDB\n    titulo\n    fechaSalida,\n\t\tvistas,\n\t\tcalificacionPromedio,\n  \tcalificaciones {\n\t\t\tusuario {\n\t\t\t\tnombre\n\t\t\t},\n\t\t\tvaloracion\n\t\t}\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "Populares en TMDB",
+          "event": [],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9091/graphql",
+              "protocol": "http",
+              "host": [
+                "localhost:9091"
+              ],
+              "path": [
+                "graphql"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query {\n  populares {\n    idTMDB\n    titulo\n    fechaSalida,\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "Bucar película en TMDB",
+          "event": [],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9091/graphql",
+              "protocol": "http",
+              "host": [
+                "localhost:9091"
+              ],
+              "path": [
+                "graphql"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query {\n  peliculaPorIdTMDB(idTMDB: 76600) {\n    idTMDB\n    titulo\n    fechaSalida,\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "Mejores películas",
+          "event": [],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9091/graphql",
+              "protocol": "http",
+              "host": [
+                "localhost:9091"
+              ],
+              "path": [
+                "graphql"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query {\n\tmejorCalificadas {\n\t\tidTMDB,\n\t\ttitulo,\n\t\tvistas,\n\t\tcalificacionPromedio,\n\t}\n}\n"
+              }
+            }
+          }
+        },
+        {
+          "name": "Calificar película",
+          "event": [],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9091/graphql",
+              "protocol": "http",
+              "host": [
+                "localhost:9091"
+              ],
+              "path": [
+                "graphql"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation {\n\tcalificarPelicula(calificacionPelicula: {\n\t\tidTMDB: 436270, \n\t\tusuario: \"admin\", \n\t\tvaloracion: 6\n\t}) {\n\t\tidTMDB,\n\t\ttitulo,\n\t\tvistas\n\t}\n}\n"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Content",
+      "item": [
+        {
+          "name": "Stream de una película",
+          "event": [],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9092/content/watch",
+              "protocol": "http",
+              "host": [
+                "localhost:9092"
+              ],
+              "path": [
+                "content",
+                "watch"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "76600",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "access_token",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "AUTH-SERVICE",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "TMDB_URL",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
