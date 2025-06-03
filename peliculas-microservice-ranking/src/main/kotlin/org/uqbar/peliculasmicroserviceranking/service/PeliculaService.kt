@@ -1,5 +1,6 @@
 package org.uqbar.peliculasmicroserviceranking.service
 
+import jakarta.transaction.Transactional
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -24,6 +25,7 @@ class PeliculaService {
 
    val logger: Logger = LoggerFactory.getLogger(PeliculaService::class.java)
 
+   @Transactional(value = Transactional.TxType.REQUIRED)
    fun buscarPelicula(_idTMDB: Int): Pelicula {
       logger.info("Buscando película con id TMDB = $_idTMDB")
       return peliculaRepository.findByIdTMDB(_idTMDB).orElseGet {
@@ -34,6 +36,7 @@ class PeliculaService {
       }
    }
 
+   @Transactional(value = Transactional.TxType.REQUIRED)
    fun verPelicula(idTMDB: Int): Pelicula {
       logger.info("Visualizar película $idTMDB")
       val pelicula = buscarPelicula(idTMDB)
@@ -42,10 +45,13 @@ class PeliculaService {
       return peliculaRepository.save(pelicula)
    }
 
+   @Transactional(value = Transactional.TxType.NEVER)
    fun masVistas() = peliculaRepository.findAllByOrderByVistasDesc()
 
+   @Transactional(value = Transactional.TxType.NEVER)
    fun mejorCalificadas() = peliculaRepository.findAllByOrderByCalificacionPromedioDesc()
 
+   @Transactional(value = Transactional.TxType.REQUIRED)
    fun calificarPelicula(peliculaUpdate: CalificacionPelicula): Pelicula {
       val usuario = usuarioService.getUsuario(peliculaUpdate.usuario)
       val pelicula = buscarPelicula(peliculaUpdate.idTMDB)

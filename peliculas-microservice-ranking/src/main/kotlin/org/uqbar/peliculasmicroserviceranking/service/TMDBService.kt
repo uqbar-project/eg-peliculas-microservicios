@@ -1,6 +1,7 @@
 package org.uqbar.peliculasmicroserviceranking.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import jakarta.transaction.Transactional
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -24,6 +25,7 @@ class TMDBService {
 
    val logger: Logger = LoggerFactory.getLogger(TMDBService::class.java)
 
+   @Transactional(value = Transactional.TxType.NEVER)
    fun peliculasPopulares(): List<Pelicula> {
       actualizarGeneros()
       val response = prepareTMDBResponse("${baseUrl}/movie/popular?api_key=${apiKey}&language=en-US&page=1")
@@ -31,6 +33,7 @@ class TMDBService {
       return popularesDTO.results.map { it.toPelicula() }
    }
 
+   @Transactional(value = Transactional.TxType.NEVER)
    fun buscarPeliculaPorId(_idTMDB: Number): Pelicula {
       logger.info("buscando película con id $_idTMDB en TMDB")
       val response = prepareTMDBResponse("${baseUrl}/movie/${_idTMDB}?api_key=${apiKey}&language=en-US")

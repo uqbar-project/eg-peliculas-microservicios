@@ -25,7 +25,9 @@ jobs:
           build-root-directory: ./peliculas-microservice-content
           arguments: runOnGitHub
 
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v4
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           fail_ci_if_error: false
           directory: peliculas-microservice-content

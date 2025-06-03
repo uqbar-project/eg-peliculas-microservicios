@@ -1,5 +1,6 @@
 package org.uqbar.peliculasmicroserviceranking.service
 
+import jakarta.transaction.Transactional
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -8,7 +9,7 @@ import org.springframework.http.RequestEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.uqbar.peliculasmicroserviceranking.domain.Usuario
-import org.uqbar.peliculasmicroserviceranking.exceptions.BusinessException
+import org.uqbar.peliculasmicroserviceranking.exceptions.BusinessException // FIXME: que se llame SystemException
 
 @Service
 class UsuarioService {
@@ -20,6 +21,7 @@ class UsuarioService {
 
    val logger: Logger = LoggerFactory.getLogger(UsuarioService::class.java)
 
+   @Transactional(value = Transactional.TxType.NEVER)
    fun authorize(_token: String): Boolean {
       token = _token
       logger.info("token $token")
@@ -38,6 +40,7 @@ class UsuarioService {
       }
    }
 
+   @Transactional(value = Transactional.TxType.NEVER)
    fun getUsuario(nombreUsuario: String): Usuario {
       val authRequest = RequestEntity.get("${authBaseUrl}/auth/users/$nombreUsuario")
          .headers(HttpHeaders().apply {
