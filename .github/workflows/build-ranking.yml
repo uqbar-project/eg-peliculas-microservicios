@@ -23,7 +23,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v5
 
       - name: Run test with coverage
-        run: ./gradlew runOnGitHub
+        run: ./gradlew test
 
       - uses: codecov/codecov-action@v5
         env:
