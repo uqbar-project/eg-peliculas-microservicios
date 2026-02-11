@@ -1,9 +1,9 @@
 plugins {
-	id("org.springframework.boot") version "3.4.2"
+	id("org.springframework.boot") version "3.5.10"
 	id("io.spring.dependency-management") version "1.1.7"
-	kotlin("jvm") version "1.9.25"
-	kotlin("plugin.spring") version "1.9.25"
-	kotlin("plugin.jpa") version "1.9.25"
+	kotlin("jvm") version "2.3.0"
+	kotlin("plugin.spring") version "2.3.0"
+	kotlin("plugin.jpa") version "2.3.0"
 	jacoco
 }
 
@@ -42,11 +42,26 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
 	// microservicios
-	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.2.0")
+	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.3.1")
 
 	// testing
-	testImplementation("com.h2database:h2:2.3.232")
+	testImplementation("com.h2database:h2:2.4.240")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+kotlin {
+	jvmToolchain(21)
+
+	compilerOptions {
+		freeCompilerArgs.addAll(
+			"-Xjsr305=strict",
+		)
+	}
+}
+
+tasks.withType<JavaCompile> {
+	targetCompatibility = "21"
+	sourceCompatibility = "21"
 }
 
 tasks.withType<Test> {
@@ -62,7 +77,7 @@ tasks.jacocoTestReport {
 }
 
 jacoco {
-	toolVersion = "0.8.12"
+	toolVersion = "0.8.14"
 }
 
 tasks.jacocoTestReport {
@@ -78,10 +93,4 @@ tasks.jacocoTestReport {
 		csv.required.set(false)
 		html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
 	}
-}
-
-tasks.register("runOnGitHub") {
-	dependsOn("jacocoTestReport")
-	group = "custom"
-	description = "$ ./gradlew runOnGitHub # runs on GitHub Action"
 }
