@@ -1,9 +1,9 @@
 plugins {
-   id("org.springframework.boot") version "3.4.2"
+   id("org.springframework.boot") version "3.5.10"
    id("io.spring.dependency-management") version "1.1.7"
-   kotlin("jvm") version "1.9.25"
-   kotlin("plugin.spring") version "1.9.25"
-   kotlin("plugin.jpa") version "1.9.25"
+   kotlin("jvm") version "2.3.0"
+   kotlin("plugin.spring") version "2.3.0"
+   kotlin("plugin.jpa") version "2.3.0"
    jacoco
 }
 
@@ -54,14 +54,14 @@ dependencies {
    implementation("org.springframework.boot:spring-boot-starter-graphql")
 
    // microservicios
-   implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.2.0")
+   implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.3.1")
 
    // testing
    testImplementation("org.springframework.boot:spring-boot-starter-test")
-   testImplementation("org.mockito:mockito-core:5.15.2")
+   testImplementation("org.mockito:mockito-core:5.21.0")
    testImplementation("io.projectreactor:reactor-test")
    testImplementation("org.springframework.graphql:spring-graphql-test")
-   testImplementation("com.github.tomakehurst:wiremock-standalone:3.0.1")
+   testImplementation("org.wiremock:wiremock-standalone:3.13.2")
 }
 
 tasks.withType<Test> {
@@ -77,7 +77,7 @@ tasks.jacocoTestReport {
 }
 
 jacoco {
-   toolVersion = "0.8.12"
+   toolVersion = "0.8.14"
 }
 
 tasks.jacocoTestReport {
@@ -93,10 +93,4 @@ tasks.jacocoTestReport {
       csv.required.set(false)
       html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
    }
-}
-
-tasks.register("runOnGitHub") {
-   dependsOn("jacocoTestReport")
-   group = "custom"
-   description = "$ ./gradlew runOnGitHub # runs on GitHub Action"
 }
